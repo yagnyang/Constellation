@@ -49,7 +49,7 @@ export default function PerspectiveGameHUD({
           particleCount: 80,
           spread: 60,
           origin: { y: 0.65 },
-          colors: ['#38bdf8', '#f59e0b', '#ffffff', '#e0f2fe'],
+          colors: ['#c084fc', '#a855f7', '#9333ea', '#7e22ce', '#d8b4fe'],
         });
       } catch {}
     }
@@ -61,8 +61,8 @@ export default function PerspectiveGameHUD({
       <div className="flex items-start justify-between w-full">
         {/* Left: Level & Title */}
         <div className="pointer-events-auto bg-space-900/80 border border-white/10 rounded-2xl p-4 backdrop-blur-xl shadow-2xl">
-          <div className="flex items-center gap-2 text-[10px] uppercase font-mono tracking-widest text-cyan-400">
-            <Compass className="w-3.5 h-3.5 text-amber-400" />
+          <div className="flex items-center gap-2 text-[10px] uppercase font-mono tracking-widest text-purple-300">
+            <Compass className="w-3.5 h-3.5 text-purple-400" />
             LEVEL {levelIndex + 1} OF {totalLevels} • TIER {level.tier}
           </div>
           <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-white mt-0.5">
@@ -77,7 +77,7 @@ export default function PerspectiveGameHUD({
         <div className="pointer-events-auto flex items-center gap-2 bg-space-900/80 border border-white/10 rounded-2xl p-2 backdrop-blur-xl shadow-2xl">
           <button
             onClick={onOpenLevelSelect}
-            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-cyan-300 flex items-center gap-1.5 transition-colors"
+            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-purple-200 flex items-center gap-1.5 transition-colors"
           >
             <Grid className="w-3.5 h-3.5" />
             LEVELS
@@ -93,17 +93,17 @@ export default function PerspectiveGameHUD({
 
       {/* CENTER VICTORY CARD */}
       {isSolved && (
-        <div className="pointer-events-auto self-center bg-space-900/95 border-2 border-amber-400/80 rounded-3xl p-6 md:p-8 max-w-md w-full backdrop-blur-2xl shadow-2xl shadow-amber-500/20 text-center animate-fadeIn">
-          <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-amber-400/20 border-2 border-amber-400 flex items-center justify-center text-amber-300 animate-bounce">
+        <div className="pointer-events-auto self-center bg-space-900/95 border-2 border-purple-500/80 rounded-3xl p-6 md:p-8 max-w-md w-full backdrop-blur-2xl shadow-2xl shadow-purple-500/20 text-center animate-fadeIn">
+          <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-purple-500/20 border-2 border-purple-400 flex items-center justify-center text-purple-300 animate-bounce">
             <CheckCircle2 className="w-7 h-7" />
           </div>
-          <div className="text-[10px] uppercase font-mono tracking-widest text-amber-400 font-bold">
+          <div className="text-[10px] uppercase font-mono tracking-widest text-purple-300 font-bold">
             PERSPECTIVE HARMONIZED
           </div>
           <h2 className="text-3xl font-extrabold text-white mt-1">
             {level.name.toUpperCase()}
           </h2>
-          <p className="text-xs text-cyan-300 font-medium italic mt-0.5">
+          <p className="text-xs text-purple-200 font-medium italic mt-0.5">
             {level.subtitle}
           </p>
 
@@ -121,7 +121,7 @@ export default function PerspectiveGameHUD({
             </button>
             <button
               onClick={onNextLevel}
-              className="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold uppercase text-xs tracking-wider shadow-lg shadow-amber-500/30 transition-transform active:scale-95 flex items-center justify-center gap-2"
+              className="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-purple-700 via-purple-600 to-purple-800 hover:from-purple-600 hover:to-purple-700 text-white font-extrabold uppercase text-xs tracking-wider shadow-lg shadow-purple-500/30 transition-transform active:scale-95 flex items-center justify-center gap-2"
             >
               NEXT CONSTELLATION
               <ArrowRight className="w-4 h-4" />
@@ -138,7 +138,7 @@ export default function PerspectiveGameHUD({
             onClick={onScramble}
             className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-gray-300 hover:text-white flex items-center gap-2 transition-colors"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-cyan-400" />
+            <RotateCcw className="w-3.5 h-3.5 text-purple-400" />
             SCRAMBLE 3D
           </button>
         </div>
@@ -148,12 +148,12 @@ export default function PerspectiveGameHUD({
           <div className="pointer-events-auto flex flex-col items-center max-w-sm w-full mx-4">
             <div className="flex items-center justify-between w-full px-2 mb-1.5 font-mono text-[11px]">
               <span className="text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-cyan-400" />
+                <Sparkles className="w-3 h-3 text-purple-400" />
                 EARTH PERSPECTIVE ALIGNMENT
               </span>
               <span
                 className={`font-bold transition-colors ${
-                  accuracy > 85 ? 'text-amber-400' : accuracy > 50 ? 'text-cyan-300' : 'text-gray-500'
+                  accuracy > 85 ? 'text-purple-200' : accuracy > 50 ? 'text-purple-300' : 'text-gray-500'
                 }`}
               >
                 {accuracy}%
@@ -165,8 +165,8 @@ export default function PerspectiveGameHUD({
               <div
                 className={`h-full rounded-full transition-all duration-75 ${
                   accuracy > 90
-                    ? 'bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_15px_rgba(245,158,11,0.8)]'
-                    : 'bg-gradient-to-r from-cyan-600 to-cyan-400 shadow-[0_0_12px_rgba(56,189,248,0.6)]'
+                    ? 'bg-gradient-to-r from-purple-500 to-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.8)]'
+                    : 'bg-gradient-to-r from-purple-800 to-purple-600 shadow-[0_0_12px_rgba(168,85,247,0.5)]'
                 }`}
                 style={{ width: `${accuracy}%` }}
               />
@@ -180,7 +180,7 @@ export default function PerspectiveGameHUD({
         {/* Right: Hint / Instructions */}
         <div className="pointer-events-auto bg-space-900/80 border border-white/10 rounded-2xl p-3 backdrop-blur-xl text-right font-mono text-xs hidden sm:block">
           <div className="text-[10px] text-gray-400 uppercase tracking-widest">ASTRONOMICAL TRICK</div>
-          <div className="text-cyan-300/80 text-[11px] mt-0.5 max-w-[200px] leading-tight">
+          <div className="text-purple-300/80 text-[11px] mt-0.5 max-w-[200px] leading-tight">
             Stars are scattered in depth. Rotate until they align from Earth&apos;s angle.
           </div>
         </div>

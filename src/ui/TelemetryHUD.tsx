@@ -83,7 +83,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           particleCount: 50,
           spread: 70,
           origin: { y: 0.65 },
-          colors: ['#a855f7', '#6366f1', '#38bdf8', '#34d399', '#f59e0b'],
+          colors: ['#c084fc', '#a855f7', '#9333ea', '#7e22ce', '#e9d5ff'],
         });
       } catch {}
     }
@@ -113,11 +113,11 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   // Timer styling
   const timerStyle =
     timerSec <= 0.0
-      ? 'text-rose-400 border-rose-500/40 bg-rose-950/40'
+      ? 'text-purple-300 border-purple-500/60 bg-black/90'
       : timerSec < 5.0
-      ? 'text-rose-300 border-rose-500/50 bg-rose-950/30 animate-pulse ring-1 ring-rose-500/40'
+      ? 'text-purple-200 border-purple-400/80 bg-purple-950/50 animate-pulse ring-1 ring-purple-500/50'
       : isArcadeActive
-      ? 'text-amber-300 border-amber-500/35 bg-black/80 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+      ? 'text-purple-100 border-purple-500/40 bg-black/80 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
       : 'text-purple-200 border-purple-500/25 bg-black/70';
 
   return (
@@ -129,7 +129,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           {/* Arcade Callsign & Stage Badge */}
           {isArcadeActive ? (
             <div className="px-3.5 py-1.5 rounded-full border border-purple-400/40 bg-purple-950/40 backdrop-blur-xl flex items-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
-              <Flame className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <Flame className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
               <span className="text-xs font-bold text-white tracking-wide">
                 {arcadePlayerName}
               </span>
@@ -183,10 +183,10 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           {onOpenLeaderboard && (
             <button
               onClick={onOpenLeaderboard}
-              className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-indigo-500/20 hover:from-amber-500/30 hover:to-indigo-500/30 border border-amber-500/40 text-amber-200 text-xs font-semibold backdrop-blur-xl flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.2)] transition-all active:scale-95"
+              className="px-3.5 py-1.5 rounded-full bg-purple-950/40 hover:bg-purple-900/50 border border-purple-500/40 text-purple-200 text-xs font-semibold backdrop-blur-xl flex items-center gap-1.5 shadow-[0_0_15px_rgba(168,85,247,0.25)] transition-all active:scale-95"
               title="Open GDG DevFest Leaderboard"
             >
-              <Trophy className="w-3.5 h-3.5 text-amber-400" />
+              <Trophy className="w-3.5 h-3.5 text-purple-300" />
               <span>Leaderboard</span>
             </button>
           )}
@@ -211,12 +211,12 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
                   onClick={onToggleArt}
                   className={`px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-xl flex items-center gap-1.5 transition-all shadow-lg active:scale-95 ${
                     showArt
-                      ? 'bg-fuchsia-600/90 border-fuchsia-400 text-white shadow-[0_0_18px_rgba(217,70,239,0.45)]'
+                      ? 'bg-purple-700/90 border-purple-400 text-white shadow-[0_0_18px_rgba(168,85,247,0.45)]'
                       : 'bg-black/75 hover:bg-black/95 border-purple-500/20 text-white/70 hover:text-white'
                   }`}
                   title="Toggle art figures"
                 >
-                  <span>Art: <strong className={showArt ? 'text-fuchsia-200' : 'text-white/40'}>{showArt ? 'ON' : 'OFF'}</strong></span>
+                  <span>Art: <strong className={showArt ? 'text-purple-200' : 'text-white/40'}>{showArt ? 'ON' : 'OFF'}</strong></span>
                 </button>
               )}
             </div>
@@ -228,12 +228,12 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
               onClick={onToggleGhostGuide}
               className={`px-3 py-1.5 rounded-full border text-xs font-medium backdrop-blur-xl flex items-center gap-1.5 transition-all shadow-lg active:scale-95 ${
                 showGhostGuide
-                  ? 'bg-cyan-600/80 border-cyan-400 text-white shadow-[0_0_15px_rgba(56,189,248,0.4)]'
+                  ? 'bg-purple-700/90 border-purple-400 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]'
                   : 'bg-black/75 hover:bg-black/95 border-purple-500/20 text-white/50 hover:text-white'
               }`}
               title="Toggle target alignment guide lines overlay"
             >
-              <span>Guide: <strong className={showGhostGuide ? 'text-cyan-200' : 'text-white/40'}>{showGhostGuide ? 'ON' : 'OFF'}</strong></span>
+              <span>Guide: <strong className={showGhostGuide ? 'text-purple-200' : 'text-white/40'}>{showGhostGuide ? 'ON' : 'OFF'}</strong></span>
             </button>
           )}
 
@@ -242,7 +242,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
             <div
               className={`px-3.5 py-1.5 rounded-full border text-xs font-bold backdrop-blur-xl shadow-lg flex items-center gap-2 ${timerStyle}`}
             >
-              <Timer className={`w-3.5 h-3.5 ${timerSec < 5.0 ? 'text-rose-400 animate-spin' : 'text-amber-400'}`} />
+              <Timer className={`w-3.5 h-3.5 ${timerSec < 5.0 ? 'text-purple-300 animate-spin' : 'text-purple-400'}`} />
               <span className="tabular-nums font-mono text-sm">
                 {timerSec.toFixed(1)}s
               </span>
@@ -295,8 +295,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
       {/* --- FLOATING REWARD NOTICE (ARCADE MODE) --- */}
       {arcadeBonusNotice && (
         <div className="absolute top-16 right-5 z-40 pointer-events-none animate-bounce">
-          <div className="px-4 py-2 rounded-2xl bg-emerald-500/25 border border-emerald-400 text-emerald-300 font-black text-sm shadow-[0_0_30px_rgba(16,185,129,0.5)] backdrop-blur-xl flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-400" />
+          <div className="px-4 py-2 rounded-2xl bg-purple-900/40 border border-purple-400/50 text-purple-200 font-black text-sm shadow-[0_0_30px_rgba(168,85,247,0.4)] backdrop-blur-xl flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-purple-300" />
             <span>+{arcadeBonusNotice.bonusSec}s TIME REWARD!</span>
           </div>
         </div>
@@ -359,8 +359,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
 
             {/* Guidance */}
             <div className="flex items-center justify-between text-[11px] text-white/40 pt-0.5">
-              <span className="flex items-center gap-1.5 text-cyan-300/80">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="flex items-center gap-1.5 text-purple-300/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
                 Align 3D lines into guide
               </span>
               <span className="text-purple-300/70 font-mono">Snap &le; 3.5&deg;</span>
@@ -376,9 +376,9 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           {onStartArcadeChallenge && (
             <button
               onClick={onStartArcadeChallenge}
-              className="px-6 py-3 bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 active:scale-95 text-white font-extrabold text-xs sm:text-sm rounded-2xl transition-all shadow-[0_0_30px_rgba(168,85,247,0.5)] flex items-center gap-2.5 border border-purple-400/40"
+              className="px-6 py-3 bg-gradient-to-r from-purple-700 via-purple-600 to-purple-800 hover:from-purple-600 hover:to-purple-700 active:scale-95 text-white font-extrabold text-xs sm:text-sm rounded-2xl transition-all shadow-[0_0_30px_rgba(168,85,247,0.5)] flex items-center gap-2.5 border border-purple-400/40"
             >
-              <Flame className="w-4 h-4 text-amber-300 animate-pulse" />
+              <Flame className="w-4 h-4 text-purple-300 animate-pulse" />
               <span>START DEVFEST SPEEDRUN CHALLENGE</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-mono">
                 20s Timer
@@ -445,11 +445,11 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
 
             {/* Arcade Reward Banner */}
             {isArcadeActive && tierInfo && (
-              <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-center">
-                <span className="text-xs font-semibold text-emerald-300 block">
+              <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-500/40 text-center">
+                <span className="text-xs font-semibold text-purple-200 block">
                   {tierInfo.label} Constellation Solved!
                 </span>
-                <span className="text-sm font-extrabold text-emerald-400 font-mono">
+                <span className="text-sm font-extrabold text-purple-300 font-mono">
                   {tierInfo.bonusLabel} Added to Time Bank
                 </span>
               </div>
@@ -504,8 +504,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl pointer-events-auto animate-in fade-in duration-200">
           <div className="w-full max-w-sm bg-black/90 border border-purple-500/25 rounded-2xl p-6 shadow-[0_16px_48px_rgba(0,0,0,0.9),0_0_24px_rgba(168,85,247,0.15)] space-y-4 text-center">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/25 text-[11px] text-rose-300 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-950/50 border border-purple-500/30 text-[11px] text-purple-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
                 <span>Window Expired</span>
               </div>
               <h3 className="text-base font-bold text-white pt-1">

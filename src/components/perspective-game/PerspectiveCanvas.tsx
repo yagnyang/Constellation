@@ -186,11 +186,11 @@ export default function PerspectiveCanvas({
         if (activeLineMeshRef.current) {
           const mat = activeLineMeshRef.current.material as THREE.LineBasicMaterial;
           if (solvedRef.current || acc >= 98) {
-            mat.color.setHex(0xf59e0b); // Radiant gold
+            mat.color.setHex(0xd8b4fe); // Radiant luminous purple
             mat.opacity = 1.0;
           } else {
-            // Smooth transition from faint starlight cyan (0.35) to bright cyan (0.9)
-            mat.color.setHex(0x38bdf8);
+            // Smooth transition from faint starlight purple (0.35) to bright purple (0.9)
+            mat.color.setHex(0xa855f7);
             mat.opacity = 0.25 + (acc / 100) * 0.65;
           }
         }
@@ -426,7 +426,7 @@ export default function PerspectiveCanvas({
       {/* Reticle guide overlay */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
         <div className="w-24 h-24 border border-white/10 rounded-full flex items-center justify-center">
-          <div className="w-1.5 h-1.5 bg-cyan-400/30 rounded-full" />
+          <div className="w-1.5 h-1.5 bg-purple-400/30 rounded-full" />
         </div>
       </div>
     </div>

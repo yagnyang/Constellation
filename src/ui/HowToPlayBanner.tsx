@@ -61,7 +61,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
       >
         {/* Glow ambient background accents */}
         <div className="absolute -top-32 -left-32 w-80 h-80 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-purple-900/20 rounded-full blur-3xl pointer-events-none" />
 
         {/* Top Header */}
         <div className="relative flex items-start justify-between pb-4 border-b border-purple-500/15 gap-4">
@@ -124,7 +124,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
 
             {/* Step 2 */}
             <div className="group relative p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-purple-500/15 hover:border-purple-500/35 transition-all flex gap-3.5 items-start">
-              <div className="w-9 h-9 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-300 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-900/40 border border-purple-500/30 text-purple-200 flex items-center justify-center shrink-0 mt-0.5">
                 <Eye className="w-4 h-4" />
               </div>
               <div className="space-y-1 flex-1">
@@ -132,7 +132,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                     2. Preview from Earth
                   </h3>
-                  <span className="text-[10px] font-mono font-bold text-blue-400/80 px-1.5 py-0.5 rounded bg-blue-500/10">
+                  <span className="text-[10px] font-mono font-bold text-purple-300/80 px-1.5 py-0.5 rounded bg-purple-500/10">
                     STEP 02
                   </span>
                 </div>
@@ -144,7 +144,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
 
             {/* Step 3 */}
             <div className="group relative p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-purple-500/15 hover:border-purple-500/35 transition-all flex gap-3.5 items-start">
-              <div className="w-9 h-9 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-800/40 border border-purple-400/30 text-purple-200 flex items-center justify-center shrink-0 mt-0.5">
                 <Rocket className="w-4 h-4" />
               </div>
               <div className="space-y-1 flex-1">
@@ -152,7 +152,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                     3. Warp into Deep Space
                   </h3>
-                  <span className="text-[10px] font-mono font-bold text-cyan-400/80 px-1.5 py-0.5 rounded bg-cyan-500/10">
+                  <span className="text-[10px] font-mono font-bold text-purple-300/80 px-1.5 py-0.5 rounded bg-purple-500/10">
                     STEP 03
                   </span>
                 </div>
@@ -165,14 +165,14 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
 
           {/* RIGHT COLUMN: Steps 4 to 6 (Puzzle & Alignment) */}
           <div className="space-y-3.5">
-            <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-300/70 flex items-center gap-2 pb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-purple-300/70 flex items-center gap-2 pb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
               <span>Phase 2 &bull; Puzzle & Alignment</span>
             </div>
 
             {/* Step 4 */}
             <div className="group relative p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-purple-500/15 hover:border-purple-500/35 transition-all flex gap-3.5 items-start">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-950/40 border border-purple-500/30 text-purple-300 flex items-center justify-center shrink-0 mt-0.5">
                 <RotateCw className="w-4 h-4" />
               </div>
               <div className="space-y-1 flex-1">
@@ -180,7 +180,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                     4. Rotate & Orbit
                   </h3>
-                  <span className="text-[10px] font-mono font-bold text-amber-400/80 px-1.5 py-0.5 rounded bg-amber-500/10">
+                  <span className="text-[10px] font-mono font-bold text-purple-300/80 px-1.5 py-0.5 rounded bg-purple-500/10">
                     STEP 04
                   </span>
                 </div>
@@ -192,7 +192,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
 
             {/* Step 5 */}
             <div className="group relative p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-purple-500/15 hover:border-purple-500/35 transition-all flex gap-3.5 items-start">
-              <div className="w-9 h-9 rounded-xl bg-fuchsia-500/15 border border-fuchsia-500/30 text-fuchsia-300 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-900/40 border border-purple-400/30 text-purple-200 flex items-center justify-center shrink-0 mt-0.5">
                 <Target className="w-4 h-4" />
               </div>
               <div className="space-y-1 flex-1">
@@ -200,7 +200,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                     5. Match the Target Silhouette
                   </h3>
-                  <span className="text-[10px] font-mono font-bold text-fuchsia-400/80 px-1.5 py-0.5 rounded bg-fuchsia-500/10">
+                  <span className="text-[10px] font-mono font-bold text-purple-300/80 px-1.5 py-0.5 rounded bg-purple-500/10">
                     STEP 05
                   </span>
                 </div>
@@ -212,7 +212,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
 
             {/* Step 6 */}
             <div className="group relative p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.05] border border-purple-500/15 hover:border-purple-500/35 transition-all flex gap-3.5 items-start">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-800/40 border border-purple-300/40 text-purple-100 flex items-center justify-center shrink-0 mt-0.5">
                 <CheckCircle2 className="w-4 h-4" />
               </div>
               <div className="space-y-1 flex-1">
@@ -220,7 +220,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
                   <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                     6. Lock In &amp; Celebrate
                   </h3>
-                  <span className="text-[10px] font-mono font-bold text-emerald-400/80 px-1.5 py-0.5 rounded bg-emerald-500/10">
+                  <span className="text-[10px] font-mono font-bold text-purple-300/80 px-1.5 py-0.5 rounded bg-purple-500/10">
                     STEP 06
                   </span>
                 </div>

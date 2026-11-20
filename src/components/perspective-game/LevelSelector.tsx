@@ -21,8 +21,8 @@ export default function LevelSelector({
         {/* Header */}
         <div className="p-5 border-b border-white/10 flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase tracking-widest">
-              <Compass className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-2 text-xs font-mono text-purple-300 uppercase tracking-widest">
+              <Compass className="w-4 h-4 text-purple-400" />
               Constellation Perspective Levels
             </div>
             <h2 className="text-xl font-bold text-white mt-0.5">Select Constellation Puzzle</h2>
@@ -48,21 +48,21 @@ export default function LevelSelector({
                 }}
                 className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                   isCurrent
-                    ? 'bg-amber-500/20 border-amber-400 shadow-lg shadow-amber-500/10'
-                    : 'bg-white/5 border-white/10 hover:border-cyan-400 hover:bg-white/10'
+                    ? 'bg-purple-900/40 border-purple-400 shadow-lg shadow-purple-500/20'
+                    : 'bg-white/5 border-purple-500/20 hover:border-purple-400 hover:bg-white/10'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-800">
+                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-black/40 text-purple-200 border border-purple-700/50">
                     LEVEL {idx + 1}
                   </span>
                   <span
                     className={`text-[10px] font-mono px-2 py-0.5 rounded ${
                       lvl.difficulty === 'Easy'
-                        ? 'text-emerald-400 bg-emerald-950/40'
+                        ? 'text-purple-300 bg-purple-950/40'
                         : lvl.difficulty === 'Medium'
-                        ? 'text-amber-400 bg-amber-950/40'
-                        : 'text-rose-400 bg-rose-950/40'
+                        ? 'text-purple-200 bg-purple-900/40'
+                        : 'text-purple-100 bg-purple-800/40'
                     }`}
                   >
                     {lvl.difficulty}

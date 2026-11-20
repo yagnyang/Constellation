@@ -113,7 +113,7 @@ export default function AladinSkyBackground({
             const geojson = await res.json();
             const overlay = window.A.graphicOverlay({
               name: 'Constellation Lines',
-              color: 'rgba(96, 165, 250, 0.75)', // Soft luminous sky blue
+              color: 'rgba(168, 85, 247, 0.75)', // Soft luminous purple
               lineWidth: 1.2,
             });
             aladin.addOverlay(overlay);

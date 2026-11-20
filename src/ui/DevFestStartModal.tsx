@@ -48,11 +48,11 @@ export const DevFestStartModal: React.FC<DevFestStartModalProps> = ({
       >
         {/* Glow backdrop accent */}
         <div className="absolute -top-24 -right-24 w-60 h-60 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-60 h-60 bg-purple-900/25 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
         <div className="relative space-y-2 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/40 text-[11px] font-semibold text-purple-200 tracking-wider uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/40 border border-purple-500/40 text-[11px] font-semibold text-purple-200 tracking-wider uppercase">
             <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
             <span>GDG DevFest Live Booth Challenge</span>
           </div>
@@ -67,31 +67,31 @@ export const DevFestStartModal: React.FC<DevFestStartModalProps> = ({
 
         {/* Rules Cards */}
         <div className="grid grid-cols-3 gap-2.5 text-center">
-          <div className="p-3 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 flex flex-col items-center justify-between shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-            <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 uppercase tracking-wide">
-              <Star className="w-3 h-3 fill-emerald-400" />
+          <div className="p-3 rounded-2xl bg-purple-950/40 border border-purple-500/30 flex flex-col items-center justify-between shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+            <div className="flex items-center gap-1 text-[11px] font-bold text-purple-300 uppercase tracking-wide">
+              <Star className="w-3 h-3 fill-purple-300" />
               <span>Easy</span>
             </div>
             <div className="text-xs text-white/50 my-1">2–5 stars</div>
-            <div className="text-sm font-extrabold text-emerald-300 font-mono">+2.5s</div>
+            <div className="text-sm font-extrabold text-purple-200 font-mono">+2.5s</div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-amber-950/30 border border-amber-500/30 flex flex-col items-center justify-between shadow-[0_0_15px_rgba(245,158,11,0.1)]">
-            <div className="flex items-center gap-1 text-[11px] font-bold text-amber-400 uppercase tracking-wide">
-              <Zap className="w-3 h-3 text-amber-400" />
+          <div className="p-3 rounded-2xl bg-purple-900/40 border border-purple-400/40 flex flex-col items-center justify-between shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+            <div className="flex items-center gap-1 text-[11px] font-bold text-purple-300 uppercase tracking-wide">
+              <Zap className="w-3 h-3 text-purple-300" />
               <span>Medium</span>
             </div>
             <div className="text-xs text-white/50 my-1">6–12 stars</div>
-            <div className="text-sm font-extrabold text-amber-300 font-mono">+4.0s</div>
+            <div className="text-sm font-extrabold text-purple-200 font-mono">+4.0s</div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-rose-950/30 border border-rose-500/30 flex flex-col items-center justify-between shadow-[0_0_15px_rgba(244,63,94,0.1)]">
-            <div className="flex items-center gap-1 text-[11px] font-bold text-rose-400 uppercase tracking-wide">
-              <Sparkles className="w-3 h-3 text-rose-400" />
+          <div className="p-3 rounded-2xl bg-purple-800/40 border border-purple-300/40 flex flex-col items-center justify-between shadow-[0_0_15px_rgba(168,85,247,0.25)]">
+            <div className="flex items-center gap-1 text-[11px] font-bold text-purple-200 uppercase tracking-wide">
+              <Sparkles className="w-3 h-3 text-purple-200" />
               <span>Hard</span>
             </div>
             <div className="text-xs text-white/50 my-1">13+ stars</div>
-            <div className="text-sm font-extrabold text-rose-300 font-mono">+6.0s</div>
+            <div className="text-sm font-extrabold text-purple-100 font-mono">+6.0s</div>
           </div>
         </div>
 
@@ -126,13 +126,13 @@ export const DevFestStartModal: React.FC<DevFestStartModalProps> = ({
                 className="w-full px-4 py-3.5 rounded-2xl bg-white/5 border border-purple-500/40 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all shadow-inner font-medium"
               />
             </div>
-            {error && <p className="text-xs text-rose-400 font-medium">{error}</p>}
+            {error && <p className="text-xs text-purple-300 font-medium">{error}</p>}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
             <button
               type="submit"
-              className="flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-[0_0_24px_rgba(168,85,247,0.4)] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+              className="flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-purple-700 via-purple-600 to-purple-800 hover:from-purple-600 hover:to-purple-700 text-white font-bold text-sm shadow-[0_0_24px_rgba(168,85,247,0.4)] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
               <span>ENTER ARENA & START</span>
               <ChevronRight className="w-4 h-4" />
@@ -143,7 +143,7 @@ export const DevFestStartModal: React.FC<DevFestStartModalProps> = ({
               onClick={onOpenLeaderboard}
               className="py-3 px-5 rounded-2xl bg-white/5 hover:bg-white/10 border border-purple-500/25 text-purple-200 text-xs font-semibold transition-all flex items-center justify-center gap-2"
             >
-              <Trophy className="w-4 h-4 text-amber-400" />
+              <Trophy className="w-4 h-4 text-purple-300" />
               <span>Leaderboard</span>
             </button>
           </div>

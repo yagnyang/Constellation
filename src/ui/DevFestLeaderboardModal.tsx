@@ -65,7 +65,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
         {/* Modal Top Bar */}
         <div className="flex items-center justify-between pb-4 border-b border-purple-500/20 relative">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
+            <div className="w-9 h-9 rounded-2xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
@@ -105,16 +105,16 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                 className={`relative rounded-2xl p-3 bg-zinc-900/60 border ${
                   top2.id === highlightId
                     ? 'border-purple-400 bg-purple-950/40 ring-1 ring-purple-400/50'
-                    : 'border-slate-400/30'
+                    : 'border-purple-500/30'
                 } flex flex-col items-center justify-end text-center`}
               >
-                <div className="w-7 h-7 rounded-full bg-slate-400/20 text-slate-300 font-bold text-xs flex items-center justify-center mb-1.5 border border-slate-400/40">
+                <div className="w-7 h-7 rounded-full bg-purple-900/40 text-purple-200 font-bold text-xs flex items-center justify-center mb-1.5 border border-purple-500/40">
                   2
                 </div>
                 <div className="text-xs font-bold text-white truncate max-w-full">
                   {top2.playerName}
                 </div>
-                <div className="text-base font-extrabold text-slate-200 font-mono mt-0.5">
+                <div className="text-base font-extrabold text-purple-200 font-mono mt-0.5">
                   {top2.score} <span className="text-[10px] text-white/50 font-normal">/ 88</span>
                 </div>
                 <div className="text-[10px] text-white/50 font-mono">
@@ -128,23 +128,23 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
             {/* 1st Place (Crown) */}
             {top1 ? (
               <div
-                className={`relative rounded-2xl p-3.5 bg-gradient-to-b from-amber-500/20 via-zinc-900/80 to-zinc-950 border ${
+                className={`relative rounded-2xl p-3.5 bg-gradient-to-b from-purple-800/40 via-zinc-900/80 to-zinc-950 border ${
                   top1.id === highlightId
-                    ? 'border-amber-400 ring-2 ring-amber-400/50'
-                    : 'border-amber-500/40'
-                } flex flex-col items-center justify-end text-center shadow-[0_0_25px_rgba(245,158,11,0.2)] -translate-y-1`}
+                    ? 'border-purple-400 ring-2 ring-purple-400/50'
+                    : 'border-purple-500/40'
+                } flex flex-col items-center justify-end text-center shadow-[0_0_25px_rgba(168,85,247,0.25)] -translate-y-1`}
               >
-                <Crown className="w-5 h-5 text-amber-400 animate-bounce mb-1" />
-                <div className="w-8 h-8 rounded-full bg-amber-500/30 text-amber-300 font-black text-sm flex items-center justify-center mb-1 border border-amber-500/50">
+                <Crown className="w-5 h-5 text-purple-300 animate-bounce mb-1" />
+                <div className="w-8 h-8 rounded-full bg-purple-600/30 text-purple-200 font-black text-sm flex items-center justify-center mb-1 border border-purple-400/50">
                   1
                 </div>
-                <div className="text-xs sm:text-sm font-black text-amber-200 truncate max-w-full">
+                <div className="text-xs sm:text-sm font-black text-purple-100 truncate max-w-full">
                   {top1.playerName}
                 </div>
-                <div className="text-lg font-black text-amber-300 font-mono">
-                  {top1.score} <span className="text-xs text-amber-400/60 font-normal">/ 88</span>
+                <div className="text-lg font-black text-purple-200 font-mono">
+                  {top1.score} <span className="text-xs text-purple-400/60 font-normal">/ 88</span>
                 </div>
-                <div className="text-[11px] text-amber-300/80 font-mono font-medium">
+                <div className="text-[11px] text-purple-300/80 font-mono font-medium">
                   {top1.totalTimeSec.toFixed(1)}s • {top1.avgAccuracy.toFixed(1)}%
                 </div>
               </div>
@@ -156,16 +156,16 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                 className={`relative rounded-2xl p-3 bg-zinc-900/60 border ${
                   top3.id === highlightId
                     ? 'border-purple-400 bg-purple-950/40 ring-1 ring-purple-400/50'
-                    : 'border-amber-700/30'
+                    : 'border-purple-800/30'
                 } flex flex-col items-center justify-end text-center`}
               >
-                <div className="w-7 h-7 rounded-full bg-amber-700/20 text-amber-600 font-bold text-xs flex items-center justify-center mb-1.5 border border-amber-700/40">
+                <div className="w-7 h-7 rounded-full bg-purple-950/40 text-purple-300 font-bold text-xs flex items-center justify-center mb-1.5 border border-purple-700/40">
                   3
                 </div>
                 <div className="text-xs font-bold text-white truncate max-w-full">
                   {top3.playerName}
                 </div>
-                <div className="text-base font-extrabold text-amber-600/90 font-mono mt-0.5">
+                <div className="text-base font-extrabold text-purple-300/90 font-mono mt-0.5">
                   {top3.score} <span className="text-[10px] text-white/50 font-normal">/ 88</span>
                 </div>
                 <div className="text-[10px] text-white/50 font-mono">
@@ -207,11 +207,11 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   {/* Rank */}
                   <span className="col-span-1 text-center font-mono font-bold">
                     {entry.rank === 1 ? (
-                      <span className="text-amber-400">1</span>
+                      <span className="text-purple-300">1</span>
                     ) : entry.rank === 2 ? (
-                      <span className="text-slate-300">2</span>
+                      <span className="text-purple-200">2</span>
                     ) : entry.rank === 3 ? (
-                      <span className="text-amber-600">3</span>
+                      <span className="text-purple-400">3</span>
                     ) : (
                       <span className="text-white/40">{entry.rank}</span>
                     )}
@@ -221,7 +221,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   <div className="col-span-4 flex items-center gap-1.5 truncate pr-2">
                     <span className="truncate font-medium text-white">{entry.playerName}</span>
                     {entry.isAllCleared && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold shrink-0">
+                      <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-900/40 text-purple-200 border border-purple-500/40 font-bold shrink-0">
                         MAX 88
                       </span>
                     )}
@@ -235,7 +235,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                     </span>
                     <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden mt-1">
                       <div
-                        className="h-full bg-gradient-to-r from-purple-500 to-indigo-400 rounded-full"
+                        className="h-full bg-gradient-to-r from-purple-700 to-purple-400 rounded-full"
                         style={{ width: `${Math.min(100, (entry.score / 88) * 100)}%` }}
                       />
                     </div>
@@ -247,7 +247,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   </span>
 
                   {/* Avg Accuracy */}
-                  <span className="col-span-2 text-right font-mono text-emerald-300 font-semibold">
+                  <span className="col-span-2 text-right font-mono text-purple-200 font-semibold">
                     {entry.avgAccuracy.toFixed(1)}%
                   </span>
                 </div>
@@ -260,10 +260,10 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
         <div className="pt-4 border-t border-purple-500/20 flex flex-col sm:flex-row items-center justify-between gap-3">
           {showClearConfirm ? (
             <div className="flex items-center gap-2">
-              <span className="text-xs text-rose-300 font-medium">Reset board?</span>
+              <span className="text-xs text-purple-300 font-medium">Reset board?</span>
               <button
                 onClick={handleClear}
-                className="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold"
+                className="px-2.5 py-1 rounded-lg bg-purple-700 hover:bg-purple-600 text-white text-xs font-semibold"
               >
                 Confirm Clear
               </button>
@@ -277,7 +277,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
           ) : (
             <button
               onClick={() => setShowClearConfirm(true)}
-              className="text-[11px] text-white/30 hover:text-rose-400 transition-colors flex items-center gap-1"
+              className="text-[11px] text-white/30 hover:text-purple-400 transition-colors flex items-center gap-1"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Reset Board</span>
@@ -298,7 +298,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
               }}
               className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-[0_0_18px_rgba(168,85,247,0.4)] flex items-center justify-center gap-1.5"
             >
-              <Flame className="w-4 h-4 text-amber-300" />
+              <Flame className="w-4 h-4 text-purple-300" />
               <span>NEW SESSION / PLAY</span>
             </button>
           </div>

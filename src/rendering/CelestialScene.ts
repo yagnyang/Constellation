@@ -472,7 +472,7 @@ export class CelestialScene {
       vertexShader: GHOST_GUIDE_LINE_VERTEX_SHADER,
       fragmentShader: GHOST_GUIDE_LINE_FRAGMENT_SHADER,
       uniforms: {
-        uColor: { value: new THREE.Color(0x38bdf8) }, // Starlight cyan
+        uColor: { value: new THREE.Color(0xa855f7) }, // Luminous celestial purple
         uOpacity: { value: 0.5 },
         uTime: { value: 0.0 },
         uAccuracy: { value: 0.0 },
@@ -813,11 +813,11 @@ export class CelestialScene {
 
       if (gameState === 'ALIGN_PUZZLE') {
         const alignRatio = Math.max(0, Math.min(1, accuracy / 100));
-        // Dynamic alignment color: Shifts from celestial purple/cyan to radiant warm gold
+        // Dynamic alignment color: Transitions within purple shades from deep purple to brilliant luminous violet-purple
         this.activeLinesMat.uniforms.uColor.value.setRGB(
-          0.55 + 0.45 * alignRatio,
-          0.35 + 0.55 * alignRatio,
-          0.98 - 0.75 * alignRatio
+          0.66 + 0.20 * alignRatio,
+          0.33 + 0.40 * alignRatio,
+          0.97 + 0.02 * alignRatio
         );
       } else {
         this.activeLinesMat.uniforms.uColor.value.setHex(0xa855f7);
@@ -892,7 +892,7 @@ export class CelestialScene {
         if (id === this.activeConstellationId) {
           mesh.visible = true;
           mat.opacity = gameState === 'RESOLVED' ? 0.92 : 0.70;
-          mat.color.setHex(gameState === 'RESOLVED' ? 0x67e8f9 : 0xc084fc);
+          mat.color.setHex(gameState === 'RESOLVED' ? 0xd8b4fe : 0xc084fc);
         } else {
           mesh.visible = false;
         }
@@ -906,7 +906,7 @@ export class CelestialScene {
         if (id === this.activeConstellationId) {
           mesh.visible = true;
           mat.opacity = 0.15 + 0.55 * alignRatio;
-          mat.color.setHex(alignRatio > 0.85 ? 0x67e8f9 : 0xc084fc);
+          mat.color.setHex(alignRatio > 0.85 ? 0xd8b4fe : 0xc084fc);
         } else {
           mesh.visible = false;
         }

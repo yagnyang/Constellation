@@ -680,7 +680,7 @@ export default function ConstellationAlignerApp() {
 
       {/* Error Screen */}
       {loadError && (
-        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black text-rose-300 p-6 text-center space-y-2">
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black text-purple-300 p-6 text-center space-y-2">
           <div className="text-sm font-semibold tracking-wide">
             Unable to load stellar data
           </div>

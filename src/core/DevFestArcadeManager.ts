@@ -19,10 +19,10 @@ export function getConstellationTierInfo(starCount: number): TierInfo {
       label: 'Easy',
       bonusSec: 2.5,
       starRange: '2–5 Stars',
-      badgeBg: 'bg-emerald-500/15',
-      badgeBorder: 'border-emerald-500/40',
-      badgeText: 'text-emerald-300',
-      glowColor: 'rgba(16,185,129,0.3)',
+      badgeBg: 'bg-purple-950/40',
+      badgeBorder: 'border-purple-600/40',
+      badgeText: 'text-purple-300',
+      glowColor: 'rgba(168,85,247,0.25)',
       bonusLabel: '+2.5s',
     };
   } else if (starCount <= 12) {
@@ -31,10 +31,10 @@ export function getConstellationTierInfo(starCount: number): TierInfo {
       label: 'Medium',
       bonusSec: 4.0,
       starRange: '6–12 Stars',
-      badgeBg: 'bg-amber-500/15',
-      badgeBorder: 'border-amber-500/40',
-      badgeText: 'text-amber-300',
-      glowColor: 'rgba(245,158,11,0.3)',
+      badgeBg: 'bg-purple-900/40',
+      badgeBorder: 'border-purple-500/50',
+      badgeText: 'text-purple-200',
+      glowColor: 'rgba(192,132,252,0.3)',
       bonusLabel: '+4.0s',
     };
   } else {
@@ -43,10 +43,10 @@ export function getConstellationTierInfo(starCount: number): TierInfo {
       label: 'Hard',
       bonusSec: 6.0,
       starRange: '13+ Stars',
-      badgeBg: 'bg-rose-500/15',
-      badgeBorder: 'border-rose-500/40',
-      badgeText: 'text-rose-300',
-      glowColor: 'rgba(244,63,94,0.35)',
+      badgeBg: 'bg-purple-800/40',
+      badgeBorder: 'border-purple-400/60',
+      badgeText: 'text-purple-100',
+      glowColor: 'rgba(216,180,254,0.35)',
       bonusLabel: '+6.0s',
     };
   }
