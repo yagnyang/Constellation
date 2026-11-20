@@ -7,7 +7,18 @@ import { CelestialScene } from '../rendering/CelestialScene';
 import { TelemetryHUD } from '../ui/TelemetryHUD';
 import { ConstellationSelector } from '../ui/ConstellationSelector';
 import { SettingsModal } from '../ui/SettingsModal';
+import { HowToPlayBanner } from '../ui/HowToPlayBanner';
 import { ControlSettings, loadControlSettings, saveControlSettings, DEFAULT_CONTROL_SETTINGS } from '../core/ControlSettings';
+import { DevFestStartModal } from '../ui/DevFestStartModal';
+import { DevFestLeaderboardModal } from '../ui/DevFestLeaderboardModal';
+import { DevFestGameOverModal } from '../ui/DevFestGameOverModal';
+import {
+  getConstellationTierInfo,
+  generateArcadeQueue,
+  saveLeaderboardEntry,
+  LeaderboardEntry,
+  SolvedConstellationRecord,
+} from '../core/DevFestArcadeManager';
 
 export default function ConstellationAlignerApp() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -36,6 +47,65 @@ export default function ConstellationAlignerApp() {
   const [showSkyPanorama, setShowSkyPanorama] = useState<boolean>(true);
   const [controlSettings, setControlSettings] = useState<ControlSettings>(loadControlSettings());
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [showHowToPlay, setShowHowToPlay] = useState<boolean>(false);
+
+  // DevFest Tournament State & Modals
+  const [isStartModalOpen, setIsStartModalOpen] = useState<boolean>(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState<boolean>(false);
+  const [isGameOverModalOpen, setIsGameOverModalOpen] = useState<boolean>(false);
+  const [highlightEntryId, setHighlightEntryId] = useState<string | undefined>(undefined);
+
+  const [isArcadeActive, setIsArcadeActive] = useState<boolean>(false);
+  const [arcadePlayerName, setArcadePlayerName] = useState<string>('Stargazer');
+  const [arcadeQueue, setArcadeQueue] = useState<string[]>([]);
+  const [arcadeIndex, setArcadeIndex] = useState<number>(0);
+  const [arcadeTimeBank, setArcadeTimeBank] = useState<number>(20.0);
+  const [arcadeTotalActiveTime, setArcadeTotalActiveTime] = useState<number>(0);
+  const [arcadeHistory, setArcadeHistory] = useState<SolvedConstellationRecord[]>([]);
+  const [arcadeBonusNotice, setArcadeBonusNotice] = useState<{ bonusSec: number; label: string } | null>(null);
+
+  const [gameOverEntry, setGameOverEntry] = useState<LeaderboardEntry | null>(null);
+  const [gameOverRank, setGameOverRank] = useState<number>(1);
+  const [isVictory, setIsVictory] = useState<boolean>(false);
+
+  // Mutable refs for persistent callbacks inside render loops & controller
+  const isArcadeActiveRef = useRef<boolean>(false);
+  const arcadePlayerNameRef = useRef<string>('Stargazer');
+  const arcadeQueueRef = useRef<string[]>([]);
+  const arcadeIndexRef = useRef<number>(0);
+  const arcadeTimeBankRef = useRef<number>(20.0);
+  const arcadeTotalActiveTimeRef = useRef<number>(0);
+  const arcadeHistoryRef = useRef<SolvedConstellationRecord[]>([]);
+  const bonusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Sync refs when states change
+  useEffect(() => {
+    isArcadeActiveRef.current = isArcadeActive;
+  }, [isArcadeActive]);
+
+  useEffect(() => {
+    arcadePlayerNameRef.current = arcadePlayerName;
+  }, [arcadePlayerName]);
+
+  useEffect(() => {
+    arcadeQueueRef.current = arcadeQueue;
+  }, [arcadeQueue]);
+
+  useEffect(() => {
+    arcadeIndexRef.current = arcadeIndex;
+  }, [arcadeIndex]);
+
+  useEffect(() => {
+    arcadeTimeBankRef.current = arcadeTimeBank;
+  }, [arcadeTimeBank]);
+
+  useEffect(() => {
+    arcadeTotalActiveTimeRef.current = arcadeTotalActiveTime;
+  }, [arcadeTotalActiveTime]);
+
+  useEffect(() => {
+    arcadeHistoryRef.current = arcadeHistory;
+  }, [arcadeHistory]);
 
   // 1. Load astronomical dataset
   useEffect(() => {
@@ -60,6 +130,14 @@ export default function ConstellationAlignerApp() {
           }
         } catch {}
 
+        // Check if user has seen how-to-play guide
+        try {
+          const seenGuide = localStorage.getItem('starc_has_seen_guide');
+          if (!seenGuide) {
+            setShowHowToPlay(true);
+          }
+        } catch {}
+
         setIsDataLoaded(true);
       } catch (err: unknown) {
         if (!isMounted) return;
@@ -74,6 +152,79 @@ export default function ConstellationAlignerApp() {
       isMounted = false;
     };
   }, []);
+
+  // Finish arcade session on game over / timeout
+  const handleGameOverArcade = useCallback(() => {
+    setIsArcadeActive(false);
+    isArcadeActiveRef.current = false;
+    controllerRef.current?.setFastDisplace(false);
+
+    const history = arcadeHistoryRef.current;
+    const score = history.length;
+    const totalTimeSec = +arcadeTotalActiveTimeRef.current.toFixed(1);
+
+    // Calculate refined average accuracy % & residual offset
+    const avgAccuracy =
+      score > 0
+        ? +(history.reduce((sum, h) => sum + h.accuracy, 0) / score).toFixed(2)
+        : 0;
+
+    const avgOffsetDeg =
+      score > 0
+        ? +(history.reduce((sum, h) => sum + h.alphaDeg, 0) / score).toFixed(2)
+        : 90.0;
+
+    const result = saveLeaderboardEntry({
+      playerName: arcadePlayerNameRef.current,
+      score,
+      totalConstellations: 88,
+      totalTimeSec,
+      avgAccuracy,
+      avgOffsetDeg,
+      isAllCleared: false,
+      history,
+    });
+
+    setGameOverEntry(result.entry);
+    setGameOverRank(result.rank);
+    setHighlightEntryId(result.entry.id);
+    setIsVictory(false);
+    setIsGameOverModalOpen(true);
+  }, []);
+
+  // Complete arcade session on conquering all 88 constellations!
+  const handleCompleteArcade = useCallback(
+    (history: SolvedConstellationRecord[], totalTimeSec: number) => {
+      setIsArcadeActive(false);
+      isArcadeActiveRef.current = false;
+      controllerRef.current?.setFastDisplace(false);
+
+      const avgAccuracy = +(
+        history.reduce((sum, h) => sum + h.accuracy, 0) / 88
+      ).toFixed(2);
+      const avgOffsetDeg = +(
+        history.reduce((sum, h) => sum + h.alphaDeg, 0) / 88
+      ).toFixed(2);
+
+      const result = saveLeaderboardEntry({
+        playerName: arcadePlayerNameRef.current,
+        score: 88,
+        totalConstellations: 88,
+        totalTimeSec: +totalTimeSec.toFixed(1),
+        avgAccuracy,
+        avgOffsetDeg,
+        isAllCleared: true,
+        history,
+      });
+
+      setGameOverEntry(result.entry);
+      setGameOverRank(result.rank);
+      setHighlightEntryId(result.entry.id);
+      setIsVictory(true);
+      setIsGameOverModalOpen(true);
+    },
+    []
+  );
 
   // 2. Initialize Three.js scene and OrbitalCameraController
   useEffect(() => {
@@ -121,6 +272,9 @@ export default function ConstellationAlignerApp() {
       },
       onTimerUpdate: (timeLeft) => {
         setTimerSec(timeLeft);
+        if (isArcadeActiveRef.current) {
+          arcadeTimeBankRef.current = timeLeft;
+        }
       },
       onSolved: (stats) => {
         setSolvedStats(stats);
@@ -137,9 +291,61 @@ export default function ConstellationAlignerApp() {
         if (norm) {
           scene.markConstellationSolved(norm);
         }
+
+        // If in DevFest Arcade Tournament Mode:
+        if (isArcadeActiveRef.current && norm) {
+          const tierInfo = getConstellationTierInfo(norm.starCount);
+          const bonus = tierInfo.bonusSec;
+
+          // Calculate remaining timer + reward bonus
+          const currentRemaining = controllerRef.current?.getPuzzleTimer() || 0;
+          const newBank = +(currentRemaining + bonus).toFixed(1);
+
+          controllerRef.current?.setCustomPuzzleTimer(newBank);
+          setTimerSec(newBank);
+          setArcadeTimeBank(newBank);
+          arcadeTimeBankRef.current = newBank;
+
+          const record: SolvedConstellationRecord = {
+            constellationId: stats.constellationId,
+            constellationName: stats.constellationName,
+            starCount: norm.starCount,
+            tier: tierInfo.tier,
+            timeSpentSec: stats.timeSpentSec,
+            accuracy: stats.finalAccuracy,
+            alphaDeg: stats.finalAlphaDeg,
+            bonusSec: bonus,
+          };
+
+          const newHistory = [...arcadeHistoryRef.current, record];
+          arcadeHistoryRef.current = newHistory;
+          setArcadeHistory(newHistory);
+
+          const newTotalTime = +(
+            arcadeTotalActiveTimeRef.current + stats.timeSpentSec
+          ).toFixed(1);
+          arcadeTotalActiveTimeRef.current = newTotalTime;
+          setArcadeTotalActiveTime(newTotalTime);
+
+          // Show floating visual bonus notification
+          setArcadeBonusNotice({ bonusSec: bonus, label: tierInfo.bonusLabel });
+          if (bonusTimeoutRef.current) clearTimeout(bonusTimeoutRef.current);
+          bonusTimeoutRef.current = setTimeout(() => {
+            setArcadeBonusNotice(null);
+          }, 2500);
+
+          // Check if solved all 88 constellations
+          if (newHistory.length >= 88) {
+            handleCompleteArcade(newHistory, newTotalTime);
+          }
+        }
       },
       onTimeout: () => {
-        setShowTimeoutModal(true);
+        if (isArcadeActiveRef.current) {
+          handleGameOverArcade();
+        } else {
+          setShowTimeoutModal(true);
+        }
       },
     });
 
@@ -207,6 +413,7 @@ export default function ConstellationAlignerApp() {
 
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      if (bonusTimeoutRef.current) clearTimeout(bonusTimeoutRef.current);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('pointerup', handleGlobalPointerUp);
       window.removeEventListener('pointercancel', handleGlobalPointerUp);
@@ -215,10 +422,9 @@ export default function ConstellationAlignerApp() {
       sceneRef.current = null;
       controllerRef.current = null;
     };
-  }, [isDataLoaded, constellationList]);
+  }, [isDataLoaded, constellationList, handleGameOverArcade, handleCompleteArcade]);
 
   // Pointer event handlers for 360 Earth gaze & orbital puzzle rotation
-  // Strict click-and-hold requirement: only active when mouse button or touch is physically held down
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     if (e.button !== 0 && e.buttons !== 1) return;
     try {
@@ -228,7 +434,6 @@ export default function ConstellationAlignerApp() {
   }, []);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
-    // If no button is held down (e.buttons === 0), cancel any active drag immediately!
     if (e.buttons === 0) {
       controllerRef.current?.handlePointerUp();
       return;
@@ -243,7 +448,7 @@ export default function ConstellationAlignerApp() {
     controllerRef.current?.handlePointerUp();
   }, []);
 
-  // Constellation selection
+  // Constellation selection (free explorer mode)
   const handleSelectConstellation = useCallback((id: string) => {
     controllerRef.current?.handlePointerUp();
     const norm = starDataManager.getNormalizedConstellation(id);
@@ -255,38 +460,143 @@ export default function ConstellationAlignerApp() {
     setIsCatalogOpen(false);
   }, []);
 
+  // Start DevFest Arcade Speedrun Tournament
+  const handleStartArcade = useCallback(
+    (playerName: string) => {
+      setIsStartModalOpen(false);
+      setIsLeaderboardOpen(false);
+      setIsGameOverModalOpen(false);
+      setShowTimeoutModal(false);
+      setSolvedStats(null);
+
+      // 1. Generate progressive 88-constellation queue (Easy -> Medium -> Hard)
+      const queue = generateArcadeQueue(constellationList);
+      setArcadeQueue(queue);
+      arcadeQueueRef.current = queue;
+
+      setArcadeIndex(0);
+      arcadeIndexRef.current = 0;
+
+      setArcadePlayerName(playerName);
+      arcadePlayerNameRef.current = playerName;
+
+      setArcadeHistory([]);
+      arcadeHistoryRef.current = [];
+
+      setArcadeTotalActiveTime(0);
+      arcadeTotalActiveTimeRef.current = 0;
+
+      setArcadeBonusNotice(null);
+      setIsVictory(false);
+
+      setIsArcadeActive(true);
+      isArcadeActiveRef.current = true;
+
+      // 2. Set fast displace mode & initial 20.0s time bank
+      controllerRef.current?.setFastDisplace(true);
+      controllerRef.current?.setCustomPuzzleTimer(20.0);
+      setTimerSec(20.0);
+      setArcadeTimeBank(20.0);
+      arcadeTimeBankRef.current = 20.0;
+
+      // 3. Load first constellation from queue
+      const firstId = queue[0];
+      const norm = starDataManager.getNormalizedConstellation(firstId);
+      if (norm && sceneRef.current && controllerRef.current) {
+        setActiveConstellation(norm);
+        sceneRef.current.setActiveConstellation(norm);
+        controllerRef.current.selectConstellation(norm, true);
+      }
+    },
+    [constellationList]
+  );
+
   // Next constellation action
   const handleNextConstellation = useCallback(() => {
-    if (!activeConstellation || constellationList.length === 0) return;
+    if (isArcadeActiveRef.current) {
+      const queue = arcadeQueueRef.current;
+      const nextIndex = arcadeIndexRef.current + 1;
 
-    // Find next constellation in catalog
-    const currentIndex = constellationList.findIndex((c) => c.id === activeConstellation.id);
-    const nextIndex = (currentIndex + 1) % constellationList.length;
-    const nextRaw = constellationList[nextIndex];
+      if (nextIndex < queue.length) {
+        setArcadeIndex(nextIndex);
+        arcadeIndexRef.current = nextIndex;
 
-    handleSelectConstellation(nextRaw.id);
-  }, [activeConstellation, constellationList, handleSelectConstellation]);
+        // Carry over remaining time bank into next puzzle
+        controllerRef.current?.setCustomPuzzleTimer(arcadeTimeBankRef.current);
+
+        const nextId = queue[nextIndex];
+        const norm = starDataManager.getNormalizedConstellation(nextId);
+        if (norm && sceneRef.current && controllerRef.current) {
+          setActiveConstellation(norm);
+          sceneRef.current.setActiveConstellation(norm);
+          controllerRef.current.selectConstellation(norm, true);
+        }
+      } else {
+        // Conquered all 88 constellations!
+        handleCompleteArcade(arcadeHistoryRef.current, arcadeTotalActiveTimeRef.current);
+      }
+    } else {
+      // Free Explorer mode: cycle next
+      if (!activeConstellation || constellationList.length === 0) return;
+      const currentIndex = constellationList.findIndex((c) => c.id === activeConstellation.id);
+      const nextIndex = (currentIndex + 1) % constellationList.length;
+      const nextRaw = constellationList[nextIndex];
+      handleSelectConstellation(nextRaw.id);
+    }
+  }, [
+    activeConstellation,
+    constellationList,
+    handleSelectConstellation,
+    handleCompleteArcade,
+  ]);
+
+  // Spacebar hotkey to rapidly advance upon solve in arcade tournament
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && gameState === 'RESOLVED') {
+        e.preventDefault();
+        handleNextConstellation();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [gameState, handleNextConstellation]);
+
+  // Auto-advance after 2.5s on solve in arcade tournament mode
+  useEffect(() => {
+    if (gameState === 'RESOLVED' && isArcadeActive) {
+      const autoAdvanceTimer = setTimeout(() => {
+        handleNextConstellation();
+      }, 2500);
+      return () => clearTimeout(autoAdvanceTimer);
+    }
+  }, [gameState, isArcadeActive, handleNextConstellation]);
 
   // Return to Earth Hub
   const handleReturnToEarthHub = useCallback(() => {
-    controllerRef.current?.transitionTo('EARTH_HUB');
-    setShowTimeoutModal(false);
-    setSolvedStats(null);
-  }, []);
+    if (isArcadeActiveRef.current) {
+      // Forfeiting active arcade run
+      handleGameOverArcade();
+    } else {
+      controllerRef.current?.transitionTo('EARTH_HUB');
+      setShowTimeoutModal(false);
+      setSolvedStats(null);
+    }
+  }, [handleGameOverArcade]);
 
-  // Retry orbit on timeout
+  // Retry orbit on timeout (free explorer mode)
   const handleRetryOrbit = useCallback(() => {
     setShowTimeoutModal(false);
     controllerRef.current?.retryOrbit();
   }, []);
 
-  // Auto-align on timeout
+  // Auto-align on timeout (free explorer mode)
   const handleAutoAlign = useCallback(() => {
     setShowTimeoutModal(false);
     controllerRef.current?.autoAlignToEarth();
   }, []);
 
-  // Sky View All-Constellation Lines & Art Toggle
+  // Sky View Lines Toggle
   const handleToggleAllLines = useCallback(() => {
     setShowAllLines((prev) => {
       const next = !prev;
@@ -296,7 +606,7 @@ export default function ConstellationAlignerApp() {
     });
   }, []);
 
-  // Sky View Art Toggle (independent control)
+  // Sky View Art Toggle
   const handleToggleArt = useCallback(() => {
     setShowArt((prev) => {
       const next = !prev;
@@ -378,7 +688,7 @@ export default function ConstellationAlignerApp() {
         </div>
       )}
 
-      {/* Stealth Telemetry HUD */}
+      {/* Telemetry HUD */}
       {isDataLoaded && (
         <TelemetryHUD
           state={gameState}
@@ -406,11 +716,20 @@ export default function ConstellationAlignerApp() {
           onRetryOrbit={handleRetryOrbit}
           onAutoAlign={handleAutoAlign}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenHowToPlay={() => setShowHowToPlay(true)}
+          // DevFest Arcade Tournament Props
+          isArcadeActive={isArcadeActive}
+          arcadePlayerName={arcadePlayerName}
+          arcadeStage={arcadeIndex + 1}
+          arcadeTotalSolved={arcadeHistory.length}
+          arcadeBonusNotice={arcadeBonusNotice}
+          onOpenLeaderboard={() => setIsLeaderboardOpen(true)}
+          onStartArcadeChallenge={() => setIsStartModalOpen(true)}
         />
       )}
 
-      {/* Earth Hub Constellation Catalog Selector */}
-      {isDataLoaded && gameState === 'EARTH_HUB' && (
+      {/* Earth Hub Constellation Catalog Selector (in non-arcade mode) */}
+      {isDataLoaded && gameState === 'EARTH_HUB' && !isArcadeActive && (
         <ConstellationSelector
           constellations={constellationList}
           activeId={activeConstellation?.id || null}
@@ -428,6 +747,54 @@ export default function ConstellationAlignerApp() {
         settings={controlSettings}
         onUpdateSettings={handleUpdateControlSettings}
         onResetSettings={handleResetControlSettings}
+      />
+
+      {/* How to Play Banner (6-Step Directive) */}
+      <HowToPlayBanner
+        isOpen={showHowToPlay}
+        onClose={() => setShowHowToPlay(false)}
+      />
+
+      {/* DevFest Arcade Start Registration Modal */}
+      <DevFestStartModal
+        isOpen={isStartModalOpen}
+        onClose={() => setIsStartModalOpen(false)}
+        onStart={handleStartArcade}
+        onOpenLeaderboard={() => {
+          setIsStartModalOpen(false);
+          setIsLeaderboardOpen(true);
+        }}
+      />
+
+      {/* DevFest Tournament Leaderboard Modal */}
+      <DevFestLeaderboardModal
+        isOpen={isLeaderboardOpen}
+        onClose={() => setIsLeaderboardOpen(false)}
+        onStartNewGame={() => {
+          setIsLeaderboardOpen(false);
+          setIsStartModalOpen(true);
+        }}
+        highlightId={highlightEntryId}
+      />
+
+      {/* DevFest Game Over / Session Complete Modal */}
+      <DevFestGameOverModal
+        isOpen={isGameOverModalOpen}
+        entry={gameOverEntry}
+        rank={gameOverRank}
+        isVictory={isVictory}
+        onViewLeaderboard={() => {
+          setIsGameOverModalOpen(false);
+          setIsLeaderboardOpen(true);
+        }}
+        onPlayAgain={() => {
+          setIsGameOverModalOpen(false);
+          setIsStartModalOpen(true);
+        }}
+        onReturnToSky={() => {
+          setIsGameOverModalOpen(false);
+          controllerRef.current?.transitionTo('EARTH_HUB');
+        }}
       />
     </div>
   );

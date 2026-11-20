@@ -52,6 +52,9 @@ export class OrbitalCameraController {
   // Timers and Animation Tweens
   private stateElapsedTimeMs: number = 0;
   private puzzleTimerSec: number = 20.0;
+  private puzzleStartTimeSec: number = 20.0;
+  private customPuzzleTimerSec: number | null = null;
+  private isFastDisplace: boolean = false;
   private isTimerRunning: boolean = false;
 
   // Slerp / Transition caches
@@ -106,6 +109,29 @@ export class OrbitalCameraController {
 
   public getPuzzleTimer(): number {
     return Math.max(0, this.puzzleTimerSec);
+  }
+
+  public setCustomPuzzleTimer(seconds: number) {
+    this.customPuzzleTimerSec = seconds;
+    if (this.state === 'ALIGN_PUZZLE') {
+      this.puzzleTimerSec = seconds;
+      this.callbacks.onTimerUpdate?.(Math.max(0, this.puzzleTimerSec));
+    }
+  }
+
+  public addBonusTime(seconds: number) {
+    this.puzzleTimerSec += seconds;
+    this.callbacks.onTimerUpdate?.(Math.max(0, this.puzzleTimerSec));
+  }
+
+  public setFastDisplace(enabled: boolean) {
+    this.isFastDisplace = enabled;
+  }
+
+  public skipPreview() {
+    if (this.state === 'PREVIEW') {
+      this.transitionTo('DISPLACE');
+    }
   }
 
   public getAlignmentMetrics(): { alpha: number; accuracy: number; lineOpacity: number; dimFactor: number } {
@@ -210,7 +236,13 @@ export class OrbitalCameraController {
       this.animTargetTheta = targetTheta;
       this.animTargetPhi = targetPhi;
     } else if (nextState === 'ALIGN_PUZZLE') {
-      this.puzzleTimerSec = 20.0;
+      if (this.customPuzzleTimerSec !== null) {
+        this.puzzleTimerSec = this.customPuzzleTimerSec;
+        this.customPuzzleTimerSec = null;
+      } else {
+        this.puzzleTimerSec = 20.0;
+      }
+      this.puzzleStartTimeSec = this.puzzleTimerSec;
       this.isTimerRunning = true;
       this.orbitTargetTheta = this.orbitTheta;
       this.orbitTargetPhi = this.orbitPhi;
@@ -231,7 +263,7 @@ export class OrbitalCameraController {
         this.callbacks.onSolved({
           constellationId: this.activeConstellation.id,
           constellationName: this.activeConstellation.name,
-          timeSpentSec: Math.max(0.1, +(20.0 - this.puzzleTimerSec).toFixed(1)),
+          timeSpentSec: Math.max(0.1, +(this.puzzleStartTimeSec - this.puzzleTimerSec).toFixed(1)),
           finalAccuracy: +this.currentAccuracy.toFixed(1),
           finalAlphaDeg: +this.currentAlpha.toFixed(1),
           distMin: this.activeConstellation.distMin,
@@ -321,8 +353,9 @@ export class OrbitalCameraController {
     this.currentAlpha = 0.0;
     this.currentAccuracy = 100.0;
 
-    // After 2500ms preview, transition to DISPLACE
-    if (this.stateElapsedTimeMs >= 2500) {
+    // After preview (1200ms in fast mode, 2500ms in standard), transition to DISPLACE
+    const previewDuration = this.isFastDisplace ? 1200 : 2500;
+    if (this.stateElapsedTimeMs >= previewDuration) {
       this.transitionTo('DISPLACE');
     }
   }
@@ -331,7 +364,7 @@ export class OrbitalCameraController {
   private updateDisplaceState(_deltaSec: number) {
     if (!this.activeConstellation) return;
 
-    const displaceDuration = 1500;
+    const displaceDuration = this.isFastDisplace ? 800 : 1500;
     const progress = Math.min(1.0, this.stateElapsedTimeMs / displaceDuration);
     const t = easeInOutCubic(progress);
 
