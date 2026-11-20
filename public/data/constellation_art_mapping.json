@@ -1,0 +1,1850 @@
+{
+  "And": {
+    "id": "And",
+    "name": "Andromeda",
+    "english": "Andromeda",
+    "artFile": "andromeda.png",
+    "artUrl": "/sky_art-1/andromeda.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 29180
+    },
+    "direction": [
+      0.7731,
+      0.1143,
+      0.6239
+    ],
+    "brightestStar": "Mirach"
+  },
+  "Ant": {
+    "id": "Ant",
+    "name": "Antlia",
+    "english": "Air\u2005Pump",
+    "artFile": "antlia.png",
+    "artUrl": "/sky_art-1/antlia.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 9334
+    },
+    "direction": [
+      -0.7385,
+      0.3532,
+      -0.5743
+    ],
+    "brightestStar": "Alp Ant"
+  },
+  "Aps": {
+    "id": "Aps",
+    "name": "Apus",
+    "english": "Bird\u2005of\u2005Paradise",
+    "artFile": "apus.png",
+    "artUrl": "/sky_art-1/apus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 10839
+    },
+    "direction": [
+      -0.0916,
+      -0.1721,
+      -0.9808
+    ],
+    "brightestStar": "Paradys"
+  },
+  "Aqr": {
+    "id": "Aqr",
+    "name": "Aquarius",
+    "english": "Aquarius",
+    "artFile": "aquarius.png",
+    "artUrl": "/sky_art-1/aquarius.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 43176
+    },
+    "direction": [
+      0.9029,
+      -0.4048,
+      -0.1446
+    ],
+    "brightestStar": "Sadalsuud"
+  },
+  "Aql": {
+    "id": "Aql",
+    "name": "Aquila",
+    "english": "Eagle",
+    "artFile": "aquila.png",
+    "artUrl": "/sky_art-1/aquila.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 35935
+    },
+    "direction": [
+      0.4183,
+      -0.9045,
+      0.0836
+    ],
+    "brightestStar": "Altair"
+  },
+  "Ara": {
+    "id": "Ara",
+    "name": "Ara",
+    "english": "Altar",
+    "artFile": "ara.png",
+    "artUrl": "/sky_art-1/ara.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 13745
+    },
+    "direction": [
+      -0.1101,
+      -0.5501,
+      -0.8278
+    ],
+    "brightestStar": "Alp Ara"
+  },
+  "Ari": {
+    "id": "Ari",
+    "name": "Aries",
+    "english": "Ram",
+    "artFile": "aries.png",
+    "artUrl": "/sky_art-1/aries.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 30182
+    },
+    "direction": [
+      0.7757,
+      0.498,
+      0.3876
+    ],
+    "brightestStar": "Hamal"
+  },
+  "Aur": {
+    "id": "Aur",
+    "name": "Auriga",
+    "english": "Charioteer",
+    "artFile": "auriga.png",
+    "artUrl": "/sky_art-1/auriga.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 57787
+    },
+    "direction": [
+      0.1171,
+      0.7414,
+      0.6607
+    ],
+    "brightestStar": "Capella"
+  },
+  "Boo": {
+    "id": "Boo",
+    "name": "Bo\u00f6tes",
+    "english": "Herdsman",
+    "artFile": "bootes.png",
+    "artUrl": "/sky_art-1/bootes.png",
+    "historicalNote": "Bo\u00f6tes normalized to bootes.png.",
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 36561
+    },
+    "direction": [
+      -0.674,
+      -0.5074,
+      0.5369
+    ],
+    "brightestStar": "Arcturus"
+  },
+  "Cae": {
+    "id": "Cae",
+    "name": "Caelum",
+    "english": "Graving\u2005tool",
+    "artFile": "caelum.png",
+    "artUrl": "/sky_art-1/caelum.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 7211
+    },
+    "direction": [
+      0.2465,
+      0.7265,
+      -0.6415
+    ],
+    "brightestStar": "Alp Cae"
+  },
+  "Cam": {
+    "id": "Cam",
+    "name": "Camelopardalis",
+    "english": "Giraffe",
+    "artFile": "camelopardalis.png",
+    "artUrl": "/sky_art-1/camelopardalis.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 8194
+    },
+    "direction": [
+      0.1277,
+      0.3822,
+      0.9152
+    ],
+    "brightestStar": "Bet Cam"
+  },
+  "Cnc": {
+    "id": "Cnc",
+    "name": "Cancer",
+    "english": "Crab",
+    "artFile": "cancer.png",
+    "artUrl": "/sky_art-1/cancer.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 12396
+    },
+    "direction": [
+      -0.6172,
+      0.7242,
+      0.3076
+    ],
+    "brightestStar": "Tarf"
+  },
+  "CVn": {
+    "id": "CVn",
+    "name": "Canes Venatici",
+    "english": "Hunting\u2005Dogs",
+    "artFile": "canes_venatici.png",
+    "artUrl": "/sky_art-1/canes_venatici.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 11587
+    },
+    "direction": [
+      -0.7527,
+      -0.1501,
+      0.641
+    ],
+    "brightestStar": "Chara"
+  },
+  "CMa": {
+    "id": "CMa",
+    "name": "Canis Major",
+    "english": "Great\u2005Dog",
+    "artFile": "canis_major.png",
+    "artUrl": "/sky_art-1/canis_major.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 27199
+    },
+    "direction": [
+      -0.2168,
+      0.8986,
+      -0.3814
+    ],
+    "brightestStar": "Sirius"
+  },
+  "CMi": {
+    "id": "CMi",
+    "name": "Canis Minor",
+    "english": "Little\u2005Dog",
+    "artFile": "canis_minor.png",
+    "artUrl": "/sky_art-1/canis_minor.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 24562
+    },
+    "direction": [
+      -0.393,
+      0.912,
+      0.1177
+    ],
+    "brightestStar": "Procyon"
+  },
+  "Cap": {
+    "id": "Cap",
+    "name": "Capricornus",
+    "english": "Capricorn",
+    "artFile": "capricornus.png",
+    "artUrl": "/sky_art-1/capricornus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 41969
+    },
+    "direction": [
+      0.6714,
+      -0.6673,
+      -0.3225
+    ],
+    "brightestStar": "Deneb Algedi"
+  },
+  "Car": {
+    "id": "Car",
+    "name": "Carina",
+    "english": "Keel",
+    "artFile": "carina.png",
+    "artUrl": "/sky_art-1/carina.png",
+    "historicalNote": "Historically part of Argo Navis (Keel). Mapped to carina.png (and argonavis.png).",
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 52573
+    },
+    "direction": [
+      -0.3721,
+      0.3085,
+      -0.8754
+    ],
+    "brightestStar": "Canopus"
+  },
+  "Cas": {
+    "id": "Cas",
+    "name": "Cassiopeia",
+    "english": "Cassiopeia",
+    "artFile": "cassiopeia.png",
+    "artUrl": "/sky_art-1/cassiopeia.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 44222
+    },
+    "direction": [
+      0.478,
+      0.1267,
+      0.8692
+    ],
+    "brightestStar": "Cih"
+  },
+  "Cen": {
+    "id": "Cen",
+    "name": "Centaurus",
+    "english": "Centaur",
+    "artFile": "centaurus.png",
+    "artUrl": "/sky_art-1/centaurus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 33573
+    },
+    "direction": [
+      -0.6022,
+      -0.2312,
+      -0.7642
+    ],
+    "brightestStar": "Hadar"
+  },
+  "Cep": {
+    "id": "Cep",
+    "name": "Cepheus",
+    "english": "Cepheus",
+    "artFile": "cepheus.png",
+    "artUrl": "/sky_art-1/cepheus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 40144
+    },
+    "direction": [
+      0.3706,
+      -0.2358,
+      0.8984
+    ],
+    "brightestStar": "Alderamin"
+  },
+  "Cet": {
+    "id": "Cet",
+    "name": "Cetus",
+    "english": "Whale",
+    "artFile": "cetus.png",
+    "artUrl": "/sky_art-1/cetus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 41780
+    },
+    "direction": [
+      0.8568,
+      0.5139,
+      -0.0429
+    ],
+    "brightestStar": "Diphda"
+  },
+  "Cha": {
+    "id": "Cha",
+    "name": "Chamaeleon",
+    "english": "Chamaeleon",
+    "artFile": "chamaeleon.png",
+    "artUrl": "/sky_art-1/chamaeleon.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 10777
+    },
+    "direction": [
+      -0.1722,
+      0.0594,
+      -0.9833
+    ],
+    "brightestStar": "Alp Cha"
+  },
+  "Cir": {
+    "id": "Cir",
+    "name": "Circinus",
+    "english": "Compass",
+    "artFile": "circinus.png",
+    "artUrl": "/sky_art-1/circinus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 7254
+    },
+    "direction": [
+      -0.3274,
+      -0.3554,
+      -0.8755
+    ],
+    "brightestStar": "Xami"
+  },
+  "Col": {
+    "id": "Col",
+    "name": "Columba",
+    "english": "Dove",
+    "artFile": "columba.png",
+    "artUrl": "/sky_art-1/columba.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 27363
+    },
+    "direction": [
+      0.0261,
+      0.8045,
+      -0.5933
+    ],
+    "brightestStar": "Phact"
+  },
+  "Com": {
+    "id": "Com",
+    "name": "Coma Berenices",
+    "english": "Berenice's\u2005Hair",
+    "artFile": "coma_berenices.png",
+    "artUrl": "/sky_art-1/coma_berenices.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 29048
+    },
+    "direction": [
+      -0.8812,
+      -0.2225,
+      0.4171
+    ],
+    "brightestStar": "Bet Com"
+  },
+  "CrA": {
+    "id": "CrA",
+    "name": "Corona Austrina",
+    "english": "Southern\u2005Crown",
+    "artFile": "corona_austrina.png",
+    "artUrl": "/sky_art-1/corona_austrina.png",
+    "historicalNote": "Corona Austrina mapped to corona_austrina.png (canonical corona_australis.png).",
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 30110
+    },
+    "direction": [
+      0.1987,
+      -0.7398,
+      -0.6429
+    ],
+    "brightestStar": "Bet CrA"
+  },
+  "CrB": {
+    "id": "CrB",
+    "name": "Corona Borealis",
+    "english": "Northern\u2005Crown",
+    "artFile": "corona_borealis.png",
+    "artUrl": "/sky_art-1/corona_borealis.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 16900
+    },
+    "direction": [
+      -0.4938,
+      -0.7313,
+      0.4706
+    ],
+    "brightestStar": "Alphecca"
+  },
+  "Crv": {
+    "id": "Crv",
+    "name": "Corvus",
+    "english": "Crow",
+    "artFile": "corvus.png",
+    "artUrl": "/sky_art-1/corvus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 13062
+    },
+    "direction": [
+      -0.9302,
+      -0.0805,
+      -0.3581
+    ],
+    "brightestStar": "Gienah"
+  },
+  "Crt": {
+    "id": "Crt",
+    "name": "Crater",
+    "english": "Cup",
+    "artFile": "crater.png",
+    "artUrl": "/sky_art-1/crater.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 14822
+    },
+    "direction": [
+      -0.9486,
+      0.1381,
+      -0.2847
+    ],
+    "brightestStar": "Del Crt"
+  },
+  "Cru": {
+    "id": "Cru",
+    "name": "Crux",
+    "english": "Cross",
+    "artFile": "crux.png",
+    "artUrl": "/sky_art-1/crux.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 11048
+    },
+    "direction": [
+      -0.5002,
+      -0.0662,
+      -0.8634
+    ],
+    "brightestStar": "Acrux"
+  },
+  "Cyg": {
+    "id": "Cyg",
+    "name": "Cygnus",
+    "english": "Swan",
+    "artFile": "cygnus.png",
+    "artUrl": "/sky_art-1/cygnus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 29252
+    },
+    "direction": [
+      0.4053,
+      -0.6403,
+      0.6525
+    ],
+    "brightestStar": "Deneb"
+  },
+  "Del": {
+    "id": "Del",
+    "name": "Delphinus",
+    "english": "Dolphin",
+    "artFile": "delphinus.png",
+    "artUrl": "/sky_art-1/delphinus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 19622
+    },
+    "direction": [
+      0.6223,
+      -0.7411,
+      0.2522
+    ],
+    "brightestStar": "Rotanev"
+  },
+  "Dor": {
+    "id": "Dor",
+    "name": "Dorado",
+    "english": "Goldfish",
+    "artFile": "dorado.png",
+    "artUrl": "/sky_art-1/dorado.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 10536
+    },
+    "direction": [
+      0.1178,
+      0.493,
+      -0.862
+    ],
+    "brightestStar": "Alp Dor"
+  },
+  "Dra": {
+    "id": "Dra",
+    "name": "Draco",
+    "english": "Dragon",
+    "artFile": "draco.png",
+    "artUrl": "/sky_art-1/draco.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 43164
+    },
+    "direction": [
+      -0.1222,
+      -0.3822,
+      0.9159
+    ],
+    "brightestStar": "Eltanin"
+  },
+  "Equ": {
+    "id": "Equ",
+    "name": "Equuleus",
+    "english": "Colt",
+    "artFile": "equuleus.png",
+    "artUrl": "/sky_art-1/equuleus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 13578
+    },
+    "direction": [
+      0.7395,
+      -0.6568,
+      0.1472
+    ],
+    "brightestStar": "Kitalpha"
+  },
+  "Eri": {
+    "id": "Eri",
+    "name": "Eridanus",
+    "english": "Eridanus",
+    "artFile": "eridanus.png",
+    "artUrl": "/sky_art-1/eridanus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 22399
+    },
+    "direction": [
+      0.533,
+      0.7194,
+      -0.4453
+    ],
+    "brightestStar": "Achernar"
+  },
+  "For": {
+    "id": "For",
+    "name": "Fornax",
+    "english": "Furnace",
+    "artFile": "fornax.png",
+    "artUrl": "/sky_art-1/fornax.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 26003
+    },
+    "direction": [
+      0.6561,
+      0.5597,
+      -0.5063
+    ],
+    "brightestStar": "Dalim"
+  },
+  "Gem": {
+    "id": "Gem",
+    "name": "Gemini",
+    "english": "Twins",
+    "artFile": "gemini.png",
+    "artUrl": "/sky_art-1/gemini.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 18325
+    },
+    "direction": [
+      -0.2468,
+      0.8859,
+      0.3927
+    ],
+    "brightestStar": "Pollux"
+  },
+  "Gru": {
+    "id": "Gru",
+    "name": "Grus",
+    "english": "Crane",
+    "artFile": "grus.png",
+    "artUrl": "/sky_art-1/grus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 11640
+    },
+    "direction": [
+      0.6474,
+      -0.2863,
+      -0.7063
+    ],
+    "brightestStar": "Alnair"
+  },
+  "Her": {
+    "id": "Her",
+    "name": "Hercules",
+    "english": "Hercules",
+    "artFile": "hercules.png",
+    "artUrl": "/sky_art-1/hercules.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 43187
+    },
+    "direction": [
+      -0.2099,
+      -0.8119,
+      0.5448
+    ],
+    "brightestStar": "Kornephoros"
+  },
+  "Hor": {
+    "id": "Hor",
+    "name": "Horologium",
+    "english": "Clock",
+    "artFile": "horologium.png",
+    "artUrl": "/sky_art-1/horologium.png",
+    "historicalNote": "Horologium mapped to horologium.png (original file horlogium.png).",
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 25588
+    },
+    "direction": [
+      0.4021,
+      0.422,
+      -0.8126
+    ],
+    "brightestStar": "Alp Hor"
+  },
+  "Hya": {
+    "id": "Hya",
+    "name": "Hydra",
+    "english": "Sea\u2005Serpent",
+    "artFile": "hydra.png",
+    "artUrl": "/sky_art-1/hydra.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 35348
+    },
+    "direction": [
+      -0.8808,
+      0.4315,
+      -0.1947
+    ],
+    "brightestStar": "Alphard"
+  },
+  "Hyi": {
+    "id": "Hyi",
+    "name": "Hydrus",
+    "english": "Hydrus",
+    "artFile": "hydrus.png",
+    "artUrl": "/sky_art-1/hydrus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 7321
+    },
+    "direction": [
+      0.2845,
+      0.1878,
+      -0.9401
+    ],
+    "brightestStar": "Bet Hyi"
+  },
+  "Ind": {
+    "id": "Ind",
+    "name": "Indus",
+    "english": "Indian",
+    "artFile": "indus.png",
+    "artUrl": "/sky_art-1/indus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 30184
+    },
+    "direction": [
+      0.4315,
+      -0.4105,
+      -0.8033
+    ],
+    "brightestStar": "Alp Ind"
+  },
+  "Lac": {
+    "id": "Lac",
+    "name": "Lacerta",
+    "english": "Lizard",
+    "artFile": "lacerta.png",
+    "artUrl": "/sky_art-1/lacerta.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 23311
+    },
+    "direction": [
+      0.6398,
+      -0.2802,
+      0.7156
+    ],
+    "brightestStar": "Stellio"
+  },
+  "Leo": {
+    "id": "Leo",
+    "name": "Leo",
+    "english": "Lion",
+    "artFile": "leo.png",
+    "artUrl": "/sky_art-1/leo.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 32902
+    },
+    "direction": [
+      -0.8751,
+      0.3515,
+      0.3326
+    ],
+    "brightestStar": "Regulus"
+  },
+  "LMi": {
+    "id": "LMi",
+    "name": "Leo Minor",
+    "english": "Little\u2005Lion",
+    "artFile": "leo_minor.png",
+    "artUrl": "/sky_art-1/leo_minor.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 11860
+    },
+    "direction": [
+      -0.7353,
+      0.3508,
+      0.58
+    ],
+    "brightestStar": "Praecipua"
+  },
+  "Lep": {
+    "id": "Lep",
+    "name": "Lepus",
+    "english": "Hare",
+    "artFile": "lepus.png",
+    "artUrl": "/sky_art-1/lepus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 14328
+    },
+    "direction": [
+      0.1066,
+      0.9484,
+      -0.2987
+    ],
+    "brightestStar": "Arneb"
+  },
+  "Lib": {
+    "id": "Lib",
+    "name": "Libra",
+    "english": "Balance",
+    "artFile": "libra.png",
+    "artUrl": "/sky_art-1/libra.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 10659
+    },
+    "direction": [
+      -0.601,
+      -0.7174,
+      -0.3523
+    ],
+    "brightestStar": "Zubeneschamali"
+  },
+  "Lup": {
+    "id": "Lup",
+    "name": "Lupus",
+    "english": "Wolf",
+    "artFile": "lupus.png",
+    "artUrl": "/sky_art-1/lupus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 26820
+    },
+    "direction": [
+      -0.4587,
+      -0.5917,
+      -0.6629
+    ],
+    "brightestStar": "Uridim"
+  },
+  "Lyn": {
+    "id": "Lyn",
+    "name": "Lynx",
+    "english": "Lynx",
+    "artFile": "lynx.png",
+    "artUrl": "/sky_art-1/lynx.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 25636
+    },
+    "direction": [
+      -0.3854,
+      0.5588,
+      0.7343
+    ],
+    "brightestStar": "Alp Lyn"
+  },
+  "Lyr": {
+    "id": "Lyr",
+    "name": "Lyra",
+    "english": "Lyre",
+    "artFile": "lyra.png",
+    "artUrl": "/sky_art-1/lyra.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 11604
+    },
+    "direction": [
+      0.1687,
+      -0.7859,
+      0.5949
+    ],
+    "brightestStar": "Vega"
+  },
+  "Men": {
+    "id": "Men",
+    "name": "Mensa",
+    "english": "Mensa",
+    "artFile": "mensa.png",
+    "artUrl": "/sky_art-1/mensa.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 32720
+    },
+    "direction": [
+      0.0423,
+      0.2646,
+      -0.9634
+    ],
+    "brightestStar": "Hoerikwaggo"
+  },
+  "Mic": {
+    "id": "Mic",
+    "name": "Microscopium",
+    "english": "Microscope",
+    "artFile": "microscopium.png",
+    "artUrl": "/sky_art-1/microscopium.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 22241
+    },
+    "direction": [
+      0.5768,
+      -0.5578,
+      -0.5969
+    ],
+    "brightestStar": "Gam Mic"
+  },
+  "Mon": {
+    "id": "Mon",
+    "name": "Monoceros",
+    "english": "Unicorn",
+    "artFile": "monoceros.png",
+    "artUrl": "/sky_art-1/monoceros.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 31882
+    },
+    "direction": [
+      -0.2352,
+      0.9719,
+      -0.0042
+    ],
+    "brightestStar": "Bet Mon"
+  },
+  "Mus": {
+    "id": "Mus",
+    "name": "Musca",
+    "english": "Fly",
+    "artFile": "musca.png",
+    "artUrl": "/sky_art-1/musca.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 33231
+    },
+    "direction": [
+      -0.3494,
+      -0.0441,
+      -0.9359
+    ],
+    "brightestStar": "Alp Mus"
+  },
+  "Nor": {
+    "id": "Nor",
+    "name": "Norma",
+    "english": "Level",
+    "artFile": "norma.png",
+    "artUrl": "/sky_art-1/norma.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 7537
+    },
+    "direction": [
+      -0.298,
+      -0.5983,
+      -0.7438
+    ],
+    "brightestStar": "Gam-2 Nor"
+  },
+  "Oct": {
+    "id": "Oct",
+    "name": "Octans",
+    "english": "Octant",
+    "artFile": "octans.png",
+    "artUrl": "/sky_art-1/octans.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 28312
+    },
+    "direction": [
+      0.0784,
+      -0.0798,
+      -0.9937
+    ],
+    "brightestStar": "Nu Oct"
+  },
+  "Oph": {
+    "id": "Oph",
+    "name": "Ophiuchus",
+    "english": "Ophiuchus",
+    "artFile": "ophiuchus.png",
+    "artUrl": "/sky_art-1/ophiuchus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 35799
+    },
+    "direction": [
+      -0.2632,
+      -0.9511,
+      -0.1614
+    ],
+    "brightestStar": "Rasalhague"
+  },
+  "Ori": {
+    "id": "Ori",
+    "name": "Orion",
+    "english": "Orion",
+    "artFile": "orion.png",
+    "artUrl": "/sky_art-1/orion.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 41095
+    },
+    "direction": [
+      0.1469,
+      0.9816,
+      0.1216
+    ],
+    "brightestStar": "Rigel"
+  },
+  "Pav": {
+    "id": "Pav",
+    "name": "Pavo",
+    "english": "Peacock",
+    "artFile": "pavo.png",
+    "artUrl": "/sky_art-1/pavo.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 24119
+    },
+    "direction": [
+      0.1501,
+      -0.3754,
+      -0.9146
+    ],
+    "brightestStar": "Peacock"
+  },
+  "Peg": {
+    "id": "Peg",
+    "name": "Pegasus",
+    "english": "Pegasus",
+    "artFile": "pegasus.png",
+    "artUrl": "/sky_art-1/pegasus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 33947
+    },
+    "direction": [
+      0.8822,
+      -0.3061,
+      0.3579
+    ],
+    "brightestStar": "Enif"
+  },
+  "Per": {
+    "id": "Per",
+    "name": "Perseus",
+    "english": "Perseus",
+    "artFile": "perseus.png",
+    "artUrl": "/sky_art-1/perseus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 51300
+    },
+    "direction": [
+      0.4445,
+      0.5473,
+      0.7091
+    ],
+    "brightestStar": "Mirfak"
+  },
+  "Phe": {
+    "id": "Phe",
+    "name": "Phoenix",
+    "english": "Phoenix",
+    "artFile": "phoenix.png",
+    "artUrl": "/sky_art-1/phoenix.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 17236
+    },
+    "direction": [
+      0.6566,
+      0.1684,
+      -0.7352
+    ],
+    "brightestStar": "Ankaa"
+  },
+  "Pic": {
+    "id": "Pic",
+    "name": "Pictor",
+    "english": "Painter",
+    "artFile": "pictor.png",
+    "artUrl": "/sky_art-1/pictor.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 11097
+    },
+    "direction": [
+      -0.0129,
+      0.5507,
+      -0.8346
+    ],
+    "brightestStar": "Alp Pic"
+  },
+  "Psc": {
+    "id": "Psc",
+    "name": "Pisces",
+    "english": "Fishes",
+    "artFile": "pisces.png",
+    "artUrl": "/sky_art-1/pisces.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 52817
+    },
+    "direction": [
+      0.9724,
+      0.1627,
+      0.1674
+    ],
+    "brightestStar": "Alpherg"
+  },
+  "PsA": {
+    "id": "PsA",
+    "name": "Piscis Austrinus",
+    "english": "Southern\u2005Fish",
+    "artFile": "piscis_austrinus.png",
+    "artUrl": "/sky_art-1/piscis_austrinus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 12235
+    },
+    "direction": [
+      0.7834,
+      -0.3341,
+      -0.5241
+    ],
+    "brightestStar": "Fomalhaut"
+  },
+  "Pup": {
+    "id": "Pup",
+    "name": "Puppis",
+    "english": "Poop\u2005Deck",
+    "artFile": "puppis.png",
+    "artUrl": "/sky_art-1/puppis.png",
+    "historicalNote": "Historically part of Argo Navis (Poop\u2005Deck). Mapped to puppis.png (and argonavis.png).",
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 52573
+    },
+    "direction": [
+      -0.3694,
+      0.7642,
+      -0.5287
+    ],
+    "brightestStar": "Gam-2 Pup"
+  },
+  "Pyx": {
+    "id": "Pyx",
+    "name": "Pyxis",
+    "english": "Compass",
+    "artFile": "pyxis.png",
+    "artUrl": "/sky_art-1/pyxis.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 18557
+    },
+    "direction": [
+      -0.519,
+      0.6448,
+      -0.5611
+    ],
+    "brightestStar": "Naos"
+  },
+  "Ret": {
+    "id": "Ret",
+    "name": "Reticulum",
+    "english": "Net",
+    "artFile": "reticulum.png",
+    "artUrl": "/sky_art-1/reticulum.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 9635
+    },
+    "direction": [
+      0.2271,
+      0.4103,
+      -0.8832
+    ],
+    "brightestStar": "Rhombus"
+  },
+  "Sge": {
+    "id": "Sge",
+    "name": "Sagitta",
+    "english": "Arrow",
+    "artFile": "sagitta.png",
+    "artUrl": "/sky_art-1/sagitta.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 4501
+    },
+    "direction": [
+      0.4263,
+      -0.8478,
+      0.3155
+    ],
+    "brightestStar": "Gam Sge"
+  },
+  "Sgr": {
+    "id": "Sgr",
+    "name": "Sagittarius",
+    "english": "Archer",
+    "artFile": "sagittarius.png",
+    "artUrl": "/sky_art-1/sagittarius.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 33662
+    },
+    "direction": [
+      0.2431,
+      -0.8501,
+      -0.4672
+    ],
+    "brightestStar": "Kaus Australis"
+  },
+  "Sco": {
+    "id": "Sco",
+    "name": "Scorpius",
+    "english": "Scorpion",
+    "artFile": "scorpius.png",
+    "artUrl": "/sky_art-1/scorpius.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 38820
+    },
+    "direction": [
+      -0.255,
+      -0.7925,
+      -0.5539
+    ],
+    "brightestStar": "Antares"
+  },
+  "Scl": {
+    "id": "Scl",
+    "name": "Sculptor",
+    "english": "Sculptor",
+    "artFile": "sculptor.png",
+    "artUrl": "/sky_art-1/sculptor.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 13799
+    },
+    "direction": [
+      0.8449,
+      -0.0166,
+      -0.5347
+    ],
+    "brightestStar": "Alp Scl"
+  },
+  "Sct": {
+    "id": "Sct",
+    "name": "Scutum",
+    "english": "Shield",
+    "artFile": "scutum.png",
+    "artUrl": "/sky_art-1/scutum.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 22049
+    },
+    "direction": [
+      0.1652,
+      -0.9733,
+      -0.1591
+    ],
+    "brightestStar": "Alp Sct"
+  },
+  "Ser": {
+    "id": "Ser",
+    "name": "Serpens Cauda",
+    "english": "Serpent",
+    "artFile": "ophiuchus.png",
+    "artUrl": "/sky_art-1/ophiuchus.png",
+    "historicalNote": "Serpent entwined with Ophiuchus.",
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 35799
+    },
+    "direction": [
+      0.0095,
+      -0.99,
+      -0.1405
+    ],
+    "brightestStar": "Sabik"
+  },
+  "Sex": {
+    "id": "Sex",
+    "name": "Sextans",
+    "english": "Sextant",
+    "artFile": "sextans.png",
+    "artUrl": "/sky_art-1/sextans.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 12176
+    },
+    "direction": [
+      -0.8959,
+      0.4413,
+      -0.0518
+    ],
+    "brightestStar": "Alp Sex"
+  },
+  "Tau": {
+    "id": "Tau",
+    "name": "Taurus",
+    "english": "Bull",
+    "artFile": "taurus.png",
+    "artUrl": "/sky_art-1/taurus.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 30557
+    },
+    "direction": [
+      0.4162,
+      0.8739,
+      0.2512
+    ],
+    "brightestStar": "Aldebaran"
+  },
+  "Tel": {
+    "id": "Tel",
+    "name": "Telescopium",
+    "english": "Telescope",
+    "artFile": "telescopium.png",
+    "artUrl": "/sky_art-1/telescopium.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 3637
+    },
+    "direction": [
+      0.066,
+      -0.6786,
+      -0.7315
+    ],
+    "brightestStar": "Alp Tel"
+  },
+  "Tri": {
+    "id": "Tri",
+    "name": "Triangulum",
+    "english": "Triangle",
+    "artFile": "triangulum.png",
+    "artUrl": "/sky_art-1/triangulum.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "RGB",
+      "bytes": 4278
+    },
+    "direction": [
+      0.7156,
+      0.4404,
+      0.5422
+    ],
+    "brightestStar": "Bet Tri"
+  },
+  "TrA": {
+    "id": "TrA",
+    "name": "Triangulum Australe",
+    "english": "Southern\u2005Triangle",
+    "artFile": "triangulum_australe.png",
+    "artUrl": "/sky_art-1/triangulum_australe.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 128,
+      "height": 128,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 3201
+    },
+    "direction": [
+      -0.1927,
+      -0.3345,
+      -0.9225
+    ],
+    "brightestStar": "Atria"
+  },
+  "Tuc": {
+    "id": "Tuc",
+    "name": "Tucana",
+    "english": "Toucan",
+    "artFile": "tucana.png",
+    "artUrl": "/sky_art-1/tucana.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 6617
+    },
+    "direction": [
+      0.4431,
+      -0.0632,
+      -0.8943
+    ],
+    "brightestStar": "Lang-Exster"
+  },
+  "UMa": {
+    "id": "UMa",
+    "name": "Ursa Major",
+    "english": "Big\u2005Dipper",
+    "artFile": "ursa_major.png",
+    "artUrl": "/sky_art-1/ursa_major.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 28437
+    },
+    "direction": [
+      -0.5821,
+      0.1712,
+      0.7949
+    ],
+    "brightestStar": "Alioth"
+  },
+  "UMi": {
+    "id": "UMi",
+    "name": "Ursa Minor",
+    "english": "Little\u2005Dipper",
+    "artFile": "ursa_minor.png",
+    "artUrl": "/sky_art-1/ursa_minor.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 9042
+    },
+    "direction": [
+      -0.0958,
+      -0.1444,
+      0.9849
+    ],
+    "brightestStar": "Polaris"
+  },
+  "Vel": {
+    "id": "Vel",
+    "name": "Vela",
+    "english": "Sails",
+    "artFile": "vela.png",
+    "artUrl": "/sky_art-1/vela.png",
+    "historicalNote": "Historically part of Argo Navis (Sails). Mapped to vela.png (and argonavis.png).",
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 52573
+    },
+    "direction": [
+      -0.52,
+      0.4003,
+      -0.7545
+    ],
+    "brightestStar": "Gam-2 Vel"
+  },
+  "Vir": {
+    "id": "Vir",
+    "name": "Virgo",
+    "english": "Virgin",
+    "artFile": "virgo.png",
+    "artUrl": "/sky_art-1/virgo.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 512,
+      "height": 512,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 42158
+    },
+    "direction": [
+      -0.945,
+      -0.327,
+      -0.0069
+    ],
+    "brightestStar": "Spica"
+  },
+  "Vol": {
+    "id": "Vol",
+    "name": "Volans",
+    "english": "Flying\u2005Fish",
+    "artFile": "volans.png",
+    "artUrl": "/sky_art-1/volans.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 5273
+    },
+    "direction": [
+      -0.1889,
+      0.3185,
+      -0.9289
+    ],
+    "brightestStar": "Bet Vol"
+  },
+  "Vul": {
+    "id": "Vul",
+    "name": "Vulpecula",
+    "english": "Little\u2005Fox",
+    "artFile": "vulpecula.png",
+    "artUrl": "/sky_art-1/vulpecula.png",
+    "historicalNote": null,
+    "imageInfo": {
+      "width": 256,
+      "height": 256,
+      "aspectRatio": 1.0,
+      "mode": "L",
+      "bytes": 11241
+    },
+    "direction": [
+      0.406,
+      -0.8083,
+      0.4264
+    ],
+    "brightestStar": "Anser"
+  }
+}
