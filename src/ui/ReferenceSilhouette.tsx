@@ -54,20 +54,35 @@ export const ReferenceSilhouette: React.FC<ReferenceSilhouetteProps> = ({
 
           {/* Ethereal Constellation Artwork Overlay */}
           {constellation.art?.url && (
-            <image
-              href={constellation.art.url}
-              x={size * 0.05}
-              y={size * 0.05}
-              width={size * 0.9}
-              height={size * 0.9}
-              preserveAspectRatio="xMidYMid meet"
-              opacity="0.28"
-              className="transition-opacity duration-500"
-              style={{
-                filter: 'brightness(1.4) drop-shadow(0 0 10px rgba(192, 132, 252, 0.45))',
-                mixBlendMode: 'screen',
-              }}
-            />
+            constellation.art.svgMatrix ? (
+              <image
+                href={constellation.art.url}
+                width={constellation.art.width || 512}
+                height={constellation.art.height || 512}
+                transform={`matrix(${constellation.art.svgMatrix.a * size}, ${constellation.art.svgMatrix.b * size}, ${constellation.art.svgMatrix.c * size}, ${constellation.art.svgMatrix.d * size}, ${constellation.art.svgMatrix.e * size}, ${constellation.art.svgMatrix.f * size})`}
+                opacity="0.32"
+                className="transition-opacity duration-500"
+                style={{
+                  filter: 'brightness(1.4) drop-shadow(0 0 10px rgba(192, 132, 252, 0.45))',
+                  mixBlendMode: 'screen',
+                }}
+              />
+            ) : (
+              <image
+                href={constellation.art.url}
+                x={size * 0.05}
+                y={size * 0.05}
+                width={size * 0.9}
+                height={size * 0.9}
+                preserveAspectRatio="xMidYMid meet"
+                opacity="0.28"
+                className="transition-opacity duration-500"
+                style={{
+                  filter: 'brightness(1.4) drop-shadow(0 0 10px rgba(192, 132, 252, 0.45))',
+                  mixBlendMode: 'screen',
+                }}
+              />
+            )
           )}
 
           {/* Stick-figure connection lines */}

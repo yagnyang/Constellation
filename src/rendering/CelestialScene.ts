@@ -564,44 +564,41 @@ export class CelestialScene {
       const texture = this.textureLoader.load(artUrl);
       texture.colorSpace = THREE.SRGBColorSpace;
 
-      const { pivotDir, basis, bounds2D } = c;
-      const { r, v } = basis;
+      let meshGeo: THREE.BufferGeometry;
+      const meshPos = new THREE.Vector3(0, 0, 0);
+      const meshQuat = new THREE.Quaternion();
 
-      // Constellation span and center
-      const maxSpan = bounds2D ? bounds2D.maxSpan : 0.4;
-      const centerU = bounds2D ? bounds2D.centerU : 0.0;
-      const centerV = bounds2D ? bounds2D.centerV : 0.0;
+      if (c.art?.affine) {
+        // Mathematically exact alignment anchored to Stellarium reference stars
+        meshGeo = this.createConstellationArtGeometry(c.art.affine, R, 8);
+      } else {
+        // Fallback to bounding box approximation
+        const { pivotDir, basis, bounds2D } = c;
+        const { r, v } = basis;
 
-      const planeSize = Math.max(16.0, maxSpan * R * 1.35);
-      const planeGeo = new THREE.PlaneGeometry(planeSize, planeSize);
+        const maxSpan = bounds2D ? bounds2D.maxSpan : 0.4;
+        const centerU = bounds2D ? bounds2D.centerU : 0.0;
+        const centerV = bounds2D ? bounds2D.centerV : 0.0;
 
-      // Spherical center direction for the constellation bounding box
-      const centerDir = pivotDir.clone()
-        .addScaledVector(r, centerU)
-        .addScaledVector(v, centerV)
-        .normalize();
-      const planePos = centerDir.clone().multiplyScalar(R);
+        const planeSize = Math.max(16.0, maxSpan * R * 1.35);
+        meshGeo = new THREE.PlaneGeometry(planeSize, planeSize);
 
-      // Tangent plane orientation facing Earth (0, 0, 0):
-      // Normal vector facing Earth
-      const N = centerDir.clone().negate().normalize();
+        const centerDir = pivotDir.clone()
+          .addScaledVector(r, centerU)
+          .addScaledVector(v, centerV)
+          .normalize();
+        meshPos.copy(centerDir.clone().multiplyScalar(R));
 
-      // Tangent Up vector pointing towards North Celestial Pole along local meridian
-      let nPole = new THREE.Vector3(0, 0, 1);
-      if (Math.abs(nPole.dot(N)) > 0.98) {
-        nPole = new THREE.Vector3(0, 1, 0);
+        const N = centerDir.clone().negate().normalize();
+        let nPole = new THREE.Vector3(0, 0, 1);
+        if (Math.abs(nPole.dot(N)) > 0.98) {
+          nPole = new THREE.Vector3(0, 1, 0);
+        }
+        const U = nPole.clone().sub(N.clone().multiplyScalar(nPole.dot(N))).normalize();
+        const R_tan = new THREE.Vector3().crossVectors(centerDir, U).normalize();
+        const rotMatrix = new THREE.Matrix4().makeBasis(R_tan, U, N);
+        meshQuat.setFromRotationMatrix(rotMatrix);
       }
-      const U = nPole.clone().sub(N.clone().multiplyScalar(nPole.dot(N))).normalize();
-
-      // Tangent Right vector pointing West (Observer's screen right)
-      const R_tan = new THREE.Vector3().crossVectors(centerDir, U).normalize();
-
-      // Orthonormal tangent basis for Three.js PlaneGeometry:
-      // Local +X -> R_tan (Right)
-      // Local +Y -> U (Up)
-      // Local +Z -> N (Normal facing Earth)
-      const rotMatrix = new THREE.Matrix4().makeBasis(R_tan, U, N);
-      const quaternion = new THREE.Quaternion().setFromRotationMatrix(rotMatrix);
 
       const mat = new THREE.MeshBasicMaterial({
         map: texture,
@@ -613,14 +610,70 @@ export class CelestialScene {
         color: new THREE.Color(0xa78bfa), // Celestial starlight violet
       });
 
-      const mesh = new THREE.Mesh(planeGeo, mat);
-      mesh.position.copy(planePos);
-      mesh.quaternion.copy(quaternion);
+      const mesh = new THREE.Mesh(meshGeo, mat);
+      mesh.position.copy(meshPos);
+      mesh.quaternion.copy(meshQuat);
       mesh.renderOrder = 2;
 
       this.constellationArtGroup.add(mesh);
       this.allArtMeshes.set(c.id, mesh);
     }
+  }
+
+  /**
+   * Generates a curved spherical quad mesh conforming to the celestial sphere of radius R,
+   * mapped mathematically using the 3-anchor affine alignment from Stellarium.
+   */
+  private createConstellationArtGeometry(
+    affine: { p0: [number, number, number]; du: [number, number, number]; dv: [number, number, number] },
+    R: number = 98.2,
+    segments: number = 8
+  ): THREE.BufferGeometry {
+    const p0 = new THREE.Vector3(...affine.p0);
+    const du = new THREE.Vector3(...affine.du);
+    const dv = new THREE.Vector3(...affine.dv);
+
+    const positions: number[] = [];
+    const uvs: number[] = [];
+    const indices: number[] = [];
+
+    const N = segments;
+    for (let j = 0; j <= N; j++) {
+      const v = j / N;
+      for (let i = 0; i <= N; i++) {
+        const u = i / N;
+        // Point on tangent affine plane
+        const px = p0.x + u * du.x + v * dv.x;
+        const py = p0.y + u * du.y + v * dv.y;
+        const pz = p0.z + u * du.z + v * dv.z;
+        const len = Math.sqrt(px * px + py * py + pz * pz) || 1.0;
+
+        // Project directly onto celestial sphere of radius R
+        positions.push((px / len) * R, (py / len) * R, (pz / len) * R);
+        uvs.push(u, v);
+      }
+    }
+
+    const rowStride = N + 1;
+    for (let j = 0; j < N; j++) {
+      for (let i = 0; i < N; i++) {
+        const v00 = j * rowStride + i;
+        const v10 = j * rowStride + (i + 1);
+        const v01 = (j + 1) * rowStride + i;
+        const v11 = (j + 1) * rowStride + (i + 1);
+
+        // Two triangles covering the quad cell
+        indices.push(v00, v10, v11);
+        indices.push(v00, v11, v01);
+      }
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    return geo;
   }
 
   public replayAllLinesAnimation() {

@@ -19,12 +19,38 @@ export interface RawLine {
   p2: [number, number, number];
 }
 
+export interface ConstellationArtAffine {
+  p0: [number, number, number];
+  du: [number, number, number];
+  dv: [number, number, number];
+}
+
+export interface ConstellationArtAnchor {
+  hip: number;
+  name: string;
+  pos: [number, number];
+  uv: [number, number];
+  ray: [number, number, number];
+}
+
+export interface ConstellationArtSvgMatrix {
+  a: number;
+  b: number;
+  c: number;
+  d: number;
+  e: number;
+  f: number;
+}
+
 export interface ConstellationArtMeta {
   filename: string;
   url: string;
-  note?: string;
+  note?: string | null;
   width?: number;
   height?: number;
+  affine?: ConstellationArtAffine;
+  anchors?: ConstellationArtAnchor[];
+  svgMatrix?: ConstellationArtSvgMatrix;
 }
 
 export interface RawConstellation {

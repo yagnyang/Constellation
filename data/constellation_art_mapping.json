@@ -3,1848 +3,7744 @@
     "id": "And",
     "name": "Andromeda",
     "english": "Andromeda",
-    "artFile": "andromeda.png",
-    "artUrl": "/sky_art-1/andromeda.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 29180
+    "filename": "andromeda.png",
+    "url": "/sky_art-1/andromeda.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.480351,
+        0.364218,
+        0.897455
+      ],
+      "du": [
+        0.247407,
+        0.223382,
+        -0.475669
+      ],
+      "dv": [
+        0.275896,
+        -0.496567,
+        -0.09724
+      ]
     },
-    "direction": [
-      0.7731,
-      0.1143,
-      0.6239
+    "anchors": [
+      {
+        "hip": 3881,
+        "name": "Nu",
+        "pos": [
+          198,
+          215
+        ],
+        "uv": [
+          0.38672,
+          0.58008
+        ],
+        "ray": [
+          0.736069,
+          0.162556,
+          0.657098
+        ]
+      },
+      {
+        "hip": 3092,
+        "name": "Del",
+        "pos": [
+          337,
+          136
+        ],
+        "uv": [
+          0.6582,
+          0.73438
+        ],
+        "ray": [
+          0.845806,
+          0.146582,
+          0.512957
+        ]
+      },
+      {
+        "hip": 9640,
+        "name": "Almach",
+        "pos": [
+          224,
+          428
+        ],
+        "uv": [
+          0.4375,
+          0.16406
+        ],
+        "ray": [
+          0.633856,
+          0.38048,
+          0.673396
+        ]
+      }
     ],
-    "brightestStar": "Mirach"
+    "svgMatrix": {
+      "a": -0.00042635,
+      "b": 0.00131708,
+      "c": -0.00126203,
+      "d": -0.0004929,
+      "e": 0.786627,
+      "f": 0.24977
+    }
   },
   "Ant": {
     "id": "Ant",
     "name": "Antlia",
     "english": "Air\u2005Pump",
-    "artFile": "antlia.png",
-    "artUrl": "/sky_art-1/antlia.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 9334
+    "filename": "antlia.png",
+    "url": "/sky_art-1/antlia.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        -0.734119,
+        0.3123,
+        -0.614413
+      ],
+      "du": [
+        0.13702,
+        0.284136,
+        0.031895
+      ],
+      "dv": [
+        -0.166934,
+        0.047769,
+        0.283242
+      ]
     },
-    "direction": [
-      -0.7385,
-      0.3532,
-      -0.5743
+    "anchors": [
+      {
+        "hip": 51172,
+        "name": "Alp",
+        "pos": [
+          4,
+          84
+        ],
+        "uv": [
+          0.03125,
+          0.34375
+        ],
+        "ray": [
+          -0.787221,
+          0.3376,
+          -0.516052
+        ]
+      },
+      {
+        "hip": 47758,
+        "name": "The",
+        "pos": [
+          72,
+          69
+        ],
+        "uv": [
+          0.5625,
+          0.46094
+        ],
+        "ray": [
+          -0.733992,
+          0.494145,
+          -0.465915
+        ]
+      },
+      {
+        "hip": 48926,
+        "name": "Eta",
+        "pos": [
+          42,
+          120
+        ],
+        "uv": [
+          0.32812,
+          0.0625
+        ],
+        "ray": [
+          -0.699593,
+          0.408518,
+          -0.586245
+        ]
+      }
     ],
-    "brightestStar": "Alp Ant"
+    "svgMatrix": {
+      "a": 0.00590841,
+      "b": -0.00038357,
+      "c": 0.00053746,
+      "d": 0.00628625,
+      "e": 0.300668,
+      "f": -0.160201
+    }
   },
   "Aps": {
     "id": "Aps",
     "name": "Apus",
     "english": "Bird\u2005of\u2005Paradise",
-    "artFile": "apus.png",
-    "artUrl": "/sky_art-1/apus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 10839
+    "filename": "apus.png",
+    "url": "/sky_art-1/apus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.054573,
+        -0.075985,
+        -1.018619
+      ],
+      "du": [
+        -0.229825,
+        0.099682,
+        0.012067
+      ],
+      "dv": [
+        -0.086874,
+        -0.200877,
+        0.05113
+      ]
     },
-    "direction": [
-      -0.0916,
-      -0.1721,
-      -0.9808
+    "anchors": [
+      {
+        "hip": 81852,
+        "name": "Bet",
+        "pos": [
+          66,
+          60
+        ],
+        "uv": [
+          0.25781,
+          0.76562
+        ],
+        "ray": [
+          -0.071191,
+          -0.204082,
+          -0.976362
+        ]
+      },
+      {
+        "hip": 81065,
+        "name": "Gam",
+        "pos": [
+          76,
+          87
+        ],
+        "uv": [
+          0.29688,
+          0.66016
+        ],
+        "ray": [
+          -0.071006,
+          -0.179002,
+          -0.981283
+        ]
+      },
+      {
+        "hip": 72370,
+        "name": "Paradys",
+        "pos": [
+          163,
+          110
+        ],
+        "uv": [
+          0.63672,
+          0.57031
+        ],
+        "ray": [
+          -0.141306,
+          -0.127078,
+          -0.981776
+        ]
+      }
     ],
-    "brightestStar": "Paradys"
-  },
-  "Aqr": {
-    "id": "Aqr",
-    "name": "Aquarius",
-    "english": "Aquarius",
-    "artFile": "aquarius.png",
-    "artUrl": "/sky_art-1/aquarius.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 43176
-    },
-    "direction": [
-      0.9029,
-      -0.4048,
-      -0.1446
-    ],
-    "brightestStar": "Sadalsuud"
+    "svgMatrix": {
+      "a": -0.00870576,
+      "b": -0.00377731,
+      "c": 0.0033651,
+      "d": -0.00770961,
+      "e": 1.20077,
+      "f": 1.59324
+    }
   },
   "Aql": {
     "id": "Aql",
     "name": "Aquila",
     "english": "Eagle",
-    "artFile": "aquila.png",
-    "artUrl": "/sky_art-1/aquila.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 35935
+    "filename": "aquila.png",
+    "url": "/sky_art-1/aquila.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.649691,
+        -0.846274,
+        -0.189529
+      ],
+      "du": [
+        -0.445895,
+        -0.150512,
+        -0.057
+      ],
+      "dv": [
+        -0.088713,
+        0.035379,
+        0.66165
+      ]
     },
-    "direction": [
-      0.4183,
-      -0.9045,
-      0.0836
+    "anchors": [
+      {
+        "hip": 97649,
+        "name": "Altair",
+        "pos": [
+          163,
+          232
+        ],
+        "uv": [
+          0.31836,
+          0.54688
+        ],
+        "ray": [
+          0.459221,
+          -0.874842,
+          0.154164
+        ]
+      },
+      {
+        "hip": 93244,
+        "name": "Eps",
+        "pos": [
+          385,
+          131
+        ],
+        "uv": [
+          0.75195,
+          0.74414
+        ],
+        "ray": [
+          0.248384,
+          -0.933124,
+          0.25997
+        ]
+      },
+      {
+        "hip": 93805,
+        "name": "Lam",
+        "pos": [
+          397,
+          397
+        ],
+        "uv": [
+          0.77539,
+          0.22461
+        ],
+        "ray": [
+          0.284022,
+          -0.955032,
+          -0.085114
+        ]
+      }
     ],
-    "brightestStar": "Altair"
+    "svgMatrix": {
+      "a": 0.00199731,
+      "b": 0.00016623,
+      "c": -0.00028241,
+      "d": 0.00278267,
+      "e": 0.135354,
+      "f": -0.340962
+    }
+  },
+  "Aqr": {
+    "id": "Aqr",
+    "name": "Aquarius",
+    "english": "Aquarius",
+    "filename": "aquarius.png",
+    "url": "/sky_art-1/aquarius.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        1.038744,
+        -0.003064,
+        -0.286588
+      ],
+      "du": [
+        -0.387547,
+        -0.386117,
+        -0.372479
+      ],
+      "dv": [
+        -0.030796,
+        -0.420391,
+        0.508572
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 115438,
+        "name": "HIP 115438",
+        "pos": [
+          144,
+          464
+        ],
+        "uv": [
+          0.28125,
+          0.09375
+        ],
+        "ray": [
+          0.92686,
+          -0.151071,
+          -0.343669
+        ]
+      },
+      {
+        "hip": 109074,
+        "name": "Sadalmelik",
+        "pos": [
+          179,
+          98
+        ],
+        "uv": [
+          0.34961,
+          0.80859
+        ],
+        "ray": [
+          0.878353,
+          -0.47798,
+          -0.005582
+        ]
+      },
+      {
+        "hip": 102618,
+        "name": "Albali",
+        "pos": [
+          465,
+          49
+        ],
+        "uv": [
+          0.9082,
+          0.9043
+        ],
+        "ray": [
+          0.658925,
+          -0.733895,
+          -0.164975
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00101862,
+      "b": 0.00073702,
+      "c": -0.00076046,
+      "d": 0.00097892,
+      "e": 0.432676,
+      "f": 0.112216
+    }
   },
   "Ara": {
     "id": "Ara",
     "name": "Ara",
     "english": "Altar",
-    "artFile": "ara.png",
-    "artUrl": "/sky_art-1/ara.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 13745
+    "filename": "ara.png",
+    "url": "/sky_art-1/ara.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.050938,
+        -0.723299,
+        -0.705109
+      ],
+      "du": [
+        0.181265,
+        0.186051,
+        -0.141987
+      ],
+      "dv": [
+        -0.229119,
+        0.155088,
+        -0.095626
+      ]
     },
-    "direction": [
-      -0.1101,
-      -0.5501,
-      -0.8278
+    "anchors": [
+      {
+        "hip": 83081,
+        "name": "Zet",
+        "pos": [
+          98,
+          70
+        ],
+        "uv": [
+          0.38281,
+          0.72656
+        ],
+        "ray": [
+          -0.148017,
+          -0.539395,
+          -0.828941
+        ]
+      },
+      {
+        "hip": 85727,
+        "name": "Del",
+        "pos": [
+          191,
+          93
+        ],
+        "uv": [
+          0.74609,
+          0.63672
+        ],
+        "ray": [
+          -0.061582,
+          -0.48574,
+          -0.871931
+        ]
+      },
+      {
+        "hip": 88714,
+        "name": "The",
+        "pos": [
+          107,
+          249
+        ],
+        "uv": [
+          0.41797,
+          0.02734
+        ],
+        "ray": [
+          0.01856,
+          -0.641295,
+          -0.76707
+        ]
+      }
     ],
-    "brightestStar": "Alp Ara"
+    "svgMatrix": {
+      "a": -0.00218597,
+      "b": 0.00402235,
+      "c": -0.00396123,
+      "d": -0.0022318,
+      "e": 1.13036,
+      "f": 0.308914
+    }
   },
   "Ari": {
     "id": "Ari",
     "name": "Aries",
     "english": "Ram",
-    "artFile": "aries.png",
-    "artUrl": "/sky_art-1/aries.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 30182
+    "filename": "aries.png",
+    "url": "/sky_art-1/aries.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.600149,
+        0.725403,
+        0.383911
+      ],
+      "du": [
+        0.18656,
+        -0.0937,
+        -0.237628
+      ],
+      "dv": [
+        0.094554,
+        -0.24483,
+        0.173237
+      ]
     },
-    "direction": [
-      0.7757,
-      0.498,
-      0.3876
+    "anchors": [
+      {
+        "hip": 13209,
+        "name": "Bharani",
+        "pos": [
+          12,
+          130
+        ],
+        "uv": [
+          0.04688,
+          0.49219
+        ],
+        "ray": [
+          0.655433,
+          0.600508,
+          0.458037
+        ]
+      },
+      {
+        "hip": 13914,
+        "name": "Eps",
+        "pos": [
+          58,
+          206
+        ],
+        "uv": [
+          0.22656,
+          0.19531
+        ],
+        "ray": [
+          0.660884,
+          0.656356,
+          0.363909
+        ]
+      },
+      {
+        "hip": 8832,
+        "name": "Mesarthim",
+        "pos": [
+          210,
+          47
+        ],
+        "uv": [
+          0.82031,
+          0.81641
+        ],
+        "ray": [
+          0.830381,
+          0.448659,
+          0.330413
+        ]
+      }
     ],
-    "brightestStar": "Hamal"
+    "svgMatrix": {
+      "a": 0.00236644,
+      "b": 0.00343307,
+      "c": -0.00337533,
+      "d": 0.00237748,
+      "e": 0.538747,
+      "f": -0.091252
+    }
   },
   "Aur": {
     "id": "Aur",
     "name": "Auriga",
     "english": "Charioteer",
-    "artFile": "auriga.png",
-    "artUrl": "/sky_art-1/auriga.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 57787
+    "filename": "auriga.png",
+    "url": "/sky_art-1/auriga.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.145171,
+        0.982863,
+        0.344784
+      ],
+      "du": [
+        0.264261,
+        -0.272994,
+        0.283442
+      ],
+      "dv": [
+        -0.388937,
+        -0.129919,
+        0.240124
+      ]
     },
-    "direction": [
-      0.1171,
-      0.7414,
-      0.6607
+    "anchors": [
+      {
+        "hip": 28380,
+        "name": "Mahasim",
+        "pos": [
+          196,
+          189
+        ],
+        "uv": [
+          0.38281,
+          0.63086
+        ],
+        "ray": [
+          0.000969,
+          0.796397,
+          0.604774
+        ]
+      },
+      {
+        "hip": 24608,
+        "name": "Capella",
+        "pos": [
+          419,
+          208
+        ],
+        "uv": [
+          0.81836,
+          0.59375
+        ],
+        "ray": [
+          0.1305,
+          0.682316,
+          0.719315
+        ]
+      },
+      {
+        "hip": 23015,
+        "name": "Hassaleh",
+        "pos": [
+          290,
+          423
+        ],
+        "uv": [
+          0.56641,
+          0.17383
+        ],
+        "ray": [
+          0.227242,
+          0.805654,
+          0.547068
+        ]
+      }
     ],
-    "brightestStar": "Capella"
+    "svgMatrix": {
+      "a": 0.00095271,
+      "b": -0.00116065,
+      "c": 0.00114617,
+      "d": 0.00097432,
+      "e": -0.082032,
+      "f": 0.660589
+    }
   },
   "Boo": {
     "id": "Boo",
     "name": "Bo\u00f6tes",
     "english": "Herdsman",
-    "artFile": "bootes.png",
-    "artUrl": "/sky_art-1/bootes.png",
-    "historicalNote": "Bo\u00f6tes normalized to bootes.png.",
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 36561
+    "filename": "bootes.png",
+    "url": "/sky_art-1/bootes.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.957662,
+        -0.562961,
+        0.034761
+      ],
+      "du": [
+        0.062756,
+        0.495245,
+        0.508042
+      ],
+      "dv": [
+        0.460091,
+        -0.426781,
+        0.348023
+      ]
     },
-    "direction": [
-      -0.674,
-      -0.5074,
-      0.5369
+    "anchors": [
+      {
+        "hip": 72105,
+        "name": "Izar",
+        "pos": [
+          225,
+          222
+        ],
+        "uv": [
+          0.43945,
+          0.56641
+        ],
+        "ray": [
+          -0.669485,
+          -0.587055,
+          0.455144
+        ]
+      },
+      {
+        "hip": 71075,
+        "name": "Seginus",
+        "pos": [
+          365,
+          184
+        ],
+        "uv": [
+          0.71289,
+          0.64062
+        ],
+        "ray": [
+          -0.618178,
+          -0.483312,
+          0.619892
+        ]
+      },
+      {
+        "hip": 67927,
+        "name": "Muphrid",
+        "pos": [
+          207,
+          401
+        ],
+        "uv": [
+          0.4043,
+          0.2168
+        ],
+        "ray": [
+          -0.832543,
+          -0.45526,
+          0.315611
+        ]
+      }
     ],
-    "brightestStar": "Arcturus"
-  },
-  "Cae": {
-    "id": "Cae",
-    "name": "Caelum",
-    "english": "Graving\u2005tool",
-    "artFile": "caelum.png",
-    "artUrl": "/sky_art-1/caelum.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 7211
-    },
-    "direction": [
-      0.2465,
-      0.7265,
-      -0.6415
-    ],
-    "brightestStar": "Alp Cae"
-  },
-  "Cam": {
-    "id": "Cam",
-    "name": "Camelopardalis",
-    "english": "Giraffe",
-    "artFile": "camelopardalis.png",
-    "artUrl": "/sky_art-1/camelopardalis.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 8194
-    },
-    "direction": [
-      0.1277,
-      0.3822,
-      0.9152
-    ],
-    "brightestStar": "Bet Cam"
-  },
-  "Cnc": {
-    "id": "Cnc",
-    "name": "Cancer",
-    "english": "Crab",
-    "artFile": "cancer.png",
-    "artUrl": "/sky_art-1/cancer.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 12396
-    },
-    "direction": [
-      -0.6172,
-      0.7242,
-      0.3076
-    ],
-    "brightestStar": "Tarf"
-  },
-  "CVn": {
-    "id": "CVn",
-    "name": "Canes Venatici",
-    "english": "Hunting\u2005Dogs",
-    "artFile": "canes_venatici.png",
-    "artUrl": "/sky_art-1/canes_venatici.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 11587
-    },
-    "direction": [
-      -0.7527,
-      -0.1501,
-      0.641
-    ],
-    "brightestStar": "Chara"
+    "svgMatrix": {
+      "a": 0.00067988,
+      "b": -0.00124065,
+      "c": 0.00121268,
+      "d": 0.00074533,
+      "e": 0.013836,
+      "f": 0.71547
+    }
   },
   "CMa": {
     "id": "CMa",
     "name": "Canis Major",
     "english": "Great\u2005Dog",
-    "artFile": "canis_major.png",
-    "artUrl": "/sky_art-1/canis_major.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 27199
+    "filename": "canis_major.png",
+    "url": "/sky_art-1/canis_major.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.271738,
+        0.777654,
+        -0.597807
+      ],
+      "du": [
+        0.324793,
+        0.12987,
+        0.13587
+      ],
+      "dv": [
+        -0.168909,
+        0.096229,
+        0.319005
+      ]
     },
-    "direction": [
-      -0.2168,
-      0.8986,
-      -0.3814
+    "anchors": [
+      {
+        "hip": 35904,
+        "name": "Aludra",
+        "pos": [
+          21,
+          347
+        ],
+        "uv": [
+          0.04102,
+          0.32227
+        ],
+        "ray": [
+          -0.31285,
+          0.813992,
+          -0.48943
+        ]
+      },
+      {
+        "hip": 33160,
+        "name": "The",
+        "pos": [
+          321,
+          24
+        ],
+        "uv": [
+          0.62695,
+          0.95312
+        ],
+        "ray": [
+          -0.229099,
+          0.950795,
+          -0.208571
+        ]
+      },
+      {
+        "hip": 30122,
+        "name": "Furud",
+        "pos": [
+          318,
+          492
+        ],
+        "uv": [
+          0.62109,
+          0.03906
+        ],
+        "ray": [
+          -0.076609,
+          0.862075,
+          -0.500957
+        ]
+      }
     ],
-    "brightestStar": "Sirius"
+    "svgMatrix": {
+      "a": 0.00159233,
+      "b": -0.000663,
+      "c": 0.00065216,
+      "d": 0.00159134,
+      "e": -0.047445,
+      "f": 0.303135
+    }
   },
   "CMi": {
     "id": "CMi",
     "name": "Canis Minor",
     "english": "Little\u2005Dog",
-    "artFile": "canis_minor.png",
-    "artUrl": "/sky_art-1/canis_minor.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 24562
+    "filename": "canis_minor.png",
+    "url": "/sky_art-1/canis_minor.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.476085,
+        0.890667,
+        0.00541
+      ],
+      "du": [
+        0.176919,
+        0.073279,
+        0.054133
+      ],
+      "dv": [
+        -0.035619,
+        -0.04746,
+        0.193655
+      ]
     },
-    "direction": [
-      -0.393,
-      0.912,
-      0.1177
+    "anchors": [
+      {
+        "hip": 37921,
+        "name": "HIP 37921",
+        "pos": [
+          96,
+          43
+        ],
+        "uv": [
+          0.375,
+          0.83203
+        ],
+        "ray": [
+          -0.439376,
+          0.878658,
+          0.186837
+        ]
+      },
+      {
+        "hip": 37279,
+        "name": "Procyon",
+        "pos": [
+          101,
+          171
+        ],
+        "uv": [
+          0.39453,
+          0.33203
+        ],
+        "ray": [
+          -0.418111,
+          0.90382,
+          0.091067
+        ]
+      },
+      {
+        "hip": 36188,
+        "name": "Gomeisa",
+        "pos": [
+          184,
+          124
+        ],
+        "uv": [
+          0.71875,
+          0.51562
+        ],
+        "ray": [
+          -0.36729,
+          0.918865,
+          0.144172
+        ]
+      }
     ],
-    "brightestStar": "Procyon"
+    "svgMatrix": {
+      "a": 0.01055809,
+      "b": -0.00296969,
+      "c": 0.00285801,
+      "d": 0.01077809,
+      "e": -1.424715,
+      "f": -0.668011
+    }
+  },
+  "CVn": {
+    "id": "CVn",
+    "name": "Canes Venatici",
+    "english": "Hunting\u2005Dogs",
+    "filename": "canes_venatici.png",
+    "url": "/sky_art-1/canes_venatici.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.860074,
+        -0.392056,
+        0.438024
+      ],
+      "du": [
+        -0.056646,
+        0.318077,
+        0.007107
+      ],
+      "dv": [
+        0.193393,
+        0.030805,
+        0.2572
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 63901,
+        "name": "HIP 63901",
+        "pos": [
+          117,
+          113
+        ],
+        "uv": [
+          0.45703,
+          0.55859
+        ],
+        "ray": [
+          -0.777935,
+          -0.229477,
+          0.584942
+        ]
+      },
+      {
+        "hip": 61317,
+        "name": "Chara",
+        "pos": [
+          206,
+          40
+        ],
+        "uv": [
+          0.80469,
+          0.84375
+        ],
+        "ray": [
+          -0.742481,
+          -0.110112,
+          0.660755
+        ]
+      },
+      {
+        "hip": 61309,
+        "name": "HIP 61309",
+        "pos": [
+          207,
+          152
+        ],
+        "uv": [
+          0.80859,
+          0.40625
+        ],
+        "ray": [
+          -0.827312,
+          -0.122346,
+          0.548258
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.01258072,
+      "b": -0.00043589,
+      "c": 0.00039965,
+      "d": 0.0123766,
+      "e": -1.718981,
+      "f": -0.185713
+    }
+  },
+  "Cae": {
+    "id": "Cae",
+    "name": "Caelum",
+    "english": "Graving\u2005tool",
+    "filename": "caelum.png",
+    "url": "/sky_art-1/caelum.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.273414,
+        0.641789,
+        -0.717308
+      ],
+      "du": [
+        0.087881,
+        0.047846,
+        0.109255
+      ],
+      "dv": [
+        -0.107258,
+        0.102514,
+        0.040387
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 21060,
+        "name": "Del",
+        "pos": [
+          16,
+          231
+        ],
+        "uv": [
+          0.0625,
+          0.09766
+        ],
+        "ray": [
+          0.268433,
+          0.654791,
+          -0.706536
+        ]
+      },
+      {
+        "hip": 21770,
+        "name": "Alp",
+        "pos": [
+          76,
+          145
+        ],
+        "uv": [
+          0.29688,
+          0.43359
+        ],
+        "ray": [
+          0.252998,
+          0.700443,
+          -0.667362
+        ]
+      },
+      {
+        "hip": 21861,
+        "name": "Bet",
+        "pos": [
+          199,
+          75
+        ],
+        "uv": [
+          0.77734,
+          0.70703
+        ],
+        "ray": [
+          0.265893,
+          0.751463,
+          -0.603824
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.0012006,
+      "b": -0.00234564,
+      "c": 0.00240414,
+      "d": 0.00129756,
+      "e": 0.186246,
+      "f": 0.617635
+    }
+  },
+  "Cam": {
+    "id": "Cam",
+    "name": "Camelopardalis",
+    "english": "Giraffe",
+    "filename": "camelopardalis.png",
+    "url": "/sky_art-1/camelopardalis.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.190999,
+        0.637302,
+        0.934134
+      ],
+      "du": [
+        0.542768,
+        0.025852,
+        -0.140733
+      ],
+      "dv": [
+        0.070867,
+        -0.561637,
+        0.110427
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 25110,
+        "name": "HIP 25110",
+        "pos": [
+          77,
+          46
+        ],
+        "uv": [
+          0.30078,
+          0.82031
+        ],
+        "ray": [
+          0.030389,
+          0.184359,
+          0.982389
+        ]
+      },
+      {
+        "hip": 22783,
+        "name": "Alp",
+        "pos": [
+          128,
+          135
+        ],
+        "uv": [
+          0.5,
+          0.47266
+        ],
+        "ray": [
+          0.113881,
+          0.384766,
+          0.915962
+        ]
+      },
+      {
+        "hip": 16228,
+        "name": "HIP 16228",
+        "pos": [
+          219,
+          136
+        ],
+        "uv": [
+          0.85547,
+          0.46875
+        ],
+        "ray": [
+          0.306542,
+          0.39615,
+          0.865504
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00339272,
+      "b": 0.001477,
+      "c": -0.00138345,
+      "d": 0.00323917,
+      "e": 0.249258,
+      "f": -0.14037
+    }
   },
   "Cap": {
     "id": "Cap",
     "name": "Capricornus",
     "english": "Capricorn",
-    "artFile": "capricornus.png",
-    "artUrl": "/sky_art-1/capricornus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 41969
+    "filename": "capricornus.png",
+    "url": "/sky_art-1/capricornus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.824131,
+        -0.492679,
+        -0.30951
+      ],
+      "du": [
+        -0.225793,
+        -0.145878,
+        -0.200164
+      ],
+      "dv": [
+        -0.094626,
+        -0.199547,
+        0.253321
+      ]
     },
-    "direction": [
-      0.6714,
-      -0.6673,
-      -0.3225
+    "anchors": [
+      {
+        "hip": 107556,
+        "name": "Deneb Algedi",
+        "pos": [
+          15,
+          436
+        ],
+        "uv": [
+          0.0293,
+          0.14844
+        ],
+        "ray": [
+          0.803469,
+          -0.526573,
+          -0.277772
+        ]
+      },
+      {
+        "hip": 100064,
+        "name": "Algedi",
+        "pos": [
+          403,
+          7
+        ],
+        "uv": [
+          0.78711,
+          0.98633
+        ],
+        "ray": [
+          0.553074,
+          -0.80432,
+          -0.217204
+        ]
+      },
+      {
+        "hip": 102978,
+        "name": "Ome",
+        "pos": [
+          460,
+          438
+        ],
+        "uv": [
+          0.89844,
+          0.14453
+        ],
+        "ray": [
+          0.607593,
+          -0.652582,
+          -0.452732
+        ]
+      }
     ],
-    "brightestStar": "Deneb Algedi"
+    "svgMatrix": {
+      "a": 0.00102822,
+      "b": 0.00081771,
+      "c": -0.0008165,
+      "d": 0.00103507,
+      "e": 0.463861,
+      "f": -0.08248
+    }
   },
   "Car": {
     "id": "Car",
     "name": "Carina",
     "english": "Keel",
-    "artFile": "carina.png",
-    "artUrl": "/sky_art-1/carina.png",
-    "historicalNote": "Historically part of Argo Navis (Keel). Mapped to carina.png (and argonavis.png).",
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 52573
+    "filename": "argonavis.png",
+    "url": "/sky_art-1/argonavis.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.507365,
+        -0.038753,
+        -1.030129
+      ],
+      "du": [
+        0.751233,
+        0.534937,
+        0.061753
+      ],
+      "dv": [
+        -0.429757,
+        0.523754,
+        0.608761
+      ]
     },
-    "direction": [
-      -0.3721,
-      0.3085,
-      -0.8754
+    "anchors": [
+      {
+        "hip": 45238,
+        "name": "Miaplacidus",
+        "pos": [
+          202,
+          455
+        ],
+        "uv": [
+          0.39453,
+          0.11133
+        ],
+        "ray": [
+          -0.258825,
+          0.230605,
+          -0.937993
+        ]
+      },
+      {
+        "hip": 50191,
+        "name": "HIP 50191",
+        "pos": [
+          62,
+          216
+        ],
+        "uv": [
+          0.12109,
+          0.57812
+        ],
+        "ray": [
+          -0.664849,
+          0.32882,
+          -0.670711
+        ]
+      },
+      {
+        "hip": 39757,
+        "name": "Tureis",
+        "pos": [
+          298,
+          22
+        ],
+        "uv": [
+          0.58203,
+          0.95703
+        ],
+        "ray": [
+          -0.481415,
+          0.773847,
+          -0.411583
+        ]
+      }
     ],
-    "brightestStar": "Canopus"
+    "svgMatrix": {
+      "a": 0.00168396,
+      "b": 0.00029293,
+      "c": -0.00023018,
+      "d": 0.00160971,
+      "e": 0.157151,
+      "f": -0.134176
+    }
   },
   "Cas": {
     "id": "Cas",
     "name": "Cassiopeia",
     "english": "Cassiopeia",
-    "artFile": "cassiopeia.png",
-    "artUrl": "/sky_art-1/cassiopeia.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 44222
+    "filename": "cassiopeia.png",
+    "url": "/sky_art-1/cassiopeia.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.373399,
+        -0.0799,
+        0.939403
+      ],
+      "du": [
+        -0.112068,
+        0.338854,
+        0.014628
+      ],
+      "dv": [
+        0.29495,
+        0.099197,
+        -0.157936
+      ]
     },
-    "direction": [
-      0.478,
-      0.1267,
-      0.8692
+    "anchors": [
+      {
+        "hip": 8886,
+        "name": "Segin",
+        "pos": [
+          390,
+          336
+        ],
+        "uv": [
+          0.76172,
+          0.34375
+        ],
+        "ray": [
+          0.389424,
+          0.212311,
+          0.896255
+        ]
+      },
+      {
+        "hip": 3179,
+        "name": "Schedar",
+        "pos": [
+          163,
+          156
+        ],
+        "uv": [
+          0.31836,
+          0.69531
+        ],
+        "ray": [
+          0.542803,
+          0.09695,
+          0.834245
+        ]
+      },
+      {
+        "hip": 746,
+        "name": "Caph",
+        "pos": [
+          73,
+          243
+        ],
+        "uv": [
+          0.14258,
+          0.52539
+        ],
+        "ray": [
+          0.512384,
+          0.02053,
+          0.858511
+        ]
+      }
     ],
-    "brightestStar": "Cih"
+    "svgMatrix": {
+      "a": -0.00236232,
+      "b": -0.00017904,
+      "c": 0.00015149,
+      "d": -0.00233202,
+      "e": 1.009531,
+      "f": 1.117613
+    }
   },
   "Cen": {
     "id": "Cen",
     "name": "Centaurus",
     "english": "Centaur",
-    "artFile": "centaurus.png",
-    "artUrl": "/sky_art-1/centaurus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 33573
+    "filename": "centaurus.png",
+    "url": "/sky_art-1/centaurus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.267549,
+        -0.571328,
+        -0.902015
+      ],
+      "du": [
+        -0.078544,
+        0.68781,
+        -0.090777
+      ],
+      "dv": [
+        -0.576387,
+        -0.014353,
+        0.475856
+      ]
     },
-    "direction": [
-      -0.6022,
-      -0.2312,
-      -0.7642
+    "anchors": [
+      {
+        "hip": 68933,
+        "name": "Menkent",
+        "pos": [
+          118,
+          157
+        ],
+        "uv": [
+          0.23047,
+          0.69336
+        ],
+        "ray": [
+          -0.685294,
+          -0.422761,
+          -0.592997
+        ]
+      },
+      {
+        "hip": 71683,
+        "name": "Rigil Kentaurus",
+        "pos": [
+          194,
+          444
+        ],
+        "uv": [
+          0.37891,
+          0.13281
+        ],
+        "ray": [
+          -0.373861,
+          -0.312619,
+          -0.873211
+        ]
+      },
+      {
+        "hip": 56561,
+        "name": "Lam",
+        "pos": [
+          463,
+          412
+        ],
+        "uv": [
+          0.9043,
+          0.19531
+        ],
+        "ray": [
+          -0.451151,
+          0.047853,
+          -0.891164
+        ]
+      }
     ],
-    "brightestStar": "Hadar"
+    "svgMatrix": {
+      "a": 0.00154507,
+      "b": 0.0003962,
+      "c": -0.00044257,
+      "d": 0.00162177,
+      "e": 0.221452,
+      "f": -0.049681
+    }
   },
   "Cep": {
     "id": "Cep",
     "name": "Cepheus",
     "english": "Cepheus",
-    "artFile": "cepheus.png",
-    "artUrl": "/sky_art-1/cepheus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 40144
+    "filename": "cepheus.png",
+    "url": "/sky_art-1/cepheus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.169797,
+        0.178472,
+        1.008771
+      ],
+      "du": [
+        0.505922,
+        -0.029704,
+        -0.225193
+      ],
+      "dv": [
+        -0.045613,
+        -0.561943,
+        -0.016165
+      ]
     },
-    "direction": [
-      0.3706,
-      -0.2358,
-      0.8984
+    "anchors": [
+      {
+        "hip": 116727,
+        "name": "Errai",
+        "pos": [
+          60,
+          335
+        ],
+        "uv": [
+          0.11719,
+          0.3457
+        ],
+        "ray": [
+          0.213316,
+          -0.019275,
+          0.976793
+        ]
+      },
+      {
+        "hip": 106032,
+        "name": "Alfirk",
+        "pos": [
+          125,
+          170
+        ],
+        "uv": [
+          0.24414,
+          0.66797
+        ],
+        "ray": [
+          0.262845,
+          -0.204141,
+          0.942995
+        ]
+      },
+      {
+        "hip": 109492,
+        "name": "Zet",
+        "pos": [
+          335,
+          147
+        ],
+        "uv": [
+          0.6543,
+          0.71289
+        ],
+        "ray": [
+          0.468303,
+          -0.241568,
+          0.849904
+        ]
+      }
     ],
-    "brightestStar": "Alderamin"
+    "svgMatrix": {
+      "a": -0.00091025,
+      "b": 0.00182875,
+      "c": -0.00186887,
+      "d": -0.0009459,
+      "e": 0.932209,
+      "f": 0.34597
+    }
   },
   "Cet": {
     "id": "Cet",
     "name": "Cetus",
     "english": "Whale",
-    "artFile": "cetus.png",
-    "artUrl": "/sky_art-1/cetus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 41780
+    "filename": "cetus.png",
+    "url": "/sky_art-1/cetus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.791659,
+        0.508466,
+        -0.565378
+      ],
+      "du": [
+        0.267571,
+        -0.588459,
+        0.397648
+      ],
+      "dv": [
+        -0.158964,
+        0.346498,
+        0.654206
+      ]
     },
-    "direction": [
-      0.8568,
-      0.5139,
-      -0.0429
+    "anchors": [
+      {
+        "hip": 14143,
+        "name": "HIP 14143",
+        "pos": [
+          87,
+          63
+        ],
+        "uv": [
+          0.16992,
+          0.87695
+        ],
+        "ray": [
+          0.697722,
+          0.712337,
+          0.075899
+        ]
+      },
+      {
+        "hip": 12770,
+        "name": "Pi",
+        "pos": [
+          28,
+          274
+        ],
+        "uv": [
+          0.05469,
+          0.46484
+        ],
+        "ray": [
+          0.732399,
+          0.637352,
+          -0.239528
+        ]
+      },
+      {
+        "hip": 1562,
+        "name": "Iot",
+        "pos": [
+          412,
+          440
+        ],
+        "uv": [
+          0.80469,
+          0.14062
+        ],
+        "ray": [
+          0.984616,
+          0.083667,
+          -0.153398
+        ]
+      }
     ],
-    "brightestStar": "Diphda"
+    "svgMatrix": {
+      "a": 0.00130585,
+      "b": -0.00080857,
+      "c": 0.00076939,
+      "d": 0.00129861,
+      "e": -0.024358,
+      "f": 0.334761
+    }
   },
   "Cha": {
     "id": "Cha",
     "name": "Chamaeleon",
     "english": "Chamaeleon",
-    "artFile": "chamaeleon.png",
-    "artUrl": "/sky_art-1/chamaeleon.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 10777
+    "filename": "chamaeleon.png",
+    "url": "/sky_art-1/chamaeleon.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.192236,
+        -0.058396,
+        -0.984243
+      ],
+      "du": [
+        0.20868,
+        0.113447,
+        0.014854
+      ],
+      "dv": [
+        -0.099148,
+        0.187206,
+        -0.000559
+      ]
     },
-    "direction": [
-      -0.1722,
-      0.0594,
-      -0.9833
+    "anchors": [
+      {
+        "hip": 60000,
+        "name": "Bet",
+        "pos": [
+          29,
+          214
+        ],
+        "uv": [
+          0.11328,
+          0.16406
+        ],
+        "ray": [
+          -0.184863,
+          -0.014831,
+          -0.982652
+        ]
+      },
+      {
+        "hip": 51839,
+        "name": "Gam",
+        "pos": [
+          73,
+          123
+        ],
+        "uv": [
+          0.28516,
+          0.51953
+        ],
+        "ray": [
+          -0.18424,
+          0.071214,
+          -0.980298
+        ]
+      },
+      {
+        "hip": 40702,
+        "name": "Alp",
+        "pos": [
+          184,
+          33
+        ],
+        "uv": [
+          0.71875,
+          0.87109
+        ],
+        "ray": [
+          -0.128614,
+          0.186218,
+          -0.974054
+        ]
+      }
     ],
-    "brightestStar": "Alp Cha"
+    "svgMatrix": {
+      "a": 0.00292407,
+      "b": -0.00173568,
+      "c": 0.00137835,
+      "d": 0.00269221,
+      "e": 0.056551,
+      "f": 0.353209
+    }
   },
   "Cir": {
     "id": "Cir",
     "name": "Circinus",
     "english": "Compass",
-    "artFile": "circinus.png",
-    "artUrl": "/sky_art-1/circinus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 7254
+    "filename": "circinus.png",
+    "url": "/sky_art-1/circinus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.260004,
+        -0.33583,
+        -0.905849
+      ],
+      "du": [
+        -0.061371,
+        0.070944,
+        -0.004163
+      ],
+      "dv": [
+        -0.070949,
+        -0.071221,
+        0.053403
+      ]
     },
-    "direction": [
-      -0.3274,
-      -0.3554,
-      -0.8755
+    "anchors": [
+      {
+        "hip": 75323,
+        "name": "Gam",
+        "pos": [
+          5,
+          36
+        ],
+        "uv": [
+          0.01953,
+          0.85938
+        ],
+        "ray": [
+          -0.322175,
+          -0.39565,
+          -0.860037
+        ]
+      },
+      {
+        "hip": 74824,
+        "name": "Bet",
+        "pos": [
+          39,
+          11
+        ],
+        "uv": [
+          0.15234,
+          0.95703
+        ],
+        "ray": [
+          -0.337254,
+          -0.393183,
+          -0.855375
+        ]
+      },
+      {
+        "hip": 71908,
+        "name": "Xami",
+        "pos": [
+          235,
+          239
+        ],
+        "uv": [
+          0.91797,
+          0.06641
+        ],
+        "ray": [
+          -0.321052,
+          -0.275435,
+          -0.906124
+        ]
+      }
     ],
-    "brightestStar": "Xami"
+    "svgMatrix": {
+      "a": 0.00251502,
+      "b": 0.00030386,
+      "c": -0.0001063,
+      "d": 0.00306906,
+      "e": 0.212785,
+      "f": 0.074663
+    }
+  },
+  "Cnc": {
+    "id": "Cnc",
+    "name": "Cancer",
+    "english": "Crab",
+    "filename": "cancer.png",
+    "url": "/sky_art-1/cancer.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.676465,
+        0.761393,
+        0.067769
+      ],
+      "du": [
+        0.312064,
+        0.143642,
+        0.229697
+      ],
+      "dv": [
+        -0.131755,
+        -0.230666,
+        0.317704
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 44066,
+        "name": "Acubens",
+        "pos": [
+          29,
+          166
+        ],
+        "uv": [
+          0.11328,
+          0.35156
+        ],
+        "ray": [
+          -0.687434,
+          0.696571,
+          0.205482
+        ]
+      },
+      {
+        "hip": 40526,
+        "name": "Tarf",
+        "pos": [
+          101,
+          255
+        ],
+        "uv": [
+          0.39453,
+          0.00391
+        ],
+        "ray": [
+          -0.553861,
+          0.817163,
+          0.159632
+        ]
+      },
+      {
+        "hip": 40843,
+        "name": "Chi",
+        "pos": [
+          206,
+          91
+        ],
+        "uv": [
+          0.80469,
+          0.64453
+        ],
+        "ray": [
+          -0.510272,
+          0.728308,
+          0.457373
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00278943,
+      "b": -0.00208972,
+      "c": 0.00210376,
+      "d": 0.00282426,
+      "e": -0.126472,
+      "f": 0.367682
+    }
   },
   "Col": {
     "id": "Col",
     "name": "Columba",
     "english": "Dove",
-    "artFile": "columba.png",
-    "artUrl": "/sky_art-1/columba.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 27363
+    "filename": "columba.png",
+    "url": "/sky_art-1/columba.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.0371,
+        0.69404,
+        -0.73198
+      ],
+      "du": [
+        0.127998,
+        0.126057,
+        0.168042
+      ],
+      "dv": [
+        -0.210883,
+        0.076835,
+        0.10119
+      ]
     },
-    "direction": [
-      0.0261,
-      0.8045,
-      -0.5933
+    "anchors": [
+      {
+        "hip": 30277,
+        "name": "Del",
+        "pos": [
+          139,
+          29
+        ],
+        "uv": [
+          0.54297,
+          0.88672
+        ],
+        "ray": [
+          -0.080396,
+          0.830616,
+          -0.551011
+        ]
+      },
+      {
+        "hip": 28328,
+        "name": "Eta",
+        "pos": [
+          40,
+          190
+        ],
+        "uv": [
+          0.15625,
+          0.25781
+        ],
+        "ray": [
+          0.002731,
+          0.733545,
+          -0.679635
+        ]
+      },
+      {
+        "hip": 25859,
+        "name": "Eps",
+        "pos": [
+          204,
+          211
+        ],
+        "uv": [
+          0.79688,
+          0.17578
+        ],
+        "ray": [
+          0.102029,
+          0.807998,
+          -0.580284
+        ]
+      }
     ],
-    "brightestStar": "Phact"
+    "svgMatrix": {
+      "a": 0.0019855,
+      "b": -0.00341002,
+      "c": 0.00342091,
+      "d": 0.00197716,
+      "e": -0.250433,
+      "f": 0.587584
+    }
   },
   "Com": {
     "id": "Com",
     "name": "Coma Berenices",
     "english": "Berenice's\u2005Hair",
-    "artFile": "coma_berenices.png",
-    "artUrl": "/sky_art-1/coma_berenices.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 29048
+    "filename": "coma_berenices.png",
+    "url": "/sky_art-1/coma_berenices.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.931996,
+        -0.320869,
+        0.231733
+      ],
+      "du": [
+        -0.058847,
+        0.323649,
+        0.024922
+      ],
+      "dv": [
+        0.129164,
+        0.000179,
+        0.300168
+      ]
     },
-    "direction": [
-      -0.8812,
-      -0.2225,
-      0.4171
+    "anchors": [
+      {
+        "hip": 64241,
+        "name": "Diadem",
+        "pos": [
+          27,
+          199
+        ],
+        "uv": [
+          0.10547,
+          0.22266
+        ],
+        "ray": [
+          -0.909444,
+          -0.286694,
+          0.301196
+        ]
+      },
+      {
+        "hip": 64394,
+        "name": "Bet",
+        "pos": [
+          38,
+          58
+        ],
+        "uv": [
+          0.14844,
+          0.77344
+        ],
+        "ray": [
+          -0.840831,
+          -0.272689,
+          0.467593
+        ]
+      },
+      {
+        "hip": 60742,
+        "name": "Gam",
+        "pos": [
+          172,
+          64
+        ],
+        "uv": [
+          0.67188,
+          0.75
+        ],
+        "ray": [
+          -0.874662,
+          -0.103283,
+          0.473603
+        ]
+      }
     ],
-    "brightestStar": "Bet Com"
+    "svgMatrix": {
+      "a": 0.00503151,
+      "b": -0.00046641,
+      "c": 0.0004822,
+      "d": 0.00502556,
+      "e": -0.06331,
+      "f": -0.112591
+    }
   },
   "CrA": {
     "id": "CrA",
     "name": "Corona Austrina",
     "english": "Southern\u2005Crown",
-    "artFile": "corona_austrina.png",
-    "artUrl": "/sky_art-1/corona_austrina.png",
-    "historicalNote": "Corona Austrina mapped to corona_austrina.png (canonical corona_australis.png).",
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 30110
+    "filename": "corona_australis.png",
+    "url": "/sky_art-1/corona_australis.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.273718,
+        -0.732429,
+        -0.628903
+      ],
+      "du": [
+        -0.10267,
+        0.045041,
+        -0.081802
+      ],
+      "dv": [
+        -0.089983,
+        -0.077984,
+        0.068891
+      ]
     },
-    "direction": [
-      0.1987,
-      -0.7398,
-      -0.6429
+    "anchors": [
+      {
+        "hip": 93825,
+        "name": "Gam",
+        "pos": [
+          14,
+          142
+        ],
+        "uv": [
+          0.05469,
+          0.44531
+        ],
+        "ray": [
+          0.228032,
+          -0.764693,
+          -0.602699
+        ]
+      },
+      {
+        "hip": 90887,
+        "name": "HIP 90887",
+        "pos": [
+          218,
+          34
+        ],
+        "uv": [
+          0.85156,
+          0.86719
+        ],
+        "ray": [
+          0.108255,
+          -0.761701,
+          -0.638822
+        ]
+      },
+      {
+        "hip": 92953,
+        "name": "HIP 92953",
+        "pos": [
+          195,
+          208
+        ],
+        "uv": [
+          0.76172,
+          0.1875
+        ],
+        "ray": [
+          0.17864,
+          -0.712742,
+          -0.678297
+        ]
+      }
     ],
-    "brightestStar": "Bet CrA"
+    "svgMatrix": {
+      "a": 0.00217537,
+      "b": 0.00267988,
+      "c": -0.00266215,
+      "d": 0.00214413,
+      "e": 0.541601,
+      "f": -0.196731
+    }
   },
   "CrB": {
     "id": "CrB",
     "name": "Corona Borealis",
     "english": "Northern\u2005Crown",
-    "artFile": "corona_borealis.png",
-    "artUrl": "/sky_art-1/corona_borealis.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 16900
+    "filename": "corona_borealis.png",
+    "url": "/sky_art-1/corona_borealis.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.412756,
+        -0.7788,
+        0.476771
+      ],
+      "du": [
+        -0.108967,
+        0.02631,
+        -0.067292
+      ],
+      "dv": [
+        -0.034223,
+        0.085275,
+        0.092093
+      ]
     },
-    "direction": [
-      -0.4938,
-      -0.7313,
-      0.4706
+    "anchors": [
+      {
+        "hip": 78493,
+        "name": "Iot",
+        "pos": [
+          16,
+          186
+        ],
+        "uv": [
+          0.0625,
+          0.27344
+        ],
+        "ray": [
+          -0.428924,
+          -0.753838,
+          0.497747
+        ]
+      },
+      {
+        "hip": 76952,
+        "name": "Gam",
+        "pos": [
+          201,
+          203
+        ],
+        "uv": [
+          0.78516,
+          0.20703
+        ],
+        "ray": [
+          -0.505397,
+          -0.740488,
+          0.443003
+        ]
+      },
+      {
+        "hip": 76127,
+        "name": "The",
+        "pos": [
+          157,
+          20
+        ],
+        "uv": [
+          0.61328,
+          0.92188
+        ],
+        "ray": [
+          -0.511132,
+          -0.684052,
+          0.520401
+        ]
+      }
     ],
-    "brightestStar": "Alphecca"
-  },
-  "Crv": {
-    "id": "Crv",
-    "name": "Corvus",
-    "english": "Crow",
-    "artFile": "corvus.png",
-    "artUrl": "/sky_art-1/corvus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 13062
-    },
-    "direction": [
-      -0.9302,
-      -0.0805,
-      -0.3581
-    ],
-    "brightestStar": "Gienah"
+    "svgMatrix": {
+      "a": 0.00243795,
+      "b": 0.00180785,
+      "c": -0.00176731,
+      "d": 0.00245037,
+      "e": 0.410536,
+      "f": -0.107993
+    }
   },
   "Crt": {
     "id": "Crt",
     "name": "Crater",
     "english": "Cup",
-    "artFile": "crater.png",
-    "artUrl": "/sky_art-1/crater.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 14822
+    "filename": "crater.png",
+    "url": "/sky_art-1/crater.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.884566,
+        0.175146,
+        -0.440034
+      ],
+      "du": [
+        -0.059403,
+        0.138405,
+        0.209695
+      ],
+      "dv": [
+        -0.071893,
+        -0.217737,
+        0.128936
+      ]
     },
-    "direction": [
-      -0.9486,
-      0.1381,
-      -0.2847
+    "anchors": [
+      {
+        "hip": 58188,
+        "name": "Eta",
+        "pos": [
+          45,
+          41
+        ],
+        "uv": [
+          0.17578,
+          0.83984
+        ],
+        "ray": [
+          -0.955387,
+          0.01661,
+          -0.294888
+        ]
+      },
+      {
+        "hip": 55282,
+        "name": "Del",
+        "pos": [
+          160,
+          149
+        ],
+        "uv": [
+          0.625,
+          0.41797
+        ],
+        "ray": [
+          -0.951742,
+          0.170642,
+          -0.255084
+        ]
+      },
+      {
+        "hip": 54682,
+        "name": "Bet",
+        "pos": [
+          55,
+          242
+        ],
+        "uv": [
+          0.21484,
+          0.05469
+        ],
+        "ray": [
+          -0.90126,
+          0.192974,
+          -0.387931
+        ]
+      }
     ],
-    "brightestStar": "Del Crt"
+    "svgMatrix": {
+      "a": 0.00163586,
+      "b": -0.00278124,
+      "c": 0.00285795,
+      "d": 0.00171333,
+      "e": -0.067569,
+      "f": 0.610223
+    }
   },
   "Cru": {
     "id": "Cru",
     "name": "Crux",
     "english": "Cross",
-    "artFile": "crux.png",
-    "artUrl": "/sky_art-1/crux.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 11048
+    "filename": "crux.png",
+    "url": "/sky_art-1/crux.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        -0.428107,
+        -0.045805,
+        -0.904393
+      ],
+      "du": [
+        -0.081432,
+        0.054879,
+        0.04352
+      ],
+      "dv": [
+        -0.046185,
+        -0.090706,
+        0.031782
+      ]
     },
-    "direction": [
-      -0.5002,
-      -0.0662,
-      -0.8634
+    "anchors": [
+      {
+        "hip": 61084,
+        "name": "Gacrux",
+        "pos": [
+          112,
+          21
+        ],
+        "uv": [
+          0.875,
+          0.83594
+        ],
+        "ray": [
+          -0.537968,
+          -0.073611,
+          -0.839745
+        ]
+      },
+      {
+        "hip": 62434,
+        "name": "Mimosa",
+        "pos": [
+          42,
+          20
+        ],
+        "uv": [
+          0.32812,
+          0.84375
+        ],
+        "ray": [
+          -0.493795,
+          -0.104331,
+          -0.863297
+        ]
+      },
+      {
+        "hip": 60718,
+        "name": "Acrux",
+        "pos": [
+          21,
+          106
+        ],
+        "uv": [
+          0.16406,
+          0.17188
+        ],
+        "ray": [
+          -0.449405,
+          -0.052392,
+          -0.89179
+        ]
+      }
     ],
-    "brightestStar": "Acrux"
+    "svgMatrix": {
+      "a": 0.0036898,
+      "b": -0.00484797,
+      "c": 0.00475495,
+      "d": 0.00373711,
+      "e": -0.013453,
+      "f": 0.584944
+    }
+  },
+  "Crv": {
+    "id": "Crv",
+    "name": "Corvus",
+    "english": "Crow",
+    "filename": "corvus.png",
+    "url": "/sky_art-1/corvus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.90066,
+        -0.191059,
+        -0.400259
+      ],
+      "du": [
+        -0.00541,
+        0.170916,
+        -0.033615
+      ],
+      "dv": [
+        -0.063132,
+        0.029997,
+        0.161813
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 60965,
+        "name": "Algorab",
+        "pos": [
+          65,
+          59
+        ],
+        "uv": [
+          0.25391,
+          0.76953
+        ],
+        "ray": [
+          -0.950615,
+          -0.124578,
+          -0.284274
+        ]
+      },
+      {
+        "hip": 61359,
+        "name": "Kraz",
+        "pos": [
+          77,
+          235
+        ],
+        "uv": [
+          0.30078,
+          0.08203
+        ],
+        "ray": [
+          -0.907466,
+          -0.13719,
+          -0.397096
+        ]
+      },
+      {
+        "hip": 59316,
+        "name": "Eps",
+        "pos": [
+          213,
+          187
+        ],
+        "uv": [
+          0.83203,
+          0.26953
+        ],
+        "ray": [
+          -0.922177,
+          -0.040766,
+          -0.384614
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.0035164,
+      "b": 0.00071731,
+      "c": -0.00073231,
+      "d": 0.00355972,
+      "e": 0.127449,
+      "f": -0.134137
+    }
   },
   "Cyg": {
     "id": "Cyg",
     "name": "Cygnus",
     "english": "Swan",
-    "artFile": "cygnus.png",
-    "artUrl": "/sky_art-1/cygnus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 29252
+    "filename": "cygnus.png",
+    "url": "/sky_art-1/cygnus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.777321,
+        -0.567349,
+        0.373831
+      ],
+      "du": [
+        -0.45699,
+        -0.312177,
+        0.05126
+      ],
+      "dv": [
+        -0.172805,
+        0.322075,
+        0.418831
+      ]
     },
-    "direction": [
-      0.4053,
-      -0.6403,
-      0.6525
+    "anchors": [
+      {
+        "hip": 107310,
+        "name": "Mu-1",
+        "pos": [
+          7,
+          382
+        ],
+        "uv": [
+          0.01367,
+          0.25391
+        ],
+        "ray": [
+          0.727196,
+          -0.48984,
+          0.480876
+        ]
+      },
+      {
+        "hip": 94779,
+        "name": "Kap",
+        "pos": [
+          474,
+          46
+        ],
+        "uv": [
+          0.92578,
+          0.91016
+        ],
+        "ray": [
+          0.196968,
+          -0.563218,
+          0.802489
+        ]
+      },
+      {
+        "hip": 95947,
+        "name": "Albireo",
+        "pos": [
+          467,
+          453
+        ],
+        "uv": [
+          0.91211,
+          0.11523
+        ],
+        "ray": [
+          0.340583,
+          -0.814974,
+          0.46885
+        ]
+      }
     ],
-    "brightestStar": "Deneb"
+    "svgMatrix": {
+      "a": 0.00181283,
+      "b": -8.983e-05,
+      "c": 9.24e-05,
+      "d": 0.00181188,
+      "e": -0.059923,
+      "f": 0.087293
+    }
   },
   "Del": {
     "id": "Del",
     "name": "Delphinus",
     "english": "Dolphin",
-    "artFile": "delphinus.png",
-    "artUrl": "/sky_art-1/delphinus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 19622
+    "filename": "delphinus.png",
+    "url": "/sky_art-1/delphinus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.709072,
+        -0.691459,
+        0.176976
+      ],
+      "du": [
+        -0.093,
+        -0.091608,
+        -0.044562
+      ],
+      "dv": [
+        -0.055775,
+        -0.005791,
+        0.126312
+      ]
     },
-    "direction": [
-      0.6223,
-      -0.7411,
-      0.2522
+    "anchors": [
+      {
+        "hip": 102532,
+        "name": "Gam-2",
+        "pos": [
+          59,
+          31
+        ],
+        "uv": [
+          0.23047,
+          0.87891
+        ],
+        "ray": [
+          0.638618,
+          -0.717661,
+          0.277722
+        ]
+      },
+      {
+        "hip": 102805,
+        "name": "HIP 102805",
+        "pos": [
+          75,
+          148
+        ],
+        "uv": [
+          0.29297,
+          0.42188
+        ],
+        "ray": [
+          0.658296,
+          -0.72074,
+          0.217208
+        ]
+      },
+      {
+        "hip": 101421,
+        "name": "Aldulfin",
+        "pos": [
+          211,
+          143
+        ],
+        "uv": [
+          0.82422,
+          0.44141
+        ],
+        "ray": [
+          0.607801,
+          -0.76952,
+          0.196002
+        ]
+      }
     ],
-    "brightestStar": "Rotanev"
+    "svgMatrix": {
+      "a": 0.00458458,
+      "b": 0.00161014,
+      "c": -0.00162271,
+      "d": 0.00457325,
+      "e": 0.023459,
+      "f": -0.116457
+    }
   },
   "Dor": {
     "id": "Dor",
     "name": "Dorado",
     "english": "Goldfish",
-    "artFile": "dorado.png",
-    "artUrl": "/sky_art-1/dorado.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 10536
+    "filename": "dorado.png",
+    "url": "/sky_art-1/dorado.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.080281,
+        0.407549,
+        -0.934039
+      ],
+      "du": [
+        0.338014,
+        -0.099461,
+        0.012134
+      ],
+      "dv": [
+        0.078054,
+        0.289213,
+        0.172125
+      ]
     },
-    "direction": [
-      0.1178,
-      0.493,
-      -0.862
+    "anchors": [
+      {
+        "hip": 27890,
+        "name": "HIP 27890",
+        "pos": [
+          56,
+          197
+        ],
+        "uv": [
+          0.21875,
+          0.23047
+        ],
+        "ray": [
+          0.011648,
+          0.452446,
+          -0.891716
+        ]
+      },
+      {
+        "hip": 27100,
+        "name": "Del",
+        "pos": [
+          75,
+          228
+        ],
+        "uv": [
+          0.29297,
+          0.10938
+        ],
+        "ray": [
+          0.027284,
+          0.410042,
+          -0.911658
+        ]
+      },
+      {
+        "hip": 19893,
+        "name": "Gam",
+        "pos": [
+          219,
+          46
+        ],
+        "uv": [
+          0.85547,
+          0.82031
+        ],
+        "ray": [
+          0.272908,
+          0.559708,
+          -0.782463
+        ]
+      }
     ],
-    "brightestStar": "Alp Dor"
+    "svgMatrix": {
+      "a": 0.00424986,
+      "b": 7.711e-05,
+      "c": -0.00012511,
+      "d": 0.00415255,
+      "e": -0.068638,
+      "f": -0.082542
+    }
   },
   "Dra": {
     "id": "Dra",
     "name": "Draco",
     "english": "Dragon",
-    "artFile": "draco.png",
-    "artUrl": "/sky_art-1/draco.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 43164
+    "filename": "draco.png",
+    "url": "/sky_art-1/draco.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.316411,
+        0.19462,
+        0.991182
+      ],
+      "du": [
+        0.581367,
+        -0.433941,
+        -0.004968
+      ],
+      "dv": [
+        -0.246233,
+        -0.708052,
+        -0.280943
+      ]
     },
-    "direction": [
-      -0.1222,
-      -0.3822,
-      0.9159
+    "anchors": [
+      {
+        "hip": 56211,
+        "name": "Giausar",
+        "pos": [
+          13,
+          411
+        ],
+        "uv": [
+          0.02539,
+          0.19727
+        ],
+        "ray": [
+          -0.350223,
+          0.043927,
+          0.935636
+        ]
+      },
+      {
+        "hip": 85670,
+        "name": "Rastaban",
+        "pos": [
+          361,
+          154
+        ],
+        "uv": [
+          0.70508,
+          0.69922
+        ],
+        "ray": [
+          -0.078673,
+          -0.606426,
+          0.791238
+        ]
+      },
+      {
+        "hip": 97433,
+        "name": "Eps",
+        "pos": [
+          449,
+          429
+        ],
+        "uv": [
+          0.87695,
+          0.16211
+        ],
+        "ray": [
+          0.153504,
+          -0.300708,
+          0.941282
+        ]
+      }
     ],
-    "brightestStar": "Eltanin"
+    "svgMatrix": {
+      "a": -0.00158346,
+      "b": 0.00037707,
+      "c": -6.02e-05,
+      "d": -0.00192903,
+      "e": 0.902702,
+      "f": 0.952862
+    }
   },
   "Equ": {
     "id": "Equ",
     "name": "Equuleus",
     "english": "Colt",
-    "artFile": "equuleus.png",
-    "artUrl": "/sky_art-1/equuleus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 13578
+    "filename": "equuleus.png",
+    "url": "/sky_art-1/equuleus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.735801,
+        -0.646182,
+        0.213464
+      ],
+      "du": [
+        0.081758,
+        0.074027,
+        -0.087651
+      ],
+      "dv": [
+        -0.048704,
+        -0.076484,
+        -0.106894
+      ]
     },
-    "direction": [
-      0.7395,
-      -0.6568,
-      0.1472
+    "anchors": [
+      {
+        "hip": 104521,
+        "name": "Gam",
+        "pos": [
+          17,
+          180
+        ],
+        "uv": [
+          0.06641,
+          0.29688
+        ],
+        "ray": [
+          0.726771,
+          -0.663973,
+          0.175909
+        ]
+      },
+      {
+        "hip": 104987,
+        "name": "Kitalpha",
+        "pos": [
+          149,
+          86
+        ],
+        "uv": [
+          0.58203,
+          0.66406
+        ],
+        "ray": [
+          0.751044,
+          -0.653886,
+          0.091464
+        ]
+      },
+      {
+        "hip": 105570,
+        "name": "Bet",
+        "pos": [
+          160,
+          160
+        ],
+        "uv": [
+          0.625,
+          0.375
+        ],
+        "ray": [
+          0.768635,
+          -0.628597,
+          0.118597
+        ]
+      }
     ],
-    "brightestStar": "Kitalpha"
+    "svgMatrix": {
+      "a": -0.00380607,
+      "b": 0.00305857,
+      "c": -0.00311035,
+      "d": -0.00374798,
+      "e": 1.229689,
+      "f": 0.742856
+    }
   },
   "Eri": {
     "id": "Eri",
     "name": "Eridanus",
     "english": "Eridanus",
-    "artFile": "eridanus.png",
-    "artUrl": "/sky_art-1/eridanus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 22399
+    "filename": "eridanus.png",
+    "url": "/sky_art-1/eridanus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.180541,
+        0.765217,
+        -0.555275
+      ],
+      "du": [
+        0.674809,
+        -0.574711,
+        -0.325389
+      ],
+      "dv": [
+        0.546809,
+        0.278602,
+        0.644061
+      ]
     },
-    "direction": [
-      0.533,
-      0.7194,
-      -0.4453
+    "anchors": [
+      {
+        "hip": 22109,
+        "name": "Mu",
+        "pos": [
+          41,
+          95
+        ],
+        "uv": [
+          0.08008,
+          0.81445
+        ],
+        "ray": [
+          0.318847,
+          0.946104,
+          -0.056774
+        ]
+      },
+      {
+        "hip": 13701,
+        "name": "Azha",
+        "pos": [
+          296,
+          44
+        ],
+        "uv": [
+          0.57812,
+          0.91406
+        ],
+        "ray": [
+          0.709401,
+          0.687623,
+          -0.154678
+        ]
+      },
+      {
+        "hip": 7588,
+        "name": "Achernar",
+        "pos": [
+          493,
+          490
+        ],
+        "uv": [
+          0.96289,
+          0.04297
+        ],
+        "ray": [
+          0.492722,
+          0.223805,
+          -0.840914
+        ]
+      }
     ],
-    "brightestStar": "Achernar"
+    "svgMatrix": {
+      "a": 0.00124921,
+      "b": 0.0004798,
+      "c": -0.00053237,
+      "d": 0.00125709,
+      "e": 0.311657,
+      "f": 0.020755
+    }
   },
   "For": {
     "id": "For",
     "name": "Fornax",
     "english": "Furnace",
-    "artFile": "fornax.png",
-    "artUrl": "/sky_art-1/fornax.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 26003
+    "filename": "fornax.png",
+    "url": "/sky_art-1/fornax.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.510267,
+        0.68215,
+        -0.537136
+      ],
+      "du": [
+        0.071881,
+        -0.14286,
+        -0.085211
+      ],
+      "dv": [
+        0.123176,
+        -0.016557,
+        0.129946
+      ]
     },
-    "direction": [
-      0.6561,
-      0.5597,
-      -0.5063
+    "anchors": [
+      {
+        "hip": 14879,
+        "name": "Dalim",
+        "pos": [
+          42,
+          125
+        ],
+        "uv": [
+          0.16406,
+          0.51172
+        ],
+        "ray": [
+          0.585091,
+          0.65024,
+          -0.484621
+        ]
+      },
+      {
+        "hip": 13202,
+        "name": "Gam-2",
+        "pos": [
+          128,
+          37
+        ],
+        "uv": [
+          0.5,
+          0.85547
+        ],
+        "ray": [
+          0.65158,
+          0.596556,
+          -0.468577
+        ]
+      },
+      {
+        "hip": 13147,
+        "name": "Bet",
+        "pos": [
+          190,
+          129
+        ],
+        "uv": [
+          0.74219,
+          0.49609
+        ],
+        "ray": [
+          0.624722,
+          0.567907,
+          -0.535914
+        ]
+      }
     ],
-    "brightestStar": "Dalim"
+    "svgMatrix": {
+      "a": 0.00178757,
+      "b": 0.00106814,
+      "c": -0.00106108,
+      "d": 0.00177299,
+      "e": 0.179699,
+      "f": 0.150783
+    }
   },
   "Gem": {
     "id": "Gem",
     "name": "Gemini",
     "english": "Twins",
-    "artFile": "gemini.png",
-    "artUrl": "/sky_art-1/gemini.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 18325
+    "filename": "gemini.png",
+    "url": "/sky_art-1/gemini.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.36871,
+        0.937678,
+        0.170058
+      ],
+      "du": [
+        0.390686,
+        0.04579,
+        0.104353
+      ],
+      "dv": [
+        -0.078229,
+        -0.179103,
+        0.347147
+      ]
     },
-    "direction": [
-      -0.2468,
-      0.8859,
-      0.3927
+    "anchors": [
+      {
+        "hip": 37740,
+        "name": "Kap",
+        "pos": [
+          14,
+          81
+        ],
+        "uv": [
+          0.05469,
+          0.68359
+        ],
+        "ray": [
+          -0.400822,
+          0.817749,
+          0.413073
+        ]
+      },
+      {
+        "hip": 32362,
+        "name": "Alzirr",
+        "pos": [
+          117,
+          252
+        ],
+        "uv": [
+          0.45703,
+          0.01562
+        ],
+        "ray": [
+          -0.191377,
+          0.955807,
+          0.223175
+        ]
+      },
+      {
+        "hip": 28734,
+        "name": "HIP 28734",
+        "pos": [
+          249,
+          165
+        ],
+        "uv": [
+          0.97266,
+          0.35547
+        ],
+        "ray": [
+          -0.016515,
+          0.918551,
+          0.394958
+        ]
+      }
     ],
-    "brightestStar": "Pollux"
+    "svgMatrix": {
+      "a": 0.00319159,
+      "b": -0.0009891,
+      "c": 0.00101284,
+      "d": 0.00310533,
+      "e": -0.003224,
+      "f": 0.18043
+    }
   },
   "Gru": {
     "id": "Gru",
     "name": "Grus",
     "english": "Crane",
-    "artFile": "grus.png",
-    "artUrl": "/sky_art-1/grus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 11640
+    "filename": "grus.png",
+    "url": "/sky_art-1/grus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.591634,
+        -0.063481,
+        -0.839216
+      ],
+      "du": [
+        -0.133208,
+        -0.348985,
+        0.027632
+      ],
+      "dv": [
+        0.243114,
+        -0.063207,
+        0.253065
+      ]
     },
-    "direction": [
-      0.6474,
-      -0.2863,
-      -0.7063
+    "anchors": [
+      {
+        "hip": 114131,
+        "name": "The",
+        "pos": [
+          49,
+          109
+        ],
+        "uv": [
+          0.19141,
+          0.57422
+        ],
+        "ray": [
+          0.705738,
+          -0.166573,
+          -0.688612
+        ]
+      },
+      {
+        "hip": 112623,
+        "name": "Eps",
+        "pos": [
+          85,
+          206
+        ],
+        "uv": [
+          0.33203,
+          0.19531
+        ],
+        "ray": [
+          0.594889,
+          -0.1917,
+          -0.780614
+        ]
+      },
+      {
+        "hip": 108085,
+        "name": "Aldhanab",
+        "pos": [
+          220,
+          45
+        ],
+        "uv": [
+          0.85938,
+          0.82422
+        ],
+        "ray": [
+          0.677538,
+          -0.415486,
+          -0.606888
+        ]
+      }
     ],
-    "brightestStar": "Alnair"
+    "svgMatrix": {
+      "a": 0.00403912,
+      "b": -0.00038399,
+      "c": 0.00043832,
+      "d": 0.00381423,
+      "e": -0.126399,
+      "f": 0.03671
+    }
   },
   "Her": {
     "id": "Her",
     "name": "Hercules",
     "english": "Hercules",
-    "artFile": "hercules.png",
-    "artUrl": "/sky_art-1/hercules.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 43187
+    "filename": "hercules.png",
+    "url": "/sky_art-1/hercules.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.570809,
+        -0.597439,
+        0.647901
+      ],
+      "du": [
+        0.5372,
+        -0.010502,
+        0.211705
+      ],
+      "dv": [
+        0.171018,
+        -0.33675,
+        -0.43591
+      ]
     },
-    "direction": [
-      -0.2099,
-      -0.8119,
-      0.5448
+    "anchors": [
+      {
+        "hip": 80170,
+        "name": "Gam",
+        "pos": [
+          44,
+          115
+        ],
+        "uv": [
+          0.08594,
+          0.77539
+        ],
+        "ray": [
+          -0.392037,
+          -0.859454,
+          0.328094
+        ]
+      },
+      {
+        "hip": 79992,
+        "name": "Tau",
+        "pos": [
+          254,
+          477
+        ],
+        "uv": [
+          0.49609,
+          0.06836
+        ],
+        "ray": [
+          -0.292617,
+          -0.625668,
+          0.723128
+        ]
+      },
+      {
+        "hip": 88794,
+        "name": "Omi",
+        "pos": [
+          441,
+          102
+        ],
+        "uv": [
+          0.86133,
+          0.80078
+        ],
+        "ray": [
+          0.028845,
+          -0.876147,
+          0.48118
+        ]
+      }
     ],
-    "brightestStar": "Kornephoros"
+    "svgMatrix": {
+      "a": -0.00134108,
+      "b": -0.00063392,
+      "c": 0.00063199,
+      "d": -0.00133506,
+      "e": 0.720886,
+      "f": 0.931308
+    }
   },
   "Hor": {
     "id": "Hor",
     "name": "Horologium",
     "english": "Clock",
-    "artFile": "horologium.png",
-    "artUrl": "/sky_art-1/horologium.png",
-    "historicalNote": "Horologium mapped to horologium.png (original file horlogium.png).",
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 25588
+    "filename": "horlogium.png",
+    "url": "/sky_art-1/horlogium.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.313107,
+        0.693054,
+        -0.659742
+      ],
+      "du": [
+        -0.142922,
+        -0.25171,
+        -0.231048
+      ],
+      "dv": [
+        0.315386,
+        -0.186983,
+        0.015153
+      ]
     },
-    "direction": [
-      0.4021,
-      0.422,
-      -0.8126
+    "anchors": [
+      {
+        "hip": 19747,
+        "name": "Alp",
+        "pos": [
+          16,
+          235
+        ],
+        "uv": [
+          0.0625,
+          0.08203
+        ],
+        "ray": [
+          0.330046,
+          0.661983,
+          -0.67294
+        ]
+      },
+      {
+        "hip": 12484,
+        "name": "Zet",
+        "pos": [
+          184,
+          67
+        ],
+        "uv": [
+          0.71875,
+          0.73828
+        ],
+        "ray": [
+          0.443225,
+          0.374091,
+          -0.814621
+        ]
+      },
+      {
+        "hip": 14240,
+        "name": "Mu",
+        "pos": [
+          235,
+          119
+        ],
+        "uv": [
+          0.91797,
+          0.53516
+        ],
+        "ray": [
+          0.350689,
+          0.361927,
+          -0.863728
+        ]
+      }
     ],
-    "brightestStar": "Alp Hor"
+    "svgMatrix": {
+      "a": 0.00057373,
+      "b": 0.0029694,
+      "c": -0.00297736,
+      "d": 0.00057681,
+      "e": 0.876865,
+      "f": -0.060435
+    }
   },
   "Hya": {
     "id": "Hya",
     "name": "Hydra",
     "english": "Sea\u2005Serpent",
-    "artFile": "hydra.png",
-    "artUrl": "/sky_art-1/hydra.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 35348
+    "filename": "hydra.png",
+    "url": "/sky_art-1/hydra.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.884574,
+        -0.370538,
+        -0.410526
+      ],
+      "du": [
+        0.647193,
+        0.759216,
+        -0.334335
+      ],
+      "dv": [
+        -0.332785,
+        0.527193,
+        0.829421
+      ]
     },
-    "direction": [
-      -0.8808,
-      0.4315,
-      -0.1947
+    "anchors": [
+      {
+        "hip": 64962,
+        "name": "Gam",
+        "pos": [
+          26,
+          491
+        ],
+        "uv": [
+          0.05078,
+          0.04102
+        ],
+        "ray": [
+          -0.865359,
+          -0.310361,
+          -0.393485
+        ]
+      },
+      {
+        "hip": 55434,
+        "name": "Sig",
+        "pos": [
+          111,
+          149
+        ],
+        "uv": [
+          0.2168,
+          0.70898
+        ],
+        "ray": [
+          -0.980204,
+          0.167829,
+          0.105037
+        ]
+      },
+      {
+        "hip": 43813,
+        "name": "Zet",
+        "pos": [
+          401,
+          33
+        ],
+        "uv": [
+          0.7832,
+          0.93555
+        ],
+        "ray": [
+          -0.689027,
+          0.717295,
+          0.103584
+        ]
+      }
     ],
-    "brightestStar": "Alphard"
+    "svgMatrix": {
+      "a": 0.00100072,
+      "b": 0.00030045,
+      "c": -0.0004657,
+      "d": 0.00091266,
+      "e": 0.438899,
+      "f": 0.163521
+    }
   },
   "Hyi": {
     "id": "Hyi",
     "name": "Hydrus",
     "english": "Hydrus",
-    "artFile": "hydrus.png",
-    "artUrl": "/sky_art-1/hydrus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 7321
+    "filename": "hydrus.png",
+    "url": "/sky_art-1/hydrus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.422519,
+        0.299567,
+        -0.865735
+      ],
+      "du": [
+        -0.29698,
+        -0.024489,
+        -0.095621
+      ],
+      "dv": [
+        0.035925,
+        -0.307202,
+        -0.04152
+      ]
     },
-    "direction": [
-      0.2845,
-      0.1878,
-      -0.9401
+    "anchors": [
+      {
+        "hip": 9236,
+        "name": "Alp",
+        "pos": [
+          14,
+          204
+        ],
+        "uv": [
+          0.05469,
+          0.20312
+        ],
+        "ray": [
+          0.413575,
+          0.235827,
+          -0.879398
+        ]
+      },
+      {
+        "hip": 2021,
+        "name": "Bet",
+        "pos": [
+          201,
+          43
+        ],
+        "uv": [
+          0.78516,
+          0.83203
+        ],
+        "ray": [
+          0.219234,
+          0.024737,
+          -0.975359
+        ]
+      },
+      {
+        "hip": 17678,
+        "name": "Gam",
+        "pos": [
+          241,
+          215
+        ],
+        "uv": [
+          0.94141,
+          0.16016
+        ],
+        "ray": [
+          0.148694,
+          0.227312,
+          -0.962403
+        ]
+      }
     ],
-    "brightestStar": "Bet Hyi"
+    "svgMatrix": {
+      "a": -0.00141943,
+      "b": 0.00275996,
+      "c": -0.00273979,
+      "d": -0.00145301,
+      "e": 1.167273,
+      "f": 0.381038
+    }
   },
   "Ind": {
     "id": "Ind",
     "name": "Indus",
     "english": "Indian",
-    "artFile": "indus.png",
-    "artUrl": "/sky_art-1/indus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 30184
+    "filename": "indus.png",
+    "url": "/sky_art-1/indus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.505955,
+        -0.637281,
+        -0.633069
+      ],
+      "du": [
+        0.166477,
+        0.287624,
+        -0.083822
+      ],
+      "dv": [
+        -0.26536,
+        0.093322,
+        -0.183028
+      ]
     },
-    "direction": [
-      0.4315,
-      -0.4105,
-      -0.8033
+    "anchors": [
+      {
+        "hip": 101772,
+        "name": "Alp",
+        "pos": [
+          64,
+          143
+        ],
+        "uv": [
+          0.25,
+          0.44141
+        ],
+        "ray": [
+          0.430443,
+          -0.524183,
+          -0.734814
+        ]
+      },
+      {
+        "hip": 103227,
+        "name": "Bet",
+        "pos": [
+          154,
+          20
+        ],
+        "uv": [
+          0.60156,
+          0.92188
+        ],
+        "ray": [
+          0.361473,
+          -0.378227,
+          -0.852222
+        ]
+      },
+      {
+        "hip": 105319,
+        "name": "The",
+        "pos": [
+          175,
+          98
+        ],
+        "uv": [
+          0.68359,
+          0.61719
+        ],
+        "ray": [
+          0.455981,
+          -0.383066,
+          -0.803332
+        ]
+      }
     ],
-    "brightestStar": "Alp Ind"
-  },
-  "Lac": {
-    "id": "Lac",
-    "name": "Lacerta",
-    "english": "Lizard",
-    "artFile": "lacerta.png",
-    "artUrl": "/sky_art-1/lacerta.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 23311
-    },
-    "direction": [
-      0.6398,
-      -0.2802,
-      0.7156
-    ],
-    "brightestStar": "Stellio"
-  },
-  "Leo": {
-    "id": "Leo",
-    "name": "Leo",
-    "english": "Lion",
-    "artFile": "leo.png",
-    "artUrl": "/sky_art-1/leo.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 32902
-    },
-    "direction": [
-      -0.8751,
-      0.3515,
-      0.3326
-    ],
-    "brightestStar": "Regulus"
+    "svgMatrix": {
+      "a": -0.00445397,
+      "b": 0.00152983,
+      "c": -0.00162589,
+      "d": -0.00428018,
+      "e": 1.390958,
+      "f": 0.686144
+    }
   },
   "LMi": {
     "id": "LMi",
     "name": "Leo Minor",
     "english": "Little\u2005Lion",
-    "artFile": "leo_minor.png",
-    "artUrl": "/sky_art-1/leo_minor.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 11860
+    "filename": "leo_minor.png",
+    "url": "/sky_art-1/leo_minor.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.866905,
+        0.4226,
+        0.369811
+      ],
+      "du": [
+        0.213842,
+        0.203425,
+        0.1329
+      ],
+      "dv": [
+        0.080652,
+        -0.227218,
+        0.22321
+      ]
     },
-    "direction": [
-      -0.7353,
-      0.3508,
-      0.58
+    "anchors": [
+      {
+        "hip": 53229,
+        "name": "Praecipua",
+        "pos": [
+          8,
+          40
+        ],
+        "uv": [
+          0.03125,
+          0.84375
+        ],
+        "ray": [
+          -0.792172,
+          0.237242,
+          0.562298
+        ]
+      },
+      {
+        "hip": 46952,
+        "name": "HIP 46952",
+        "pos": [
+          214,
+          127
+        ],
+        "uv": [
+          0.83594,
+          0.50391
+        ],
+        "ray": [
+          -0.647505,
+          0.478154,
+          0.593385
+        ]
+      },
+      {
+        "hip": 50303,
+        "name": "HIP 50303",
+        "pos": [
+          61,
+          155
+        ],
+        "uv": [
+          0.23828,
+          0.39453
+        ],
+        "ray": [
+          -0.784131,
+          0.381428,
+          0.489542
+        ]
+      }
     ],
-    "brightestStar": "Praecipua"
+    "svgMatrix": {
+      "a": 0.00291075,
+      "b": -0.00178503,
+      "c": 0.00179827,
+      "d": 0.00289189,
+      "e": 0.026016,
+      "f": 0.433713
+    }
+  },
+  "Lac": {
+    "id": "Lac",
+    "name": "Lacerta",
+    "english": "Lizard",
+    "filename": "lacerta.png",
+    "url": "/sky_art-1/lacerta.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.765754,
+        -0.362097,
+        0.559928
+      ],
+      "du": [
+        -0.205962,
+        -0.080359,
+        0.107512
+      ],
+      "dv": [
+        -0.007596,
+        0.227358,
+        0.150687
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 110538,
+        "name": "Bet",
+        "pos": [
+          249,
+          42
+        ],
+        "uv": [
+          0.97266,
+          0.83594
+        ],
+        "ray": [
+          0.559074,
+          -0.250202,
+          0.790466
+        ]
+      },
+      {
+        "hip": 111104,
+        "name": "HIP 111104",
+        "pos": [
+          108,
+          123
+        ],
+        "uv": [
+          0.42188,
+          0.51953
+        ],
+        "ray": [
+          0.674917,
+          -0.277879,
+          0.683572
+        ]
+      },
+      {
+        "hip": 109937,
+        "name": "HIP 109937",
+        "pos": [
+          67,
+          215
+        ],
+        "uv": [
+          0.26172,
+          0.16016
+        ],
+        "ray": [
+          0.710633,
+          -0.346716,
+          0.6122
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00174925,
+      "b": -0.00216854,
+      "c": 0.00232013,
+      "d": 0.0020538,
+      "e": -0.008152,
+      "f": 0.577187
+    }
+  },
+  "Leo": {
+    "id": "Leo",
+    "name": "Leo",
+    "english": "Lion",
+    "filename": "leo.png",
+    "url": "/sky_art-1/leo.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -1.020865,
+        -0.077805,
+        0.21272
+      ],
+      "du": [
+        -0.058682,
+        0.432735,
+        -0.417982
+      ],
+      "dv": [
+        0.314518,
+        0.332902,
+        0.482634
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 57632,
+        "name": "Denebola",
+        "pos": [
+          69,
+          411
+        ],
+        "uv": [
+          0.13477,
+          0.19727
+        ],
+        "ray": [
+          -0.966729,
+          0.046183,
+          0.251597
+        ]
+      },
+      {
+        "hip": 49669,
+        "name": "Regulus",
+        "pos": [
+          383,
+          186
+        ],
+        "uv": [
+          0.74805,
+          0.63672
+        ],
+        "ray": [
+          -0.864502,
+          0.457866,
+          0.207352
+        ]
+      },
+      {
+        "hip": 47908,
+        "name": "Ras Elased Australis",
+        "pos": [
+          321,
+          32
+        ],
+        "uv": [
+          0.62695,
+          0.9375
+        ],
+        "ray": [
+          -0.762795,
+          0.505595,
+          0.403134
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.001056,
+      "b": 0.00133847,
+      "c": -0.00120262,
+      "d": 0.00146882,
+      "e": 0.561065,
+      "f": -0.107165
+    }
   },
   "Lep": {
     "id": "Lep",
     "name": "Lepus",
     "english": "Hare",
-    "artFile": "lepus.png",
-    "artUrl": "/sky_art-1/lepus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 14328
+    "filename": "lepus.png",
+    "url": "/sky_art-1/lepus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.011625,
+        0.894852,
+        -0.46261
+      ],
+      "du": [
+        0.255124,
+        -0.00406,
+        0.074443
+      ],
+      "dv": [
+        -0.072001,
+        0.087815,
+        0.244648
+      ]
     },
-    "direction": [
-      0.1066,
-      0.9484,
-      -0.2987
+    "anchors": [
+      {
+        "hip": 28910,
+        "name": "The",
+        "pos": [
+          21,
+          48
+        ],
+        "uv": [
+          0.08203,
+          0.8125
+        ],
+        "ray": [
+          -0.025948,
+          0.965869,
+          -0.257727
+        ]
+      },
+      {
+        "hip": 24244,
+        "name": "Iot",
+        "pos": [
+          246,
+          62
+        ],
+        "uv": [
+          0.96094,
+          0.75781
+        ],
+        "ray": [
+          0.20222,
+          0.957499,
+          -0.205678
+        ]
+      },
+      {
+        "hip": 23685,
+        "name": "Eps",
+        "pos": [
+          213,
+          235
+        ],
+        "uv": [
+          0.83203,
+          0.08203
+        ],
+        "ray": [
+          0.21799,
+          0.898678,
+          -0.380603
+        ]
+      }
     ],
-    "brightestStar": "Arneb"
+    "svgMatrix": {
+      "a": 0.00299242,
+      "b": -0.00092358,
+      "c": 0.00095751,
+      "d": 0.0030313,
+      "e": 0.014508,
+      "f": 0.233888
+    }
   },
   "Lib": {
     "id": "Lib",
     "name": "Libra",
     "english": "Balance",
-    "artFile": "libra.png",
-    "artUrl": "/sky_art-1/libra.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 10659
+    "filename": "libra.png",
+    "url": "/sky_art-1/libra.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.389871,
+        -0.910693,
+        -0.286543
+      ],
+      "du": [
+        -0.094317,
+        0.199594,
+        -0.286579
+      ],
+      "dv": [
+        -0.26721,
+        0.146756,
+        0.189382
+      ]
     },
-    "direction": [
-      -0.601,
-      -0.7174,
-      -0.3523
+    "anchors": [
+      {
+        "hip": 74785,
+        "name": "Zubeneschamali",
+        "pos": [
+          41,
+          27
+        ],
+        "uv": [
+          0.16016,
+          0.89453
+        ],
+        "ray": [
+          -0.644004,
+          -0.747449,
+          -0.163032
+        ]
+      },
+      {
+        "hip": 77853,
+        "name": "The",
+        "pos": [
+          58,
+          170
+        ],
+        "uv": [
+          0.22656,
+          0.33594
+        ],
+        "ray": [
+          -0.501005,
+          -0.816172,
+          -0.28785
+        ]
+      },
+      {
+        "hip": 73714,
+        "name": "Brachium",
+        "pos": [
+          224,
+          107
+        ],
+        "uv": [
+          0.875,
+          0.58203
+        ],
+        "ray": [
+          -0.627923,
+          -0.650632,
+          -0.427073
+        ]
+      }
     ],
-    "brightestStar": "Zubeneschamali"
+    "svgMatrix": {
+      "a": 0.00165151,
+      "b": 0.00248392,
+      "c": -0.00242739,
+      "d": 0.00164634,
+      "e": 0.471326,
+      "f": -0.02099
+    }
   },
   "Lup": {
     "id": "Lup",
     "name": "Lupus",
     "english": "Wolf",
-    "artFile": "lupus.png",
-    "artUrl": "/sky_art-1/lupus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 26820
+    "filename": "lupus.png",
+    "url": "/sky_art-1/lupus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.542843,
+        -0.282043,
+        -0.830912
+      ],
+      "du": [
+        -0.174922,
+        -0.237386,
+        0.303251
+      ],
+      "dv": [
+        0.327508,
+        -0.267546,
+        -0.02303
+      ]
     },
-    "direction": [
-      -0.4587,
-      -0.5917,
-      -0.6629
+    "anchors": [
+      {
+        "hip": 74395,
+        "name": "Zet",
+        "pos": [
+          90,
+          257
+        ],
+        "uv": [
+          0.17578,
+          0.49805
+        ],
+        "ray": [
+          -0.410476,
+          -0.457021,
+          -0.789076
+        ]
+      },
+      {
+        "hip": 70576,
+        "name": "Tau-2",
+        "pos": [
+          207,
+          435
+        ],
+        "uv": [
+          0.4043,
+          0.15039
+        ],
+        "ray": [
+          -0.564309,
+          -0.418254,
+          -0.711772
+        ]
+      },
+      {
+        "hip": 75177,
+        "name": "Phi-1",
+        "pos": [
+          425,
+          239
+        ],
+        "uv": [
+          0.83008,
+          0.5332
+        ],
+        "ray": [
+          -0.513413,
+          -0.621748,
+          -0.59147
+        ]
+      }
     ],
-    "brightestStar": "Uridim"
+    "svgMatrix": {
+      "a": -3.316e-05,
+      "b": -0.00189206,
+      "c": 0.00189947,
+      "d": -3.821e-05,
+      "e": 0.110583,
+      "f": 1.045686
+    }
   },
   "Lyn": {
     "id": "Lyn",
     "name": "Lynx",
     "english": "Lynx",
-    "artFile": "lynx.png",
-    "artUrl": "/sky_art-1/lynx.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 25636
+    "filename": "lynx.png",
+    "url": "/sky_art-1/lynx.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.7589,
+        0.946873,
+        0.470948
+      ],
+      "du": [
+        0.617737,
+        0.18893,
+        0.191583
+      ],
+      "dv": [
+        0.189418,
+        -0.792173,
+        0.2732
+      ]
     },
-    "direction": [
-      -0.3854,
-      0.5588,
-      0.7343
+    "anchors": [
+      {
+        "hip": 44248,
+        "name": "HIP 44248",
+        "pos": [
+          100,
+          216
+        ],
+        "uv": [
+          0.19531,
+          0.57812
+        ],
+        "ray": [
+          -0.528741,
+          0.525798,
+          0.66631
+        ]
+      },
+      {
+        "hip": 36145,
+        "name": "HIP 36145",
+        "pos": [
+          337,
+          212
+        ],
+        "uv": [
+          0.6582,
+          0.58594
+        ],
+        "ray": [
+          -0.241317,
+          0.607063,
+          0.757126
+        ]
+      },
+      {
+        "hip": 30060,
+        "name": "HIP 30060",
+        "pos": [
+          472,
+          119
+        ],
+        "uv": [
+          0.92188,
+          0.76758
+        ],
+        "ray": [
+          -0.044031,
+          0.512988,
+          0.857266
+        ]
+      }
     ],
-    "brightestStar": "Alp Lyn"
+    "svgMatrix": {
+      "a": 0.00197687,
+      "b": -0.00082341,
+      "c": 0.00103813,
+      "d": 0.00192778,
+      "e": -0.163514,
+      "f": 0.250838
+    }
   },
   "Lyr": {
     "id": "Lyr",
     "name": "Lyra",
     "english": "Lyre",
-    "artFile": "lyra.png",
-    "artUrl": "/sky_art-1/lyra.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 11604
+    "filename": "lyra.png",
+    "url": "/sky_art-1/lyra.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.319277,
+        -0.814796,
+        0.517211
+      ],
+      "du": [
+        -0.195644,
+        -0.072231,
+        -0.051513
+      ],
+      "dv": [
+        -0.087129,
+        0.105313,
+        0.1653
+      ]
     },
-    "direction": [
-      0.1687,
-      -0.7859,
-      0.5949
+    "anchors": [
+      {
+        "hip": 92791,
+        "name": "Del-2",
+        "pos": [
+          100,
+          96
+        ],
+        "uv": [
+          0.39062,
+          0.625
+        ],
+        "ray": [
+          0.188398,
+          -0.77719,
+          0.600401
+        ]
+      },
+      {
+        "hip": 91262,
+        "name": "Vega",
+        "pos": [
+          157,
+          38
+        ],
+        "uv": [
+          0.61328,
+          0.85156
+        ],
+        "ray": [
+          0.125097,
+          -0.769413,
+          0.626382
+        ]
+      },
+      {
+        "hip": 92420,
+        "name": "Sheliak",
+        "pos": [
+          139,
+          162
+        ],
+        "uv": [
+          0.54297,
+          0.36719
+        ],
+        "ray": [
+          0.181056,
+          -0.815346,
+          0.549937
+        ]
+      }
     ],
-    "brightestStar": "Vega"
+    "svgMatrix": {
+      "a": 0.00505586,
+      "b": 0.00143206,
+      "c": -0.001522,
+      "d": 0.0049894,
+      "e": 0.010411,
+      "f": -0.205047
+    }
   },
   "Men": {
     "id": "Men",
     "name": "Mensa",
     "english": "Mensa",
-    "artFile": "mensa.png",
-    "artUrl": "/sky_art-1/mensa.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 32720
+    "filename": "mensa.png",
+    "url": "/sky_art-1/mensa.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.088606,
+        0.418261,
+        -0.916695
+      ],
+      "du": [
+        -0.015705,
+        -0.253066,
+        -0.081941
+      ],
+      "dv": [
+        0.274101,
+        -0.014813,
+        0.004845
+      ]
     },
-    "direction": [
-      0.0423,
-      0.2646,
-      -0.9634
+    "anchors": [
+      {
+        "hip": 21949,
+        "name": "Mu",
+        "pos": [
+          100,
+          67
+        ],
+        "uv": [
+          0.39062,
+          0.73828
+        ],
+        "ray": [
+          0.107623,
+          0.308471,
+          -0.945126
+        ]
+      },
+      {
+        "hip": 25918,
+        "name": "Gam",
+        "pos": [
+          179,
+          136
+        ],
+        "uv": [
+          0.69922,
+          0.46875
+        ],
+        "ray": [
+          0.028898,
+          0.234369,
+          -0.971718
+        ]
+      },
+      {
+        "hip": 29134,
+        "name": "Nu",
+        "pos": [
+          54,
+          183
+        ],
+        "uv": [
+          0.21094,
+          0.28516
+        ],
+        "ray": [
+          -0.013757,
+          0.360656,
+          -0.932598
+        ]
+      }
     ],
-    "brightestStar": "Hoerikwaggo"
+    "svgMatrix": {
+      "a": 0.0008013,
+      "b": 0.00894798,
+      "c": -0.00924577,
+      "d": 0.00096361,
+      "e": 1.626068,
+      "f": -0.86157
+    }
   },
   "Mic": {
     "id": "Mic",
     "name": "Microscopium",
     "english": "Microscope",
-    "artFile": "microscopium.png",
-    "artUrl": "/sky_art-1/microscopium.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 22241
+    "filename": "microscopium.png",
+    "url": "/sky_art-1/microscopium.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.709101,
+        -0.534076,
+        -0.483261
+      ],
+      "du": [
+        -0.121209,
+        0.003355,
+        -0.119587
+      ],
+      "dv": [
+        -0.066916,
+        -0.148662,
+        0.066395
+      ]
     },
-    "direction": [
-      0.5768,
-      -0.5578,
-      -0.5969
+    "anchors": [
+      {
+        "hip": 105140,
+        "name": "Eps",
+        "pos": [
+          122,
+          226
+        ],
+        "uv": [
+          0.47656,
+          0.11719
+        ],
+        "ray": [
+          0.643496,
+          -0.549898,
+          -0.532471
+        ]
+      },
+      {
+        "hip": 103738,
+        "name": "Gam",
+        "pos": [
+          168,
+          148
+        ],
+        "uv": [
+          0.65625,
+          0.42188
+        ],
+        "ray": [
+          0.601328,
+          -0.594591,
+          -0.533729
+        ]
+      },
+      {
+        "hip": 102831,
+        "name": "Alp",
+        "pos": [
+          234,
+          115
+        ],
+        "uv": [
+          0.91406,
+          0.55078
+        ],
+        "ray": [
+          0.561452,
+          -0.612889,
+          -0.556001
+        ]
+      }
     ],
-    "brightestStar": "Gam Mic"
+    "svgMatrix": {
+      "a": 0.0011782,
+      "b": 0.002084,
+      "c": -0.0021798,
+      "d": 0.00118381,
+      "e": 0.669967,
+      "f": -0.403152
+    }
   },
   "Mon": {
     "id": "Mon",
     "name": "Monoceros",
     "english": "Unicorn",
-    "artFile": "monoceros.png",
-    "artUrl": "/sky_art-1/monoceros.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 31882
+    "filename": "monoceros.png",
+    "url": "/sky_art-1/monoceros.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.549724,
+        0.830223,
+        -0.258782
+      ],
+      "du": [
+        0.488768,
+        0.155767,
+        -0.004203
+      ],
+      "dv": [
+        -0.001897,
+        0.022906,
+        0.514218
+      ]
     },
-    "direction": [
-      -0.2352,
-      0.9719,
-      -0.0042
+    "anchors": [
+      {
+        "hip": 39863,
+        "name": "Zet",
+        "pos": [
+          20,
+          306
+        ],
+        "uv": [
+          0.03906,
+          0.40234
+        ],
+        "ray": [
+          -0.531395,
+          0.845524,
+          -0.052053
+        ]
+      },
+      {
+        "hip": 31978,
+        "name": "HIP 31978",
+        "pos": [
+          394,
+          80
+        ],
+        "uv": [
+          0.76953,
+          0.84375
+        ],
+        "ray": [
+          -0.175202,
+          0.969417,
+          0.171856
+        ]
+      },
+      {
+        "hip": 29651,
+        "name": "Gam",
+        "pos": [
+          509,
+          359
+        ],
+        "uv": [
+          0.99414,
+          0.29883
+        ],
+        "ray": [
+          -0.064386,
+          0.991922,
+          -0.109297
+        ]
+      }
     ],
-    "brightestStar": "Bet Mon"
+    "svgMatrix": {
+      "a": 0.00148768,
+      "b": 7.53e-06,
+      "c": -2.821e-05,
+      "d": 0.00150582,
+      "e": 0.115888,
+      "f": 0.125515
+    }
   },
   "Mus": {
     "id": "Mus",
     "name": "Musca",
     "english": "Fly",
-    "artFile": "musca.png",
-    "artUrl": "/sky_art-1/musca.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 33231
+    "filename": "musca.png",
+    "url": "/sky_art-1/musca.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.339587,
+        0.077175,
+        -0.940309
+      ],
+      "du": [
+        -0.120796,
+        -0.084148,
+        0.04727
+      ],
+      "dv": [
+        0.078743,
+        -0.127695,
+        -0.027592
+      ]
     },
-    "direction": [
-      -0.3494,
-      -0.0441,
-      -0.9359
+    "anchors": [
+      {
+        "hip": 61199,
+        "name": "Gam",
+        "pos": [
+          57,
+          52
+        ],
+        "uv": [
+          0.22266,
+          0.79688
+        ],
+        "ray": [
+          -0.303735,
+          -0.043318,
+          -0.951771
+        ]
+      },
+      {
+        "hip": 62322,
+        "name": "Bet",
+        "pos": [
+          177,
+          68
+        ],
+        "uv": [
+          0.69141,
+          0.73438
+        ],
+        "ray": [
+          -0.36528,
+          -0.074782,
+          -0.927889
+        ]
+      },
+      {
+        "hip": 57363,
+        "name": "Lam",
+        "pos": [
+          129,
+          236
+        ],
+        "uv": [
+          0.50391,
+          0.07812
+        ],
+        "ray": [
+          -0.394306,
+          0.024796,
+          -0.918645
+        ]
+      }
     ],
-    "brightestStar": "Alp Mus"
+    "svgMatrix": {
+      "a": -0.00167944,
+      "b": -0.00341397,
+      "c": 0.00336664,
+      "d": -0.00167087,
+      "e": 0.301544,
+      "f": 1.058331
+    }
   },
   "Nor": {
     "id": "Nor",
     "name": "Norma",
     "english": "Level",
-    "artFile": "norma.png",
-    "artUrl": "/sky_art-1/norma.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 7537
+    "filename": "norma.png",
+    "url": "/sky_art-1/norma.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        -0.265473,
+        -0.641187,
+        -0.722753
+      ],
+      "du": [
+        0.098546,
+        0.072279,
+        -0.085553
+      ],
+      "dv": [
+        -0.102037,
+        0.09488,
+        -0.035806
+      ]
     },
-    "direction": [
-      -0.298,
-      -0.5983,
-      -0.7438
+    "anchors": [
+      {
+        "hip": 78639,
+        "name": "Eta",
+        "pos": [
+          17,
+          45
+        ],
+        "uv": [
+          0.13281,
+          0.64844
+        ],
+        "ray": [
+          -0.318549,
+          -0.570063,
+          -0.757334
+        ]
+      },
+      {
+        "hip": 79509,
+        "name": "Kap",
+        "pos": [
+          101,
+          38
+        ],
+        "uv": [
+          0.78906,
+          0.70312
+        ],
+        "ray": [
+          -0.259458,
+          -0.517442,
+          -0.815436
+        ]
+      },
+      {
+        "hip": 80582,
+        "name": "Eps",
+        "pos": [
+          16,
+          112
+        ],
+        "uv": [
+          0.125,
+          0.125
+        ],
+        "ray": [
+          -0.265909,
+          -0.620292,
+          -0.737923
+        ]
+      }
     ],
-    "brightestStar": "Gam-2 Nor"
+    "svgMatrix": {
+      "a": -0.00381477,
+      "b": 0.0093953,
+      "c": -0.00911062,
+      "d": -0.00363415,
+      "e": 1.2776,
+      "f": 0.744808
+    }
   },
   "Oct": {
     "id": "Oct",
     "name": "Octans",
     "english": "Octant",
-    "artFile": "octans.png",
-    "artUrl": "/sky_art-1/octans.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 28312
+    "filename": "octans.png",
+    "url": "/sky_art-1/octans.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.01126,
+        -0.24611,
+        -0.963314
+      ],
+      "du": [
+        0.191161,
+        0.119084,
+        -0.011331
+      ],
+      "dv": [
+        -0.118246,
+        0.184718,
+        -0.031916
+      ]
     },
-    "direction": [
-      0.0784,
-      -0.0798,
-      -0.9937
+    "anchors": [
+      {
+        "hip": 70638,
+        "name": "Del",
+        "pos": [
+          15,
+          16
+        ],
+        "uv": [
+          0.05859,
+          0.9375
+        ],
+        "ray": [
+          -0.088394,
+          -0.065959,
+          -0.993899
+        ]
+      },
+      {
+        "hip": 107089,
+        "name": "Nu",
+        "pos": [
+          236,
+          239
+        ],
+        "uv": [
+          0.92188,
+          0.06641
+        ],
+        "ray": [
+          0.179635,
+          -0.124064,
+          -0.975879
+        ]
+      },
+      {
+        "hip": 112405,
+        "name": "Bet",
+        "pos": [
+          247,
+          140
+        ],
+        "uv": [
+          0.96484,
+          0.45312
+        ],
+        "ray": [
+          0.142121,
+          -0.047513,
+          -0.988708
+        ]
+      }
     ],
-    "brightestStar": "Nu Oct"
+    "svgMatrix": {
+      "a": 0.00209005,
+      "b": -0.00131808,
+      "c": 0.00132076,
+      "d": 0.00206509,
+      "e": 0.068743,
+      "f": 0.433171
+    }
   },
   "Oph": {
     "id": "Oph",
     "name": "Ophiuchus",
     "english": "Ophiuchus",
-    "artFile": "ophiuchus.png",
-    "artUrl": "/sky_art-1/ophiuchus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 35799
+    "filename": "ophiuchus.png",
+    "url": "/sky_art-1/ophiuchus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.296356,
+        -0.992627,
+        -0.485888
+      ],
+      "du": [
+        -0.864452,
+        0.175776,
+        -0.044339
+      ],
+      "dv": [
+        -0.071145,
+        0.036505,
+        0.8709
+      ]
     },
-    "direction": [
-      -0.2632,
-      -0.9511,
-      -0.1614
+    "anchors": [
+      {
+        "hip": 92946,
+        "name": "Alya",
+        "pos": [
+          5,
+          183
+        ],
+        "uv": [
+          0.00977,
+          0.64258
+        ],
+        "ray": [
+          0.242199,
+          -0.967454,
+          0.073301
+        ]
+      },
+      {
+        "hip": 77233,
+        "name": "Zhou",
+        "pos": [
+          452,
+          47
+        ],
+        "uv": [
+          0.88281,
+          0.9082
+        ],
+        "ray": [
+          -0.531406,
+          -0.804296,
+          0.265923
+        ]
+      },
+      {
+        "hip": 85755,
+        "name": "HIP 85755",
+        "pos": [
+          238,
+          453
+        ],
+        "uv": [
+          0.46484,
+          0.11523
+        ],
+        "ray": [
+          -0.113677,
+          -0.906712,
+          -0.406141
+        ]
+      }
     ],
-    "brightestStar": "Rasalhague"
+    "svgMatrix": {
+      "a": 0.0017059,
+      "b": 7.456e-05,
+      "c": -6.895e-05,
+      "d": 0.00161678,
+      "e": 0.065946,
+      "f": -0.008104
+    }
   },
   "Ori": {
     "id": "Ori",
     "name": "Orion",
     "english": "Orion",
-    "artFile": "orion.png",
-    "artUrl": "/sky_art-1/orion.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 41095
+    "filename": "orion.png",
+    "url": "/sky_art-1/orion.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.245088,
+        0.987092,
+        -0.054992
+      ],
+      "du": [
+        0.439694,
+        0.001169,
+        -0.222253
+      ],
+      "dv": [
+        0.222181,
+        -0.050561,
+        0.436528
+      ]
     },
-    "direction": [
-      0.1469,
-      0.9816,
-      0.1216
+    "anchors": [
+      {
+        "hip": 27913,
+        "name": "Chi-1",
+        "pos": [
+          59,
+          11
+        ],
+        "uv": [
+          0.11523,
+          0.97852
+        ],
+        "ray": [
+          0.022988,
+          0.937751,
+          0.346546
+        ]
+      },
+      {
+        "hip": 27366,
+        "name": "Saiph",
+        "pos": [
+          329,
+          477
+        ],
+        "uv": [
+          0.64258,
+          0.06836
+        ],
+        "ray": [
+          0.052638,
+          0.984386,
+          -0.167966
+        ]
+      },
+      {
+        "hip": 22449,
+        "name": "Tabit",
+        "pos": [
+          421,
+          91
+        ],
+        "uv": [
+          0.82227,
+          0.82227
+        ],
+        "ray": [
+          0.299149,
+          0.946478,
+          0.121198
+        ]
+      }
     ],
-    "brightestStar": "Rigel"
+    "svgMatrix": {
+      "a": 0.00121411,
+      "b": 0.00065205,
+      "c": -0.00063756,
+      "d": 0.0012329,
+      "e": 0.293066,
+      "f": 0.071929
+    }
   },
   "Pav": {
     "id": "Pav",
     "name": "Pavo",
     "english": "Peacock",
-    "artFile": "pavo.png",
-    "artUrl": "/sky_art-1/pavo.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 24119
+    "filename": "pavo.png",
+    "url": "/sky_art-1/pavo.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.304638,
+        -0.112562,
+        -0.995913
+      ],
+      "du": [
+        -0.4301,
+        -0.16181,
+        0.002491
+      ],
+      "dv": [
+        0.148055,
+        -0.38413,
+        0.20798
+      ]
     },
-    "direction": [
-      0.1501,
-      -0.3754,
-      -0.9146
+    "anchors": [
+      {
+        "hip": 100751,
+        "name": "Peacock",
+        "pos": [
+          55,
+          60
+        ],
+        "uv": [
+          0.21484,
+          0.76562
+        ],
+        "ray": [
+          0.325588,
+          -0.441425,
+          -0.836143
+        ]
+      },
+      {
+        "hip": 98495,
+        "name": "Eps",
+        "pos": [
+          110,
+          208
+        ],
+        "uv": [
+          0.42969,
+          0.1875
+        ],
+        "ray": [
+          0.14759,
+          -0.254114,
+          -0.955847
+        ]
+      },
+      {
+        "hip": 86929,
+        "name": "Eta",
+        "pos": [
+          235,
+          146
+        ],
+        "uv": [
+          0.91797,
+          0.42969
+        ],
+        "ray": [
+          -0.026563,
+          -0.426154,
+          -0.904261
+        ]
+      }
     ],
-    "brightestStar": "Peacock"
+    "svgMatrix": {
+      "a": 0.00339226,
+      "b": 3.764e-05,
+      "c": -1.781e-05,
+      "d": 0.00336704,
+      "e": 0.080018,
+      "f": 0.042809
+    }
   },
   "Peg": {
     "id": "Peg",
     "name": "Pegasus",
     "english": "Pegasus",
-    "artFile": "pegasus.png",
-    "artUrl": "/sky_art-1/pegasus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 33947
+    "filename": "pegasus.png",
+    "url": "/sky_art-1/pegasus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.710646,
+        -0.167268,
+        0.840078
+      ],
+      "du": [
+        0.313907,
+        0.516749,
+        -0.50407
+      ],
+      "dv": [
+        0.00653,
+        -0.596244,
+        -0.551263
+      ]
     },
-    "direction": [
-      0.8822,
-      -0.3061,
-      0.3579
+    "anchors": [
+      {
+        "hip": 107315,
+        "name": "Enif",
+        "pos": [
+          164,
+          41
+        ],
+        "uv": [
+          0.32031,
+          0.91992
+        ],
+        "ray": [
+          0.817201,
+          -0.550245,
+          0.171499
+        ]
+      },
+      {
+        "hip": 109410,
+        "name": "Pi-2",
+        "pos": [
+          47,
+          283
+        ],
+        "uv": [
+          0.0918,
+          0.44727
+        ],
+        "ray": [
+          0.742382,
+          -0.386512,
+          0.547245
+        ]
+      },
+      {
+        "hip": 1067,
+        "name": "Algenib",
+        "pos": [
+          409,
+          349
+        ],
+        "uv": [
+          0.79883,
+          0.31836
+        ],
+        "ray": [
+          0.963483,
+          0.055705,
+          0.261913
+        ]
+      }
     ],
-    "brightestStar": "Enif"
+    "svgMatrix": {
+      "a": -0.00130252,
+      "b": 0.00114221,
+      "c": -0.00123168,
+      "d": -0.0012649,
+      "e": 1.119504,
+      "f": 0.547902
+    }
   },
   "Per": {
     "id": "Per",
     "name": "Perseus",
     "english": "Perseus",
-    "artFile": "perseus.png",
-    "artUrl": "/sky_art-1/perseus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 51300
+    "filename": "perseus.png",
+    "url": "/sky_art-1/perseus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.374828,
+        0.855762,
+        0.488558
+      ],
+      "du": [
+        0.35793,
+        -0.359446,
+        0.053055
+      ],
+      "dv": [
+        -0.27176,
+        -0.219233,
+        0.372139
+      ]
     },
-    "direction": [
-      0.4445,
-      0.5473,
-      0.7091
+    "anchors": [
+      {
+        "hip": 18532,
+        "name": "Eps",
+        "pos": [
+          164,
+          323
+        ],
+        "uv": [
+          0.32031,
+          0.36914
+        ],
+        "ray": [
+          0.38916,
+          0.659699,
+          0.642924
+        ]
+      },
+      {
+        "hip": 15863,
+        "name": "Mirfak",
+        "pos": [
+          299,
+          175
+        ],
+        "uv": [
+          0.58398,
+          0.6582
+        ],
+        "ray": [
+          0.40498,
+          0.501552,
+          0.764485
+        ]
+      },
+      {
+        "hip": 13254,
+        "name": "HIP 13254",
+        "pos": [
+          385,
+          386
+        ],
+        "uv": [
+          0.75195,
+          0.24609
+        ],
+        "ray": [
+          0.577096,
+          0.531524,
+          0.620034
+        ]
+      }
     ],
-    "brightestStar": "Mirfak"
+    "svgMatrix": {
+      "a": 0.00168681,
+      "b": -0.00026384,
+      "c": 0.00022531,
+      "d": 0.00169812,
+      "e": -0.157687,
+      "f": 0.110398
+    }
   },
   "Phe": {
     "id": "Phe",
     "name": "Phoenix",
     "english": "Phoenix",
-    "artFile": "phoenix.png",
-    "artUrl": "/sky_art-1/phoenix.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 17236
+    "filename": "phoenix.png",
+    "url": "/sky_art-1/phoenix.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.62473,
+        0.382618,
+        -0.693612
+      ],
+      "du": [
+        -0.12296,
+        -0.20385,
+        -0.164897
+      ],
+      "dv": [
+        0.183651,
+        -0.199221,
+        0.118933
+      ]
     },
-    "direction": [
-      0.6566,
-      0.1684,
-      -0.7352
+    "anchors": [
+      {
+        "hip": 8837,
+        "name": "Psi",
+        "pos": [
+          55,
+          243
+        ],
+        "uv": [
+          0.21484,
+          0.05078
+        ],
+        "ray": [
+          0.607639,
+          0.328706,
+          -0.722999
+        ]
+      },
+      {
+        "hip": 765,
+        "name": "Eps",
+        "pos": [
+          209,
+          15
+        ],
+        "uv": [
+          0.81641,
+          0.94141
+        ],
+        "ray": [
+          0.697234,
+          0.028646,
+          -0.716271
+        ]
+      },
+      {
+        "hip": 5348,
+        "name": "Wurren",
+        "pos": [
+          229,
+          214
+        ],
+        "uv": [
+          0.89453,
+          0.16406
+        ],
+        "ray": [
+          0.544868,
+          0.167584,
+          -0.821605
+        ]
+      }
     ],
-    "brightestStar": "Ankaa"
+    "svgMatrix": {
+      "a": 0.00202155,
+      "b": 0.00286507,
+      "c": -0.00288907,
+      "d": 0.00211964,
+      "e": 0.496949,
+      "f": -0.268279
+    }
   },
   "Pic": {
     "id": "Pic",
     "name": "Pictor",
     "english": "Painter",
-    "artFile": "pictor.png",
-    "artUrl": "/sky_art-1/pictor.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 11097
+    "filename": "pictor.png",
+    "url": "/sky_art-1/pictor.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.101533,
+        0.456767,
+        -0.884357
+      ],
+      "du": [
+        0.232944,
+        0.031441,
+        -0.017511
+      ],
+      "dv": [
+        -0.018294,
+        0.17635,
+        0.138456
+      ]
     },
-    "direction": [
-      -0.0129,
-      0.5507,
-      -0.8346
+    "anchors": [
+      {
+        "hip": 32607,
+        "name": "Alp",
+        "pos": [
+          4,
+          252
+        ],
+        "uv": [
+          0.01562,
+          0.01562
+        ],
+        "ray": [
+          -0.098179,
+          0.460014,
+          -0.882467
+        ]
+      },
+      {
+        "hip": 27530,
+        "name": "Gam",
+        "pos": [
+          148,
+          138
+        ],
+        "uv": [
+          0.57812,
+          0.46094
+        ],
+        "ray": [
+          0.024705,
+          0.556231,
+          -0.830661
+        ]
+      },
+      {
+        "hip": 27321,
+        "name": "Bet",
+        "pos": [
+          167,
+          38
+        ],
+        "uv": [
+          0.65234,
+          0.85156
+        ],
+        "ray": [
+          0.034847,
+          0.627451,
+          -0.777876
+        ]
+      }
     ],
-    "brightestStar": "Alp Pic"
-  },
-  "Psc": {
-    "id": "Psc",
-    "name": "Pisces",
-    "english": "Fishes",
-    "artFile": "pisces.png",
-    "artUrl": "/sky_art-1/pisces.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 52817
-    },
-    "direction": [
-      0.9724,
-      0.1627,
-      0.1674
-    ],
-    "brightestStar": "Alpherg"
+    "svgMatrix": {
+      "a": 0.00354948,
+      "b": -0.00012036,
+      "c": 0.00023962,
+      "d": 0.00343732,
+      "e": 0.158262,
+      "f": 0.014218
+    }
   },
   "PsA": {
     "id": "PsA",
     "name": "Piscis Austrinus",
     "english": "Southern\u2005Fish",
-    "artFile": "piscis_austrinus.png",
-    "artUrl": "/sky_art-1/piscis_austrinus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 12235
+    "filename": "piscis_austrinus.png",
+    "url": "/sky_art-1/piscis_austrinus.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.656203,
+        -0.551985,
+        -0.547353
+      ],
+      "du": [
+        0.185199,
+        0.093932,
+        0.197961
+      ],
+      "dv": [
+        0.016987,
+        0.254694,
+        -0.140191
+      ]
     },
-    "direction": [
-      0.7834,
-      -0.3341,
-      -0.5241
+    "anchors": [
+      {
+        "hip": 113246,
+        "name": "Del",
+        "pos": [
+          190,
+          5
+        ],
+        "uv": [
+          0.74219,
+          0.98047
+        ],
+        "ray": [
+          0.81031,
+          -0.23255,
+          -0.537883
+        ]
+      },
+      {
+        "hip": 107608,
+        "name": "The",
+        "pos": [
+          82,
+          202
+        ],
+        "uv": [
+          0.32031,
+          0.21094
+        ],
+        "ray": [
+          0.719107,
+          -0.468173,
+          -0.513516
+        ]
+      },
+      {
+        "hip": 111954,
+        "name": "Eps",
+        "pos": [
+          236,
+          92
+        ],
+        "uv": [
+          0.92188,
+          0.64062
+        ],
+        "ray": [
+          0.837815,
+          -0.302228,
+          -0.454669
+        ]
+      }
     ],
-    "brightestStar": "Fomalhaut"
+    "svgMatrix": {
+      "a": -0.00174088,
+      "b": -0.00261464,
+      "c": 0.002614,
+      "d": -0.00179727,
+      "e": 0.467671,
+      "f": 1.126686
+    }
+  },
+  "Psc": {
+    "id": "Psc",
+    "name": "Pisces",
+    "english": "Fishes",
+    "filename": "pisces.png",
+    "url": "/sky_art-1/pisces.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.822044,
+        0.641642,
+        0.125603
+      ],
+      "du": [
+        0.180708,
+        -0.519787,
+        -0.467018
+      ],
+      "dv": [
+        -0.015544,
+        -0.48595,
+        0.531209
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 4889,
+        "name": "Sig",
+        "pos": [
+          24,
+          104
+        ],
+        "uv": [
+          0.04688,
+          0.79688
+        ],
+        "ray": [
+          0.818129,
+          0.230036,
+          0.527019
+        ]
+      },
+      {
+        "hip": 9487,
+        "name": "Alrescha",
+        "pos": [
+          111,
+          489
+        ],
+        "uv": [
+          0.2168,
+          0.04492
+        ],
+        "ray": [
+          0.860523,
+          0.507124,
+          0.048218
+        ]
+      },
+      {
+        "hip": 114971,
+        "name": "Gam",
+        "pos": [
+          481,
+          155
+        ],
+        "uv": [
+          0.93945,
+          0.69727
+        ],
+        "ray": [
+          0.980973,
+          -0.185509,
+          0.057255
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00099618,
+      "b": 0.00088894,
+      "c": -0.00089062,
+      "d": 0.001007,
+      "e": 0.460272,
+      "f": 0.119847
+    }
   },
   "Pup": {
     "id": "Pup",
     "name": "Puppis",
     "english": "Poop\u2005Deck",
-    "artFile": "puppis.png",
-    "artUrl": "/sky_art-1/puppis.png",
-    "historicalNote": "Historically part of Argo Navis (Poop\u2005Deck). Mapped to puppis.png (and argonavis.png).",
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 52573
+    "filename": "argonavis.png",
+    "url": "/sky_art-1/argonavis.png",
+    "note": "Part of classical Argo Navis (Keel, Poop Deck, Sails). Mapped to argonavis.png.",
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.507365,
+        -0.038753,
+        -1.030129
+      ],
+      "du": [
+        0.751233,
+        0.534937,
+        0.061753
+      ],
+      "dv": [
+        -0.429757,
+        0.523754,
+        0.608761
+      ]
     },
-    "direction": [
-      -0.3694,
-      0.7642,
-      -0.5287
+    "anchors": [
+      {
+        "hip": 45238,
+        "name": "Miaplacidus",
+        "pos": [
+          202,
+          455
+        ],
+        "uv": [
+          0.39453,
+          0.11133
+        ],
+        "ray": [
+          -0.258825,
+          0.230605,
+          -0.937993
+        ]
+      },
+      {
+        "hip": 50191,
+        "name": "HIP 50191",
+        "pos": [
+          62,
+          216
+        ],
+        "uv": [
+          0.12109,
+          0.57812
+        ],
+        "ray": [
+          -0.664849,
+          0.32882,
+          -0.670711
+        ]
+      },
+      {
+        "hip": 39757,
+        "name": "Tureis",
+        "pos": [
+          298,
+          22
+        ],
+        "uv": [
+          0.58203,
+          0.95703
+        ],
+        "ray": [
+          -0.481415,
+          0.773847,
+          -0.411583
+        ]
+      }
     ],
-    "brightestStar": "Gam-2 Pup"
+    "svgMatrix": {
+      "a": 0.0028285,
+      "b": -0.0004373,
+      "c": 0.00050544,
+      "d": 0.00263563,
+      "e": -0.594265,
+      "f": 0.259699
+    }
   },
   "Pyx": {
     "id": "Pyx",
     "name": "Pyxis",
     "english": "Compass",
-    "artFile": "pyxis.png",
-    "artUrl": "/sky_art-1/pyxis.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 18557
+    "filename": "pyxis.png",
+    "url": "/sky_art-1/pyxis.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.496052,
+        0.622366,
+        -0.607892
+      ],
+      "du": [
+        -0.003173,
+        0.097048,
+        0.116188
+      ],
+      "dv": [
+        -0.133833,
+        -0.067069,
+        0.047147
+      ]
     },
-    "direction": [
-      -0.519,
-      0.6448,
-      -0.5611
+    "anchors": [
+      {
+        "hip": 41723,
+        "name": "HIP 41723",
+        "pos": [
+          152,
+          220
+        ],
+        "uv": [
+          0.59375,
+          0.14062
+        ],
+        "ray": [
+          -0.516756,
+          0.670557,
+          -0.532275
+        ]
+      },
+      {
+        "hip": 42828,
+        "name": "Alp",
+        "pos": [
+          94,
+          159
+        ],
+        "uv": [
+          0.36719,
+          0.37891
+        ],
+        "ray": [
+          -0.547928,
+          0.632588,
+          -0.547364
+        ]
+      },
+      {
+        "hip": 42515,
+        "name": "Bet",
+        "pos": [
+          44,
+          202
+        ],
+        "uv": [
+          0.17188,
+          0.21094
+        ],
+        "ray": [
+          -0.524828,
+          0.624899,
+          -0.577977
+        ]
+      }
     ],
-    "brightestStar": "Naos"
+    "svgMatrix": {
+      "a": 0.00079287,
+      "b": -0.00188733,
+      "c": 0.00198119,
+      "d": 0.00077529,
+      "e": -0.076165,
+      "f": 0.506999
+    }
   },
   "Ret": {
     "id": "Ret",
     "name": "Reticulum",
     "english": "Net",
-    "artFile": "reticulum.png",
-    "artUrl": "/sky_art-1/reticulum.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 9635
+    "filename": "reticulum.png",
+    "url": "/sky_art-1/reticulum.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        0.22032,
+        0.476969,
+        -0.85174
+      ],
+      "du": [
+        -0.065871,
+        -0.068049,
+        -0.05052
+      ],
+      "dv": [
+        0.080846,
+        -0.068873,
+        -0.013679
+      ]
     },
-    "direction": [
-      0.2271,
-      0.4103,
-      -0.8832
+    "anchors": [
+      {
+        "hip": 18597,
+        "name": "Del",
+        "pos": [
+          47,
+          56
+        ],
+        "uv": [
+          0.36719,
+          0.5625
+        ],
+        "ray": [
+          0.24161,
+          0.413241,
+          -0.877985
+        ]
+      },
+      {
+        "hip": 19780,
+        "name": "Rhombus",
+        "pos": [
+          78,
+          88
+        ],
+        "uv": [
+          0.60938,
+          0.3125
+        ],
+        "ray": [
+          0.205445,
+          0.413978,
+          -0.8868
+        ]
+      },
+      {
+        "hip": 19921,
+        "name": "Eps",
+        "pos": [
+          16,
+          111
+        ],
+        "uv": [
+          0.125,
+          0.13281
+        ],
+        "ray": [
+          0.222824,
+          0.459315,
+          -0.859871
+        ]
+      }
     ],
-    "brightestStar": "Rhombus"
-  },
-  "Sge": {
-    "id": "Sge",
-    "name": "Sagitta",
-    "english": "Arrow",
-    "artFile": "sagitta.png",
-    "artUrl": "/sky_art-1/sagitta.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 4501
-    },
-    "direction": [
-      0.4263,
-      -0.8478,
-      0.3155
-    ],
-    "brightestStar": "Gam Sge"
-  },
-  "Sgr": {
-    "id": "Sgr",
-    "name": "Sagittarius",
-    "english": "Archer",
-    "artFile": "sagittarius.png",
-    "artUrl": "/sky_art-1/sagittarius.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 33662
-    },
-    "direction": [
-      0.2431,
-      -0.8501,
-      -0.4672
-    ],
-    "brightestStar": "Kaus Australis"
-  },
-  "Sco": {
-    "id": "Sco",
-    "name": "Scorpius",
-    "english": "Scorpion",
-    "artFile": "scorpius.png",
-    "artUrl": "/sky_art-1/scorpius.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 38820
-    },
-    "direction": [
-      -0.255,
-      -0.7925,
-      -0.5539
-    ],
-    "brightestStar": "Antares"
+    "svgMatrix": {
+      "a": -0.0015136,
+      "b": 0.00637995,
+      "c": -0.00637067,
+      "d": -0.0015412,
+      "e": 0.978275,
+      "f": 0.188887
+    }
   },
   "Scl": {
     "id": "Scl",
     "name": "Sculptor",
     "english": "Sculptor",
-    "artFile": "sculptor.png",
-    "artUrl": "/sky_art-1/sculptor.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 13799
+    "filename": "sculptor.png",
+    "url": "/sky_art-1/sculptor.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.808801,
+        0.34157,
+        -0.543018
+      ],
+      "du": [
+        -0.123187,
+        -0.300447,
+        -0.23511
+      ],
+      "dv": [
+        0.155577,
+        -0.260865,
+        0.256468
+      ]
     },
-    "direction": [
-      0.8449,
-      -0.0166,
-      -0.5347
+    "anchors": [
+      {
+        "hip": 115102,
+        "name": "Gam",
+        "pos": [
+          231,
+          39
+        ],
+        "uv": [
+          0.90234,
+          0.84766
+        ],
+        "ray": [
+          0.82952,
+          -0.15066,
+          -0.537771
+        ]
+      },
+      {
+        "hip": 116231,
+        "name": "Bet",
+        "pos": [
+          240,
+          106
+        ],
+        "uv": [
+          0.9375,
+          0.58594
+        ],
+        "ray": [
+          0.784472,
+          -0.092949,
+          -0.613159
+        ]
+      },
+      {
+        "hip": 4577,
+        "name": "Alp",
+        "pos": [
+          32,
+          174
+        ],
+        "uv": [
+          0.125,
+          0.32031
+        ],
+        "ray": [
+          0.843236,
+          0.220456,
+          -0.490257
+        ]
+      }
     ],
-    "brightestStar": "Alp Scl"
+    "svgMatrix": {
+      "a": 0.00239143,
+      "b": 0.00207086,
+      "c": -0.00197859,
+      "d": 0.00239211,
+      "e": 0.402975,
+      "f": -0.07817
+    }
+  },
+  "Sco": {
+    "id": "Sco",
+    "name": "Scorpius",
+    "english": "Scorpion",
+    "filename": "scorpius.png",
+    "url": "/sky_art-1/scorpius.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.022477,
+        -0.748191,
+        -0.716633
+      ],
+      "du": [
+        -0.423523,
+        0.141562,
+        0.011152
+      ],
+      "dv": [
+        -0.062257,
+        -0.213204,
+        0.390168
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 78820,
+        "name": "Acrab",
+        "pos": [
+          447,
+          29
+        ],
+        "uv": [
+          0.87305,
+          0.94336
+        ],
+        "ray": [
+          -0.450963,
+          -0.825729,
+          -0.338827
+        ]
+      },
+      {
+        "hip": 85927,
+        "name": "Shaula",
+        "pos": [
+          62,
+          365
+        ],
+        "uv": [
+          0.12109,
+          0.28711
+        ],
+        "ray": [
+          -0.091637,
+          -0.792262,
+          -0.603261
+        ]
+      },
+      {
+        "hip": 82729,
+        "name": "Zet-2",
+        "pos": [
+          217,
+          462
+        ],
+        "uv": [
+          0.42383,
+          0.09766
+        ],
+        "ray": [
+          -0.208058,
+          -0.709014,
+          -0.673804
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00162332,
+      "b": -2.726e-05,
+      "c": 3.46e-05,
+      "d": 0.00161259,
+      "e": 0.103646,
+      "f": 0.091471
+    }
   },
   "Sct": {
     "id": "Sct",
     "name": "Scutum",
     "english": "Shield",
-    "artFile": "scutum.png",
-    "artUrl": "/sky_art-1/scutum.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 22049
+    "filename": "scutum.png",
+    "url": "/sky_art-1/scutum.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.358693,
+        -0.916133,
+        -0.234671
+      ],
+      "du": [
+        -0.196787,
+        -0.014521,
+        -0.132032
+      ],
+      "dv": [
+        -0.123217,
+        -0.060464,
+        0.191431
+      ]
     },
-    "direction": [
-      0.1652,
-      -0.9733,
-      -0.1591
+    "anchors": [
+      {
+        "hip": 92175,
+        "name": "Bet",
+        "pos": [
+          52,
+          17
+        ],
+        "uv": [
+          0.20312,
+          0.93359
+        ],
+        "ray": [
+          0.203686,
+          -0.975531,
+          -0.082771
+        ]
+      },
+      {
+        "hip": 90595,
+        "name": "Gam",
+        "pos": [
+          224,
+          124
+        ],
+        "uv": [
+          0.875,
+          0.51562
+        ],
+        "ray": [
+          0.12297,
+          -0.960016,
+          -0.251492
+        ]
+      },
+      {
+        "hip": 92814,
+        "name": "HIP 92814",
+        "pos": [
+          139,
+          206
+        ],
+        "uv": [
+          0.54297,
+          0.19531
+        ],
+        "ray": [
+          0.227778,
+          -0.935827,
+          -0.268971
+        ]
+      }
     ],
-    "brightestStar": "Alp Sct"
+    "svgMatrix": {
+      "a": 0.0033849,
+      "b": 0.00229914,
+      "c": -0.00224978,
+      "d": 0.00335924,
+      "e": 0.192378,
+      "f": -0.05495
+    }
   },
   "Ser": {
     "id": "Ser",
     "name": "Serpens Cauda",
     "english": "Serpent",
-    "artFile": "ophiuchus.png",
-    "artUrl": "/sky_art-1/ophiuchus.png",
-    "historicalNote": "Serpent entwined with Ophiuchus.",
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 35799
+    "filename": "ophiuchus.png",
+    "url": "/sky_art-1/ophiuchus.png",
+    "note": "Historically depicted entwined with Ophiuchus (Serpent Bearer). Mapped to ophiuchus.png.",
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.296356,
+        -0.992627,
+        -0.485888
+      ],
+      "du": [
+        -0.864452,
+        0.175776,
+        -0.044339
+      ],
+      "dv": [
+        -0.071145,
+        0.036505,
+        0.8709
+      ]
     },
-    "direction": [
-      0.0095,
-      -0.99,
-      -0.1405
+    "anchors": [
+      {
+        "hip": 92946,
+        "name": "Alya",
+        "pos": [
+          5,
+          183
+        ],
+        "uv": [
+          0.00977,
+          0.64258
+        ],
+        "ray": [
+          0.242199,
+          -0.967454,
+          0.073301
+        ]
+      },
+      {
+        "hip": 77233,
+        "name": "Zhou",
+        "pos": [
+          452,
+          47
+        ],
+        "uv": [
+          0.88281,
+          0.9082
+        ],
+        "ray": [
+          -0.531406,
+          -0.804296,
+          0.265923
+        ]
+      },
+      {
+        "hip": 85755,
+        "name": "HIP 85755",
+        "pos": [
+          238,
+          453
+        ],
+        "uv": [
+          0.46484,
+          0.11523
+        ],
+        "ray": [
+          -0.113677,
+          -0.906712,
+          -0.406141
+        ]
+      }
     ],
-    "brightestStar": "Sabik"
+    "svgMatrix": {
+      "a": 0.00268677,
+      "b": 0.00023148,
+      "c": -0.0001519,
+      "d": 0.00260399,
+      "e": 0.167678,
+      "f": -0.266913
+    }
   },
   "Sex": {
     "id": "Sex",
     "name": "Sextans",
     "english": "Sextant",
-    "artFile": "sextans.png",
-    "artUrl": "/sky_art-1/sextans.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 12176
+    "filename": "sextans.png",
+    "url": "/sky_art-1/sextans.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        -0.956653,
+        0.279841,
+        -0.140749
+      ],
+      "du": [
+        0.12069,
+        0.227798,
+        -0.096514
+      ],
+      "dv": [
+        0.013544,
+        0.09578,
+        0.258136
+      ]
     },
-    "direction": [
-      -0.8959,
-      0.4413,
-      -0.0518
+    "anchors": [
+      {
+        "hip": 51437,
+        "name": "Bet",
+        "pos": [
+          26,
+          54
+        ],
+        "uv": [
+          0.20312,
+          0.57812
+        ],
+        "ray": [
+          -0.924308,
+          0.381485,
+          -0.011118
+        ]
+      },
+      {
+        "hip": 49641,
+        "name": "Alp",
+        "pos": [
+          68,
+          36
+        ],
+        "uv": [
+          0.53125,
+          0.71875
+        ],
+        "ray": [
+          -0.882802,
+          0.469701,
+          -0.006486
+        ]
+      },
+      {
+        "hip": 48437,
+        "name": "Gam",
+        "pos": [
+          118,
+          84
+        ],
+        "uv": [
+          0.92188,
+          0.34375
+        ],
+        "ray": [
+          -0.840736,
+          0.522767,
+          -0.140988
+        ]
+      }
     ],
-    "brightestStar": "Alp Sex"
+    "svgMatrix": {
+      "a": 0.00915778,
+      "b": 0.00343133,
+      "c": -0.0033552,
+      "d": 0.00925514,
+      "e": 0.064938,
+      "f": -0.37414
+    }
+  },
+  "Sge": {
+    "id": "Sge",
+    "name": "Sagitta",
+    "english": "Arrow",
+    "filename": "sagitta.png",
+    "url": "/sky_art-1/sagitta.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.462682,
+        -0.839156,
+        0.284053
+      ],
+      "du": [
+        -0.066999,
+        -0.029857,
+        0.015493
+      ],
+      "dv": [
+        0.028284,
+        0.038602,
+        0.060284
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 98920,
+        "name": "Eta",
+        "pos": [
+          6,
+          12
+        ],
+        "uv": [
+          0.02344,
+          0.95312
+        ],
+        "ray": [
+          0.48807,
+          -0.803063,
+          0.341874
+        ]
+      },
+      {
+        "hip": 96757,
+        "name": "Sham",
+        "pos": [
+          249,
+          213
+        ],
+        "uv": [
+          0.97266,
+          0.16797
+        ],
+        "ray": [
+          0.402265,
+          -0.861713,
+          0.309248
+        ]
+      },
+      {
+        "hip": 96837,
+        "name": "Bet",
+        "pos": [
+          218,
+          243
+        ],
+        "uv": [
+          0.85156,
+          0.05078
+        ],
+        "ray": [
+          0.407064,
+          -0.862621,
+          0.300307
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00282554,
+      "b": -0.00061023,
+      "c": 0.00164226,
+      "d": 0.00247211,
+      "e": -0.173664,
+      "f": 0.207435
+    }
+  },
+  "Sgr": {
+    "id": "Sgr",
+    "name": "Sagittarius",
+    "english": "Archer",
+    "filename": "sagittarius.png",
+    "url": "/sky_art-1/sagittarius.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.546261,
+        -0.651356,
+        -0.610907
+      ],
+      "du": [
+        -0.481088,
+        -0.001276,
+        -0.182579
+      ],
+      "dv": [
+        -0.147618,
+        -0.286335,
+        0.403243
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 95168,
+        "name": "Rho-1",
+        "pos": [
+          96,
+          82
+        ],
+        "uv": [
+          0.1875,
+          0.83984
+        ],
+        "ray": [
+          0.332081,
+          -0.892072,
+          -0.30648
+        ]
+      },
+      {
+        "hip": 95294,
+        "name": "Arkab Posterior",
+        "pos": [
+          307,
+          492
+        ],
+        "uv": [
+          0.59961,
+          0.03906
+        ],
+        "ray": [
+          0.252029,
+          -0.663307,
+          -0.704631
+        ]
+      },
+      {
+        "hip": 87072,
+        "name": "HIP 87072",
+        "pos": [
+          506,
+          100
+        ],
+        "uv": [
+          0.98828,
+          0.80469
+        ],
+        "ray": [
+          -0.047976,
+          -0.883028,
+          -0.466862
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00136274,
+      "b": 0.00064268,
+      "c": -0.00063389,
+      "d": 0.00134994,
+      "e": 0.30244,
+      "f": 0.007263
+    }
   },
   "Tau": {
     "id": "Tau",
     "name": "Taurus",
     "english": "Bull",
-    "artFile": "taurus.png",
-    "artUrl": "/sky_art-1/taurus.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 30557
+    "filename": "taurus.png",
+    "url": "/sky_art-1/taurus.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        0.264013,
+        0.949195,
+        -0.084529
+      ],
+      "du": [
+        0.497268,
+        -0.226874,
+        0.210393
+      ],
+      "dv": [
+        -0.226507,
+        -0.018507,
+        0.53623
+      ]
     },
-    "direction": [
-      0.4162,
-      0.8739,
-      0.2512
+    "anchors": [
+      {
+        "hip": 26451,
+        "name": "Tianguan",
+        "pos": [
+          13,
+          92
+        ],
+        "uv": [
+          0.02539,
+          0.82031
+        ],
+        "ray": [
+          0.090833,
+          0.928252,
+          0.36069
+        ]
+      },
+      {
+        "hip": 15900,
+        "name": "Omi",
+        "pos": [
+          399,
+          438
+        ],
+        "uv": [
+          0.7793,
+          0.14453
+        ],
+        "ray": [
+          0.618795,
+          0.769717,
+          0.156932
+        ]
+      },
+      {
+        "hip": 17847,
+        "name": "Atlas",
+        "pos": [
+          382,
+          192
+        ],
+        "uv": [
+          0.74609,
+          0.625
+        ],
+        "ray": [
+          0.493455,
+          0.768358,
+          0.407588
+        ]
+      }
     ],
-    "brightestStar": "Aldebaran"
+    "svgMatrix": {
+      "a": 0.00140861,
+      "b": -0.00046017,
+      "c": 0.00049631,
+      "d": 0.00148163,
+      "e": 0.068754,
+      "f": 0.209267
+    }
   },
   "Tel": {
     "id": "Tel",
     "name": "Telescopium",
     "english": "Telescope",
-    "artFile": "telescopium.png",
-    "artUrl": "/sky_art-1/telescopium.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 3637
+    "filename": "telescopium.png",
+    "url": "/sky_art-1/telescopium.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        0.14009,
+        -0.623269,
+        -0.772549
+      ],
+      "du": [
+        -0.067227,
+        0.001419,
+        -0.009682
+      ],
+      "dv": [
+        -0.007896,
+        -0.099049,
+        0.089063
+      ]
     },
-    "direction": [
-      0.066,
-      -0.6786,
-      -0.7315
+    "anchors": [
+      {
+        "hip": 91589,
+        "name": "HIP 91589",
+        "pos": [
+          30,
+          66
+        ],
+        "uv": [
+          0.23438,
+          0.48438
+        ],
+        "ray": [
+          0.120509,
+          -0.670914,
+          -0.731678
+        ]
+      },
+      {
+        "hip": 90422,
+        "name": "Alp",
+        "pos": [
+          101,
+          40
+        ],
+        "uv": [
+          0.78906,
+          0.6875
+        ],
+        "ray": [
+          0.081615,
+          -0.690246,
+          -0.718957
+        ]
+      },
+      {
+        "hip": 90568,
+        "name": "Zet",
+        "pos": [
+          106,
+          92
+        ],
+        "uv": [
+          0.82812,
+          0.28125
+        ],
+        "ray": [
+          0.082197,
+          -0.649952,
+          -0.755517
+        ]
+      }
     ],
-    "brightestStar": "Alp Tel"
-  },
-  "Tri": {
-    "id": "Tri",
-    "name": "Triangulum",
-    "english": "Triangle",
-    "artFile": "triangulum.png",
-    "artUrl": "/sky_art-1/triangulum.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "RGB",
-      "bytes": 4278
-    },
-    "direction": [
-      0.7156,
-      0.4404,
-      0.5422
-    ],
-    "brightestStar": "Bet Tri"
+    "svgMatrix": {
+      "a": 0.00729034,
+      "b": 0.00134699,
+      "c": -0.00191089,
+      "d": 0.01444641,
+      "e": -0.462714,
+      "f": -0.593558
+    }
   },
   "TrA": {
     "id": "TrA",
     "name": "Triangulum Australe",
     "english": "Southern\u2005Triangle",
-    "artFile": "triangulum_australe.png",
-    "artUrl": "/sky_art-1/triangulum_australe.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 128,
-      "height": 128,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 3201
+    "filename": "triangulum_australe.png",
+    "url": "/sky_art-1/triangulum_australe.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        -0.075029,
+        -0.4181,
+        -0.912805
+      ],
+      "du": [
+        -0.01128,
+        0.164183,
+        -0.056808
+      ],
+      "dv": [
+        -0.170459,
+        0.002452,
+        0.033048
+      ]
     },
-    "direction": [
-      -0.1927,
-      -0.3345,
-      -0.9225
+    "anchors": [
+      {
+        "hip": 77952,
+        "name": "Bet",
+        "pos": [
+          26,
+          12
+        ],
+        "uv": [
+          0.20312,
+          0.90625
+        ],
+        "ray": [
+          -0.231799,
+          -0.382529,
+          -0.894394
+        ]
+      },
+      {
+        "hip": 74946,
+        "name": "Gam",
+        "pos": [
+          108,
+          15
+        ],
+        "uv": [
+          0.84375,
+          0.88281
+        ],
+        "ray": [
+          -0.23503,
+          -0.277406,
+          -0.931561
+        ]
+      },
+      {
+        "hip": 82273,
+        "name": "Atria",
+        "pos": [
+          60,
+          106
+        ],
+        "uv": [
+          0.46875,
+          0.17188
+        ],
+        "ray": [
+          -0.109614,
+          -0.340718,
+          -0.933754
+        ]
+      }
     ],
-    "brightestStar": "Atria"
+    "svgMatrix": {
+      "a": 0.00387002,
+      "b": 0.00624151,
+      "c": -0.0062612,
+      "d": 0.00376804,
+      "e": 0.555122,
+      "f": 0.009713
+    }
+  },
+  "Tri": {
+    "id": "Tri",
+    "name": "Triangulum",
+    "english": "Triangle",
+    "filename": "triangulum.png",
+    "url": "/sky_art-1/triangulum.png",
+    "note": null,
+    "width": 128,
+    "height": 128,
+    "affine": {
+      "p0": [
+        0.688226,
+        0.53002,
+        0.505138
+      ],
+      "du": [
+        0.11036,
+        -0.095001,
+        -0.074732
+      ],
+      "dv": [
+        -0.015142,
+        -0.118062,
+        0.115495
+      ]
+    },
+    "anchors": [
+      {
+        "hip": 10064,
+        "name": "Bet",
+        "pos": [
+          16,
+          42
+        ],
+        "uv": [
+          0.125,
+          0.67188
+        ],
+        "ray": [
+          0.691848,
+          0.438822,
+          0.573395
+        ]
+      },
+      {
+        "hip": 10559,
+        "name": "HIP 10559",
+        "pos": [
+          13,
+          70
+        ],
+        "uv": [
+          0.10156,
+          0.45312
+        ],
+        "ray": [
+          0.692574,
+          0.466875,
+          0.549882
+        ]
+      },
+      {
+        "hip": 8796,
+        "name": "Mothallah",
+        "pos": [
+          97,
+          78
+        ],
+        "uv": [
+          0.75781,
+          0.39062
+        ],
+        "ray": [
+          0.765944,
+          0.411909,
+          0.493621
+        ]
+      }
+    ],
+    "svgMatrix": {
+      "a": 0.00874904,
+      "b": 0.00548376,
+      "c": -0.00584767,
+      "d": 0.00869208,
+      "e": 0.469937,
+      "f": -0.331781
+    }
   },
   "Tuc": {
     "id": "Tuc",
     "name": "Tucana",
     "english": "Toucan",
-    "artFile": "tucana.png",
-    "artUrl": "/sky_art-1/tucana.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 6617
+    "filename": "tucana.png",
+    "url": "/sky_art-1/tucana.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.245032,
+        0.139142,
+        -0.979741
+      ],
+      "du": [
+        0.040491,
+        -0.409846,
+        0.050939
+      ],
+      "dv": [
+        0.37343,
+        0.015337,
+        0.148896
+      ]
     },
-    "direction": [
-      0.4431,
-      -0.0632,
-      -0.8943
+    "anchors": [
+      {
+        "hip": 2484,
+        "name": "Bet-1",
+        "pos": [
+          53,
+          121
+        ],
+        "uv": [
+          0.20703,
+          0.52734
+        ],
+        "ray": [
+          0.45034,
+          0.062379,
+          -0.890675
+        ]
+      },
+      {
+        "hip": 114996,
+        "name": "Gam",
+        "pos": [
+          154,
+          86
+        ],
+        "uv": [
+          0.60156,
+          0.66406
+        ],
+        "ray": [
+          0.51737,
+          -0.097221,
+          -0.850221
+        ]
+      },
+      {
+        "hip": 110130,
+        "name": "Lang-Exster",
+        "pos": [
+          224,
+          141
+        ],
+        "uv": [
+          0.875,
+          0.44922
+        ],
+        "ray": [
+          0.448213,
+          -0.212584,
+          -0.868282
+        ]
+      }
     ],
-    "brightestStar": "Lang-Exster"
+    "svgMatrix": {
+      "a": 0.00415308,
+      "b": -0.00113485,
+      "c": 0.00065791,
+      "d": 0.00417999,
+      "e": -0.170298,
+      "f": 0.151529
+    }
   },
   "UMa": {
     "id": "UMa",
     "name": "Ursa Major",
     "english": "Big\u2005Dipper",
-    "artFile": "ursa_major.png",
-    "artUrl": "/sky_art-1/ursa_major.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 28437
+    "filename": "ursa_major.png",
+    "url": "/sky_art-1/ursa_major.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -1.09204,
+        0.17471,
+        0.45561
+      ],
+      "du": [
+        0.60056,
+        0.550734,
+        0.292875
+      ],
+      "dv": [
+        0.562477,
+        -0.582859,
+        0.337197
+      ]
     },
-    "direction": [
-      -0.5821,
-      0.1712,
-      0.7949
+    "anchors": [
+      {
+        "hip": 67301,
+        "name": "Alkaid",
+        "pos": [
+          26,
+          75
+        ],
+        "uv": [
+          0.05078,
+          0.85352
+        ],
+        "ray": [
+          -0.58146,
+          -0.294802,
+          0.758285
+        ]
+      },
+      {
+        "hip": 41704,
+        "name": "Muscida",
+        "pos": [
+          452,
+          272
+        ],
+        "uv": [
+          0.88281,
+          0.46875
+        ],
+        "ray": [
+          -0.298196,
+          0.38769,
+          0.872224
+        ]
+      },
+      {
+        "hip": 50372,
+        "name": "Tania Borealis",
+        "pos": [
+          258,
+          394
+        ],
+        "uv": [
+          0.50391,
+          0.23047
+        ],
+        "ray": [
+          -0.65978,
+          0.317898,
+          0.680905
+        ]
+      }
     ],
-    "brightestStar": "Alioth"
+    "svgMatrix": {
+      "a": 0.00128261,
+      "b": -0.0008837,
+      "c": 0.00078012,
+      "d": 0.00127498,
+      "e": 0.046134,
+      "f": 0.269206
+    }
   },
   "UMi": {
     "id": "UMi",
     "name": "Ursa Minor",
     "english": "Little\u2005Dipper",
-    "artFile": "ursa_minor.png",
-    "artUrl": "/sky_art-1/ursa_minor.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 9042
+    "filename": "ursa_minor.png",
+    "url": "/sky_art-1/ursa_minor.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.00419,
+        -0.291503,
+        0.97398
+      ],
+      "du": [
+        -0.317922,
+        0.028477,
+        -0.028132
+      ],
+      "dv": [
+        0.026647,
+        0.322965,
+        0.029924
+      ]
     },
-    "direction": [
-      -0.0958,
-      -0.1444,
-      0.9849
+    "anchors": [
+      {
+        "hip": 11767,
+        "name": "Polaris",
+        "pos": [
+          15,
+          20
+        ],
+        "uv": [
+          0.05859,
+          0.92188
+        ],
+        "ray": [
+          0.010127,
+          0.007899,
+          0.999918
+        ]
+      },
+      {
+        "hip": 59504,
+        "name": "HIP 59504",
+        "pos": [
+          193,
+          51
+        ],
+        "uv": [
+          0.75391,
+          0.80078
+        ],
+        "ray": [
+          -0.214155,
+          -0.01141,
+          0.976733
+        ]
+      },
+      {
+        "hip": 79822,
+        "name": "Eta",
+        "pos": [
+          93,
+          209
+        ],
+        "uv": [
+          0.36328,
+          0.18359
+        ],
+        "ray": [
+          -0.106413,
+          -0.221864,
+          0.969254
+        ]
+      }
     ],
-    "brightestStar": "Polaris"
+    "svgMatrix": {
+      "a": 0.00375557,
+      "b": -0.00030585,
+      "c": 0.00036262,
+      "d": 0.00381802,
+      "e": 0.111814,
+      "f": 0.050565
+    }
   },
   "Vel": {
     "id": "Vel",
     "name": "Vela",
     "english": "Sails",
-    "artFile": "vela.png",
-    "artUrl": "/sky_art-1/vela.png",
-    "historicalNote": "Historically part of Argo Navis (Sails). Mapped to vela.png (and argonavis.png).",
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 52573
+    "filename": "argonavis.png",
+    "url": "/sky_art-1/argonavis.png",
+    "note": "Part of classical Argo Navis (Keel, Poop Deck, Sails). Mapped to argonavis.png.",
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.507365,
+        -0.038753,
+        -1.030129
+      ],
+      "du": [
+        0.751233,
+        0.534937,
+        0.061753
+      ],
+      "dv": [
+        -0.429757,
+        0.523754,
+        0.608761
+      ]
     },
-    "direction": [
-      -0.52,
-      0.4003,
-      -0.7545
+    "anchors": [
+      {
+        "hip": 45238,
+        "name": "Miaplacidus",
+        "pos": [
+          202,
+          455
+        ],
+        "uv": [
+          0.39453,
+          0.11133
+        ],
+        "ray": [
+          -0.258825,
+          0.230605,
+          -0.937993
+        ]
+      },
+      {
+        "hip": 50191,
+        "name": "HIP 50191",
+        "pos": [
+          62,
+          216
+        ],
+        "uv": [
+          0.12109,
+          0.57812
+        ],
+        "ray": [
+          -0.664849,
+          0.32882,
+          -0.670711
+        ]
+      },
+      {
+        "hip": 39757,
+        "name": "Tureis",
+        "pos": [
+          298,
+          22
+        ],
+        "uv": [
+          0.58203,
+          0.95703
+        ],
+        "ray": [
+          -0.481415,
+          0.773847,
+          -0.411583
+        ]
+      }
     ],
-    "brightestStar": "Gam-2 Vel"
+    "svgMatrix": {
+      "a": 0.00265079,
+      "b": 0.00043914,
+      "c": -0.0004359,
+      "d": 0.00261116,
+      "e": 0.204911,
+      "f": -0.224845
+    }
   },
   "Vir": {
     "id": "Vir",
     "name": "Virgo",
     "english": "Virgin",
-    "artFile": "virgo.png",
-    "artUrl": "/sky_art-1/virgo.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 512,
-      "height": 512,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 42158
+    "filename": "virgo.png",
+    "url": "/sky_art-1/virgo.png",
+    "note": null,
+    "width": 512,
+    "height": 512,
+    "affine": {
+      "p0": [
+        -0.705644,
+        -0.844343,
+        -0.065074
+      ],
+      "du": [
+        -0.311518,
+        0.563524,
+        -0.441437
+      ],
+      "dv": [
+        -0.010972,
+        0.456768,
+        0.641651
+      ]
     },
-    "direction": [
-      -0.945,
-      -0.327,
-      -0.0069
+    "anchors": [
+      {
+        "hip": 72220,
+        "name": "HIP 72220",
+        "pos": [
+          65,
+          389
+        ],
+        "uv": [
+          0.12695,
+          0.24023
+        ],
+        "ray": [
+          -0.747828,
+          -0.66307,
+          0.033031
+        ]
+      },
+      {
+        "hip": 57380,
+        "name": "Nu",
+        "pos": [
+          454,
+          57
+        ],
+        "uv": [
+          0.88672,
+          0.88867
+        ],
+        "ray": [
+          -0.991623,
+          0.061261,
+          0.113713
+        ]
+      },
+      {
+        "hip": 65474,
+        "name": "Spica",
+        "pos": [
+          338,
+          382
+        ],
+        "uv": [
+          0.66016,
+          0.25391
+        ],
+        "ray": [
+          -0.91408,
+          -0.356353,
+          -0.193572
+        ]
+      }
     ],
-    "brightestStar": "Spica"
+    "svgMatrix": {
+      "a": 0.00118464,
+      "b": 0.0008716,
+      "c": -0.00074265,
+      "d": 0.00123599,
+      "e": 0.368513,
+      "f": -0.074988
+    }
   },
   "Vol": {
     "id": "Vol",
     "name": "Volans",
     "english": "Flying\u2005Fish",
-    "artFile": "volans.png",
-    "artUrl": "/sky_art-1/volans.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 5273
+    "filename": "volans.png",
+    "url": "/sky_art-1/volans.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        -0.220374,
+        0.103426,
+        -0.982926
+      ],
+      "du": [
+        0.227684,
+        0.172618,
+        0.005891
+      ],
+      "dv": [
+        -0.171688,
+        0.208967,
+        0.097797
+      ]
     },
-    "direction": [
-      -0.1889,
-      0.3185,
-      -0.9289
+    "anchors": [
+      {
+        "hip": 44382,
+        "name": "Alp",
+        "pos": [
+          55,
+          85
+        ],
+        "uv": [
+          0.21484,
+          0.66797
+        ],
+        "ray": [
+          -0.28614,
+          0.280095,
+          -0.916335
+        ]
+      },
+      {
+        "hip": 35228,
+        "name": "Del",
+        "pos": [
+          210,
+          122
+        ],
+        "uv": [
+          0.82031,
+          0.52344
+        ],
+        "ray": [
+          -0.123471,
+          0.354408,
+          -0.926903
+        ]
+      },
+      {
+        "hip": 34481,
+        "name": "Gam-2",
+        "pos": [
+          207,
+          163
+        ],
+        "uv": [
+          0.80859,
+          0.36328
+        ],
+        "ray": [
+          -0.098642,
+          0.318918,
+          -0.942635
+        ]
+      }
     ],
-    "brightestStar": "Bet Vol"
+    "svgMatrix": {
+      "a": 0.00457493,
+      "b": -0.00051905,
+      "c": 0.00065251,
+      "d": 0.00459864,
+      "e": -0.18065,
+      "f": 0.030392
+    }
   },
   "Vul": {
     "id": "Vul",
     "name": "Vulpecula",
     "english": "Little\u2005Fox",
-    "artFile": "vulpecula.png",
-    "artUrl": "/sky_art-1/vulpecula.png",
-    "historicalNote": null,
-    "imageInfo": {
-      "width": 256,
-      "height": 256,
-      "aspectRatio": 1.0,
-      "mode": "L",
-      "bytes": 11241
+    "filename": "vulpecula.png",
+    "url": "/sky_art-1/vulpecula.png",
+    "note": null,
+    "width": 256,
+    "height": 256,
+    "affine": {
+      "p0": [
+        0.510677,
+        -0.74736,
+        0.380089
+      ],
+      "du": [
+        -0.176646,
+        -0.143205,
+        -0.122786
+      ],
+      "dv": [
+        -0.084024,
+        0.005571,
+        0.213059
+      ]
     },
-    "direction": [
-      0.406,
-      -0.8083,
-      0.4264
+    "anchors": [
+      {
+        "hip": 98543,
+        "name": "HIP 98543",
+        "pos": [
+          35,
+          133
+        ],
+        "uv": [
+          0.13672,
+          0.48047
+        ],
+        "ray": [
+          0.446155,
+          -0.764262,
+          0.46567
+        ]
+      },
+      {
+        "hip": 95771,
+        "name": "Anser",
+        "pos": [
+          174,
+          111
+        ],
+        "uv": [
+          0.67969,
+          0.56641
+        ],
+        "ray": [
+          0.343021,
+          -0.841539,
+          0.417311
+        ]
+      },
+      {
+        "hip": 94703,
+        "name": "HIP 94703",
+        "pos": [
+          242,
+          135
+        ],
+        "uv": [
+          0.94531,
+          0.47266
+        ],
+        "ray": [
+          0.303977,
+          -0.8801,
+          0.364721
+        ]
+      }
     ],
-    "brightestStar": "Anser"
+    "svgMatrix": {
+      "a": 0.00270792,
+      "b": 0.00159307,
+      "c": -0.00096805,
+      "d": 0.0025837,
+      "e": 0.331705,
+      "f": -0.059412
+    }
   }
 }
