@@ -6,6 +6,8 @@ import { OrbitalCameraController, GameState, SolvedStats } from '../core/Orbital
 import { CelestialScene } from '../rendering/CelestialScene';
 import { TelemetryHUD } from '../ui/TelemetryHUD';
 import { ConstellationSelector } from '../ui/ConstellationSelector';
+import { SettingsModal } from '../ui/SettingsModal';
+import { ControlSettings, loadControlSettings, saveControlSettings, DEFAULT_CONTROL_SETTINGS } from '../core/ControlSettings';
 
 export default function ConstellationAlignerApp() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -32,6 +34,8 @@ export default function ConstellationAlignerApp() {
   const [showArt, setShowArt] = useState<boolean>(false);
   const [showGhostGuide, setShowGhostGuide] = useState<boolean>(false);
   const [showSkyPanorama, setShowSkyPanorama] = useState<boolean>(true);
+  const [controlSettings, setControlSettings] = useState<ControlSettings>(loadControlSettings());
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
   // 1. Load astronomical dataset
   useEffect(() => {
@@ -139,6 +143,7 @@ export default function ConstellationAlignerApp() {
       },
     });
 
+    controller.setControlSettings(controlSettings);
     controllerRef.current = controller;
 
     // Mark previously solved constellations in scene
@@ -324,6 +329,23 @@ export default function ConstellationAlignerApp() {
     });
   }, []);
 
+  // Control Settings handlers
+  const handleUpdateControlSettings = useCallback((newPartial: Partial<ControlSettings>) => {
+    setControlSettings((prev) => {
+      const updated = { ...prev, ...newPartial };
+      saveControlSettings(updated);
+      controllerRef.current?.setControlSettings(updated);
+      return updated;
+    });
+  }, []);
+
+  const handleResetControlSettings = useCallback(() => {
+    const reset = { ...DEFAULT_CONTROL_SETTINGS };
+    setControlSettings(reset);
+    saveControlSettings(reset);
+    controllerRef.current?.setControlSettings(reset);
+  }, []);
+
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black select-none">
       {/* Three.js Canvas Container */}
@@ -383,6 +405,7 @@ export default function ConstellationAlignerApp() {
           onReturnToEarthHub={handleReturnToEarthHub}
           onRetryOrbit={handleRetryOrbit}
           onAutoAlign={handleAutoAlign}
+          onOpenSettings={() => setIsSettingsOpen(true)}
         />
       )}
 
@@ -397,6 +420,15 @@ export default function ConstellationAlignerApp() {
           onSelect={handleSelectConstellation}
         />
       )}
+
+      {/* Control Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        settings={controlSettings}
+        onUpdateSettings={handleUpdateControlSettings}
+        onResetSettings={handleResetControlSettings}
+      />
     </div>
   );
 }

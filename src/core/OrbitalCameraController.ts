@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { NormalizedConstellation, ORBIT_RADIUS } from './StarDataManager';
+import { ControlSettings, DEFAULT_CONTROL_SETTINGS, loadControlSettings } from './ControlSettings';
 
 export type GameState = 'EARTH_HUB' | 'PREVIEW' | 'DISPLACE' | 'ALIGN_PUZZLE' | 'RESOLVED';
 
@@ -67,11 +68,22 @@ export class OrbitalCameraController {
   private currentLineOpacity: number = 0.0;
   private currentDimFactor: number = 1.0;
 
+  // Control settings (inversion & sensitivity)
+  private controlSettings: ControlSettings = loadControlSettings();
+
   constructor(camera: THREE.PerspectiveCamera, callbacks: CameraControllerCallbacks = {}) {
     this.camera = camera;
     this.callbacks = callbacks;
     this.camera.position.set(0, 0, 0);
     this.camera.up.set(0, 0, 1);
+  }
+
+  public setControlSettings(settings: Partial<ControlSettings>) {
+    this.controlSettings = { ...this.controlSettings, ...settings };
+  }
+
+  public getControlSettings(): ControlSettings {
+    return { ...this.controlSettings };
   }
 
   public getState(): GameState {
@@ -485,8 +497,11 @@ export class OrbitalCameraController {
     if (!this.isPointerDown) return;
     if (this.state !== 'EARTH_HUB' && this.state !== 'ALIGN_PUZZLE') return;
 
-    const deltaX = clientX - this.prevPointerX;
-    const deltaY = clientY - this.prevPointerY;
+    const factorX = (this.controlSettings.invertX ? -1 : 1) * this.controlSettings.sensitivity;
+    const factorY = (this.controlSettings.invertY ? -1 : 1) * this.controlSettings.sensitivity;
+
+    const deltaX = (clientX - this.prevPointerX) * factorX;
+    const deltaY = (clientY - this.prevPointerY) * factorY;
     this.prevPointerX = clientX;
     this.prevPointerY = clientY;
 

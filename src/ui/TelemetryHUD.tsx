@@ -27,6 +27,7 @@ interface TelemetryHUDProps {
   onReturnToEarthHub: () => void;
   onRetryOrbit: () => void;
   onAutoAlign: () => void;
+  onOpenSettings?: () => void;
 }
 
 export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
@@ -51,6 +52,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   onReturnToEarthHub,
   onRetryOrbit,
   onAutoAlign,
+  onOpenSettings,
 }) => {
   // Format clean state label
   const getStateBadge = () => {
@@ -218,6 +220,25 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
               className="px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/95 border border-purple-500/20 hover:border-purple-400/50 text-xs text-white/70 hover:text-white transition-all backdrop-blur-xl shadow-lg"
             >
               Exit
+            </button>
+          )}
+
+          {/* Control Settings Button */}
+          {onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="w-8 h-8 rounded-full bg-black/75 hover:bg-purple-950/60 border border-purple-500/20 hover:border-purple-400/50 text-purple-300 hover:text-white transition-all backdrop-blur-xl flex items-center justify-center shadow-lg active:scale-95"
+              title="Control Settings (Invert X/Y axes, Sensitivity)"
+            >
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <circle cx="12" cy="12" r="3" strokeWidth={1.8} />
+              </svg>
             </button>
           )}
         </div>

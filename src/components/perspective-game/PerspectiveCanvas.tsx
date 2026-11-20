@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import * as THREE from 'three';
 import { STAR_VERTEX_SHADER, STAR_FRAGMENT_SHADER } from '@/components/constellation/shaders';
 import type { ConstellationLines, StarRecord } from '@/components/constellation/types';
+import { loadControlSettings } from '@/core/ControlSettings';
 
 interface PerspectiveCanvasProps {
   currentConstellationId: string;
@@ -367,10 +368,14 @@ export default function PerspectiveCanvas({
     const deltaY = e.clientY - prevMouseRef.current.y;
     prevMouseRef.current = { x: e.clientX, y: e.clientY };
 
+    const settings = loadControlSettings();
+    const factorX = (settings.invertX ? -1 : 1) * settings.sensitivity;
+    const factorY = (settings.invertY ? -1 : 1) * settings.sensitivity;
+
     // 3D Trackball / Arcball rotation
     const sensitivity = 0.0055;
-    const rotX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * sensitivity);
-    const rotY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * sensitivity);
+    const rotX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * factorY * sensitivity);
+    const rotY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * factorX * sensitivity);
 
     targetQuatRef.current.premultiply(rotY);
     targetQuatRef.current.premultiply(rotX);
@@ -394,9 +399,13 @@ export default function PerspectiveCanvas({
     const deltaY = e.touches[0].clientY - prevMouseRef.current.y;
     prevMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
 
+    const settings = loadControlSettings();
+    const factorX = (settings.invertX ? -1 : 1) * settings.sensitivity;
+    const factorY = (settings.invertY ? -1 : 1) * settings.sensitivity;
+
     const sensitivity = 0.0055;
-    const rotX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * sensitivity);
-    const rotY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * sensitivity);
+    const rotX = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), deltaY * factorY * sensitivity);
+    const rotY = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), deltaX * factorX * sensitivity);
 
     targetQuatRef.current.premultiply(rotY);
     targetQuatRef.current.premultiply(rotX);
