@@ -11,7 +11,6 @@ interface TelemetryHUDProps {
   timerSec: number;
   alphaDeg: number;
   accuracy: number;
-  soundEnabled: boolean;
   solvedStats: SolvedStats | null;
   showTimeoutModal: boolean;
   showAllLines?: boolean;
@@ -23,7 +22,6 @@ interface TelemetryHUDProps {
   onToggleGhostGuide?: () => void;
   showSkyPanorama?: boolean;
   onToggleSkyPanorama?: () => void;
-  onToggleSound: () => void;
   onStartAlignment?: () => void;
   onNextConstellation: () => void;
   onReturnToEarthHub: () => void;
@@ -37,7 +35,6 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   timerSec,
   alphaDeg,
   accuracy,
-  soundEnabled,
   solvedStats,
   showTimeoutModal,
   showAllLines = false,
@@ -49,7 +46,6 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   onToggleGhostGuide,
   showSkyPanorama = true,
   onToggleSkyPanorama,
-  onToggleSound,
   onStartAlignment,
   onNextConstellation,
   onReturnToEarthHub,
@@ -224,25 +220,6 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
               Exit
             </button>
           )}
-
-          {/* Sound Toggle */}
-          <button
-            onClick={onToggleSound}
-            aria-label={soundEnabled ? 'Mute audio' : 'Unmute audio'}
-            className="w-8 h-8 rounded-full bg-black/75 hover:bg-black/95 border border-purple-500/20 hover:border-purple-400/50 text-white/70 hover:text-purple-300 transition-all backdrop-blur-xl flex items-center justify-center shadow-lg"
-            title={soundEnabled ? 'Mute' : 'Unmute'}
-          >
-            {soundEnabled ? (
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-              </svg>
-            ) : (
-              <svg className="w-3.5 h-3.5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-              </svg>
-            )}
-          </button>
         </div>
       </header>
 

@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import * as THREE from 'three';
 import { STAR_VERTEX_SHADER, STAR_FRAGMENT_SHADER } from '@/components/constellation/shaders';
 import type { ConstellationLines, StarRecord } from '@/components/constellation/types';
-import { puzzleAudio } from './audio';
 
 interface PerspectiveCanvasProps {
   currentConstellationId: string;
@@ -174,14 +173,11 @@ export default function PerspectiveCanvas({
         }
 
         onAlignmentChange(acc);
-        puzzleAudio.updateResonance(acc / 100);
 
         // Magnetic Snap Condition: within 0.07 radians (~4 degrees)
         if (acc >= 94 && !solvedRef.current && !isSnappingRef.current) {
           isSnappingRef.current = true;
           targetQuatRef.current.copy(canonicalQuatRef.current);
-          puzzleAudio.playSnapSound();
-          puzzleAudio.playVictoryFanfare();
           onSolved();
         }
 
@@ -335,7 +331,6 @@ export default function PerspectiveCanvas({
 
   // Scramble perspective into a random 3D rotation
   const scramblePerspective = useCallback(() => {
-    puzzleAudio.playScrambleSound();
     isSnappingRef.current = false;
 
     // Generate random rotation axis orthogonal to Earth view

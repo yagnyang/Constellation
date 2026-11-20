@@ -6,7 +6,6 @@ import { OrbitalCameraController, GameState, SolvedStats } from '../core/Orbital
 import { CelestialScene } from '../rendering/CelestialScene';
 import { TelemetryHUD } from '../ui/TelemetryHUD';
 import { ConstellationSelector } from '../ui/ConstellationSelector';
-import { puzzleAudio } from './perspective-game/audio';
 
 export default function ConstellationAlignerApp() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -29,7 +28,6 @@ export default function ConstellationAlignerApp() {
   const [solvedStats, setSolvedStats] = useState<SolvedStats | null>(null);
   const [showTimeoutModal, setShowTimeoutModal] = useState<boolean>(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState<boolean>(false);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [showAllLines, setShowAllLines] = useState<boolean>(false);
   const [showArt, setShowArt] = useState<boolean>(false);
   const [showGhostGuide, setShowGhostGuide] = useState<boolean>(false);
@@ -111,26 +109,16 @@ export default function ConstellationAlignerApp() {
           setSolvedStats(null);
         } else if (newState === 'EARTH_HUB') {
           setShowTimeoutModal(false);
-          puzzleAudio.stopResonance();
         }
       },
       onAlignmentUpdate: (alpha, acc) => {
         setAlphaDeg(alpha);
         setAccuracy(acc);
-
-        // Web Audio resonance feedback during ALIGN_PUZZLE
-        if (controller.getState() === 'ALIGN_PUZZLE') {
-          puzzleAudio.updateResonance(acc / 100);
-        }
       },
       onTimerUpdate: (timeLeft) => {
         setTimerSec(timeLeft);
       },
       onSolved: (stats) => {
-        puzzleAudio.stopResonance();
-        puzzleAudio.playSnapSound();
-        setTimeout(() => puzzleAudio.playVictoryFanfare(), 150);
-
         setSolvedStats(stats);
         setSolvedIds((prev) => {
           const next = new Set(prev).add(stats.constellationId);
@@ -147,7 +135,6 @@ export default function ConstellationAlignerApp() {
         }
       },
       onTimeout: () => {
-        puzzleAudio.stopResonance();
         setShowTimeoutModal(true);
       },
     });
@@ -219,7 +206,6 @@ export default function ConstellationAlignerApp() {
       window.removeEventListener('pointerup', handleGlobalPointerUp);
       window.removeEventListener('pointercancel', handleGlobalPointerUp);
       window.removeEventListener('blur', handleGlobalPointerUp);
-      puzzleAudio.stopResonance();
       scene.dispose();
       sceneRef.current = null;
       controllerRef.current = null;
@@ -293,16 +279,6 @@ export default function ConstellationAlignerApp() {
   const handleAutoAlign = useCallback(() => {
     setShowTimeoutModal(false);
     controllerRef.current?.autoAlignToEarth();
-  }, []);
-
-  // Sound toggle
-  const handleToggleSound = useCallback(() => {
-    setSoundEnabled((prev) => {
-      const next = !prev;
-      puzzleAudio.enabled = next;
-      if (!next) puzzleAudio.stopResonance();
-      return next;
-    });
   }, []);
 
   // Sky View All-Constellation Lines & Art Toggle
@@ -388,7 +364,6 @@ export default function ConstellationAlignerApp() {
           timerSec={timerSec}
           alphaDeg={alphaDeg}
           accuracy={accuracy}
-          soundEnabled={soundEnabled}
           solvedStats={solvedStats}
           showTimeoutModal={showTimeoutModal}
           showAllLines={showAllLines}
@@ -400,7 +375,6 @@ export default function ConstellationAlignerApp() {
           onToggleGhostGuide={handleToggleGhostGuide}
           showSkyPanorama={showSkyPanorama}
           onToggleSkyPanorama={handleToggleSkyPanorama}
-          onToggleSound={handleToggleSound}
           onStartAlignment={() => {
             controllerRef.current?.handlePointerUp();
             controllerRef.current?.transitionTo('PREVIEW');

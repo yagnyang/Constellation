@@ -5,8 +5,6 @@ import { PuzzleLevel } from './levels';
 import {
   Sparkles,
   RotateCcw,
-  Volume2,
-  VolumeX,
   Compass,
   ArrowRight,
   Eye,
@@ -22,9 +20,7 @@ interface PerspectiveGameHUDProps {
   totalLevels: number;
   accuracy: number;
   isSolved: boolean;
-  soundEnabled: boolean;
   showGhostHint: boolean;
-  onToggleSound: () => void;
   onToggleHint: () => void;
   onScramble: () => void;
   onNextLevel: () => void;
@@ -38,9 +34,7 @@ export default function PerspectiveGameHUD({
   totalLevels,
   accuracy,
   isSolved,
-  soundEnabled,
   showGhostHint,
-  onToggleSound,
   onToggleHint,
   onScramble,
   onNextLevel,
@@ -93,13 +87,6 @@ export default function PerspectiveGameHUD({
             className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-gray-300 hover:text-white transition-colors"
           >
             PLANETARIUM
-          </button>
-          <button
-            onClick={onToggleSound}
-            className="p-2 rounded-xl text-cyan-300 hover:bg-white/10 transition-colors"
-            title={soundEnabled ? 'Mute Audio' : 'Unmute Audio'}
-          >
-            {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 text-gray-500" />}
           </button>
         </div>
       </div>

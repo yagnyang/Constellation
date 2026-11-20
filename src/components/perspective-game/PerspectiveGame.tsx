@@ -5,7 +5,6 @@ import PerspectiveCanvas from './PerspectiveCanvas';
 import PerspectiveGameHUD from './PerspectiveGameHUD';
 import LevelSelector from './LevelSelector';
 import { PUZZLE_LEVELS } from './levels';
-import { puzzleAudio } from './audio';
 import constellationLinesData from '@/components/constellation/data/constellation_lines.json';
 import starsData from '@/components/constellation/data/stars.json';
 import type { ConstellationLines, StarRecord } from '@/components/constellation/types';
@@ -18,7 +17,6 @@ export default function PerspectiveGame({ onOpenPlanetarium }: PerspectiveGamePr
   const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
   const [isSolved, setIsSolved] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
   const [showGhostHint, setShowGhostHint] = useState(false);
   const [showLevelSelector, setShowLevelSelector] = useState(false);
   const [scrambleKey, setScrambleKey] = useState(0);
@@ -51,15 +49,6 @@ export default function PerspectiveGame({ onOpenPlanetarium }: PerspectiveGamePr
     setCurrentLevelIndex(idx);
   }, []);
 
-  const handleToggleSound = useCallback(() => {
-    setSoundEnabled((prev) => {
-      const next = !prev;
-      puzzleAudio.enabled = next;
-      if (!next) puzzleAudio.stopResonance();
-      return next;
-    });
-  }, []);
-
   return (
     <div className="relative w-full h-full bg-[#02040b] overflow-hidden select-none">
       {/* 3D Perspective WebGL Canvas */}
@@ -81,9 +70,7 @@ export default function PerspectiveGame({ onOpenPlanetarium }: PerspectiveGamePr
         totalLevels={PUZZLE_LEVELS.length}
         accuracy={accuracy}
         isSolved={isSolved}
-        soundEnabled={soundEnabled}
         showGhostHint={showGhostHint}
-        onToggleSound={handleToggleSound}
         onToggleHint={() => setShowGhostHint((prev) => !prev)}
         onScramble={handleScramble}
         onNextLevel={handleNextLevel}
