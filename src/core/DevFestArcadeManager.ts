@@ -217,12 +217,12 @@ export function saveLeaderboardEntry(
 }
 
 /**
- * Clear leaderboard for booth organizers
+ * Clear leaderboard for booth organizers (writes empty array so seed records are not re-inserted)
  */
 export function clearLeaderboard(): void {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.removeItem(LEADERBOARD_STORAGE_KEY);
+    localStorage.setItem(LEADERBOARD_STORAGE_KEY, JSON.stringify([]));
   } catch {}
 }
 

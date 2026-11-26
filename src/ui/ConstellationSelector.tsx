@@ -133,7 +133,6 @@ export const ConstellationSelector: React.FC<ConstellationSelectorProps> = ({
                     key={c.id}
                     onClick={() => {
                       onSelect(c.id);
-                      onToggle();
                     }}
                     className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center justify-between group ${
                       isSelected

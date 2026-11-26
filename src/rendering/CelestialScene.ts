@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { TIFFLoader } from 'three/examples/jsm/loaders/TIFFLoader.js';
 import {
   NormalizedConstellation,
   bvToRgb,
@@ -74,13 +73,20 @@ export class CelestialScene {
   private ghostGuideMat: THREE.ShaderMaterial | null = null;
   private showGhostGuide: boolean = false;
 
-  // 6. Constellation Art Textured Meshes on Celestial Sphere
+  // 6. Constellation Art Textured Meshes on Celestial Sphere (lazy-loaded on demand)
   private constellationArtGroup: THREE.Group;
   private allArtMeshes: Map<string, THREE.Mesh> = new Map();
+  private allArtUrls: Map<string, string> = new Map();
+  private loadedArtIds: Set<string> = new Set();
   private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
   private activeConstellationId: string | null = null;
   private allArtVisible: boolean = false;
   private allArtOpacity: number = 0;
+
+  // Dynamic per-constellation camera FOV framing
+  private readonly defaultHubFov: number = 60;
+  private currentFov: number = 60;
+  private activeBounds2D: { maxTanX: number; maxTanY: number } | null = null;
 
   // Solved constellations permanent display in celestial sphere
   private solvedGroup: THREE.Group;
@@ -135,9 +141,9 @@ export class CelestialScene {
 
   /**
    * Initializes the realistic 360-degree celestial sphere background panorama
-   * using the high-quality TIFF image (with progressive instant preview & fallback).
+   * using the optimized WebP texture (with JPG fallback) and proper GPU texture disposal.
    */
-  public initBackgroundPanorama(imagePath: string = '/bg-image.tif') {
+  public initBackgroundPanorama(imagePath: string = '/bg-image.webp') {
     if (this.backgroundSkyMesh) {
       this.scene.remove(this.backgroundSkyMesh);
       this.backgroundSkyMesh.geometry.dispose();
@@ -176,6 +182,14 @@ export class CelestialScene {
     this.scene.add(this.backgroundSkyMesh);
 
     const applyTexture = (texture: THREE.Texture) => {
+      if (!this.backgroundSkyMat) {
+        texture.dispose();
+        return;
+      }
+      if (this.backgroundTexture && this.backgroundTexture !== texture) {
+        this.backgroundTexture.dispose();
+      }
+
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.ClampToEdgeWrapping;
@@ -185,48 +199,21 @@ export class CelestialScene {
       texture.needsUpdate = true;
 
       this.backgroundTexture = texture;
-      if (this.backgroundSkyMat) {
-        this.backgroundSkyMat.map = texture;
-        this.backgroundSkyMat.needsUpdate = true;
-      }
+      this.backgroundSkyMat.map = texture;
+      this.backgroundSkyMat.needsUpdate = true;
     };
 
-    // 1. Progressive load: show instant web preview so there is zero delay
     const texLoader = new THREE.TextureLoader();
     texLoader.load(
-      '/bg-image.webp',
-      (tex) => {
-        if (!this.backgroundSkyMat?.map) {
-          applyTexture(tex);
-        }
-      },
+      imagePath,
+      (tex) => applyTexture(tex),
       undefined,
       () => {
-        texLoader.load('/bg-image.jpg', (tex) => {
-          if (!this.backgroundSkyMat?.map) {
-            applyTexture(tex);
-          }
-        });
+        if (imagePath !== '/bg-image.jpg') {
+          texLoader.load('/bg-image.jpg', (tex) => applyTexture(tex));
+        }
       }
     );
-
-    // 2. Load the high-quality TIFF image directly with TIFFLoader
-    const isTiff = imagePath.toLowerCase().endsWith('.tif') || imagePath.toLowerCase().endsWith('.tiff');
-    if (isTiff) {
-      const tiffLoader = new TIFFLoader();
-      tiffLoader.load(
-        imagePath,
-        (tiffTex) => {
-          applyTexture(tiffTex);
-        },
-        undefined,
-        (err) => {
-          console.warn('TIFFLoader error, keeping web texture fallback:', err);
-        }
-      );
-    } else {
-      texLoader.load(imagePath, (tex) => applyTexture(tex));
-    }
   }
 
   public setBackgroundSkyVisible(visible: boolean) {
@@ -310,6 +297,12 @@ export class CelestialScene {
    */
   public setActiveConstellation(constellation: NormalizedConstellation) {
     this.activeConstellationId = constellation.id;
+    this.activeBounds2D = constellation.bounds2D
+      ? { maxTanX: constellation.bounds2D.maxTanX, maxTanY: constellation.bounds2D.maxTanY }
+      : null;
+
+    // Lazy-load active constellation art texture on demand
+    this.ensureArtTextureLoaded(constellation.id);
 
     // 1. Clean up previous 3D star spheres
     this.clearStarSpheres();
@@ -528,6 +521,9 @@ export class CelestialScene {
   public setAllConstellationLinesVisible(visible: boolean, restartAnimation: boolean = false) {
     this.allLinesVisible = visible;
     this.allArtVisible = visible; // Lines button also turns constellation artwork on
+    if (visible) {
+      this.ensureAllArtTexturesLoaded();
+    }
     if (restartAnimation || (visible && this.allLinesAnimTime === 0)) {
       this.allLinesAnimTime = 0.0;
     }
@@ -535,6 +531,37 @@ export class CelestialScene {
 
   public setAllConstellationArtVisible(visible: boolean) {
     this.allArtVisible = visible;
+    if (visible) {
+      this.ensureAllArtTexturesLoaded();
+    }
+  }
+
+  private ensureArtTextureLoaded(id: string) {
+    if (this.loadedArtIds.has(id)) return;
+    const mesh = this.allArtMeshes.get(id);
+    const url = this.allArtUrls.get(id);
+    if (!mesh || !url) return;
+
+    this.loadedArtIds.add(id);
+    this.textureLoader.load(url, (texture) => {
+      if (!this.allArtMeshes.has(id)) {
+        texture.dispose();
+        return;
+      }
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const mat = mesh.material as THREE.MeshBasicMaterial;
+      if (mat.map && mat.map !== texture) {
+        mat.map.dispose();
+      }
+      mat.map = texture;
+      mat.needsUpdate = true;
+    });
+  }
+
+  private ensureAllArtTexturesLoaded() {
+    this.allArtMeshes.forEach((_mesh, id) => {
+      this.ensureArtTextureLoaded(id);
+    });
   }
 
   public isAllConstellationArtVisible(): boolean {
@@ -545,24 +572,29 @@ export class CelestialScene {
    * Initializes textured 3D artwork plates for all 88 constellations on the celestial sphere
    */
   public initAllConstellationArt(constellations: NormalizedConstellation[]) {
-    // Clear any previous meshes
+    // Clear any previous meshes and textures
     this.allArtMeshes.forEach((mesh) => {
       this.constellationArtGroup.remove(mesh);
       mesh.geometry.dispose();
       if (Array.isArray(mesh.material)) {
-        mesh.material.forEach((m) => m.dispose());
+        mesh.material.forEach((m) => {
+          (m as THREE.MeshBasicMaterial).map?.dispose();
+          m.dispose();
+        });
       } else {
+        (mesh.material as THREE.MeshBasicMaterial).map?.dispose();
         mesh.material.dispose();
       }
     });
     this.allArtMeshes.clear();
+    this.allArtUrls.clear();
+    this.loadedArtIds.clear();
 
     const R = 98.2; // Positioned right along the celestial sphere of radius 100
 
     for (const c of constellations) {
       const artUrl = c.art?.url || `/sky_art-1/${c.name.toLowerCase().replace(/ /g, '_')}.png`;
-      const texture = this.textureLoader.load(artUrl);
-      texture.colorSpace = THREE.SRGBColorSpace;
+      this.allArtUrls.set(c.id, artUrl);
 
       let meshGeo: THREE.BufferGeometry;
       const meshPos = new THREE.Vector3(0, 0, 0);
@@ -601,7 +633,7 @@ export class CelestialScene {
       }
 
       const mat = new THREE.MeshBasicMaterial({
-        map: texture,
+        map: null,
         transparent: true,
         opacity: 0.0,
         blending: THREE.AdditiveBlending,
@@ -617,6 +649,12 @@ export class CelestialScene {
 
       this.constellationArtGroup.add(mesh);
       this.allArtMeshes.set(c.id, mesh);
+    }
+
+    if (this.allArtVisible) {
+      this.ensureAllArtTexturesLoaded();
+    } else if (this.activeConstellationId) {
+      this.ensureArtTextureLoaded(this.activeConstellationId);
     }
   }
 
@@ -734,6 +772,15 @@ export class CelestialScene {
     this.lastRenderTime = now;
     const elapsedTime = this.clock.getElapsedTime();
 
+    // Dynamic per-constellation camera FOV framing (returns to 60 deg in Sky View)
+    const targetFov = this.computeTargetFov(gameState);
+    const fovLerp = 1.0 - Math.exp(-5.5 * deltaSec);
+    this.currentFov += (targetFov - this.currentFov) * fovLerp;
+    if (Math.abs(this.currentFov - this.camera.fov) > 0.02) {
+      this.camera.fov = this.currentFov;
+      this.camera.updateProjectionMatrix();
+    }
+
     // 0. Update background sky panorama sphere
     if (this.backgroundSkyMesh) {
       this.backgroundSkyMesh.position.copy(this.camera.position);
@@ -806,7 +853,8 @@ export class CelestialScene {
     }
 
     // 3. Update active puzzle lines
-    if (this.activeLinesMat) {
+    if (this.activeLinesMesh && this.activeLinesMat) {
+      this.activeLinesMesh.visible = lineOpacity > 0.001;
       this.activeLinesMat.uniforms.uLineOpacity.value = lineOpacity;
       this.activeLinesMat.uniforms.uTime.value = elapsedTime;
       this.activeLinesMat.uniforms.uAccuracy.value = accuracy;
@@ -855,11 +903,18 @@ export class CelestialScene {
       }
     }
 
-    // In deep space puzzle, hide other solved constellations so only target constellation stands out
+    // Solved constellation highlight lines: only show in Sky View when Lines are ON (fade smoothly with allLinesOpacity)
     const isDeepSpace = dimFactor < 0.5;
-    this.solvedGroup.visible = !isDeepSpace;
+    const showSolvedLines = gameState === 'EARTH_HUB' && !isDeepSpace && this.allLinesOpacity > 0.001;
+    this.solvedGroup.visible = showSolvedLines;
+    if (showSolvedLines) {
+      this.solvedConstellationsMap.forEach((mesh) => {
+        const mat = mesh.material as THREE.LineBasicMaterial;
+        mat.opacity = 0.85 * this.allLinesOpacity;
+      });
+    }
 
-    // 6. Update Constellation Artwork Plates in Celestial Sky
+    // 6. Update Constellation Artwork Plates in Celestial Sky (only render plates whose texture has loaded)
     if (gameState === 'EARTH_HUB') {
       const shouldShowArt = this.allArtVisible;
       if (shouldShowArt) {
@@ -873,10 +928,11 @@ export class CelestialScene {
 
       if (isArtVisible) {
         this.allArtMeshes.forEach((mesh, id) => {
-          mesh.visible = true;
           const mat = mesh.material as THREE.MeshBasicMaterial;
+          mesh.visible = Boolean(mat.map);
+          if (!mesh.visible) return;
           if (id === this.activeConstellationId) {
-            mat.opacity = Math.max(this.allArtOpacity * 1.5, 0.88);
+            mat.opacity = Math.min(0.88, this.allArtOpacity * 1.5);
             mat.color.setHex(0xc084fc); // Brilliant radiant violet
           } else {
             mat.opacity = this.allArtOpacity;
@@ -889,7 +945,7 @@ export class CelestialScene {
       this.constellationArtGroup.visible = !isDeepSpace;
       this.allArtMeshes.forEach((mesh, id) => {
         const mat = mesh.material as THREE.MeshBasicMaterial;
-        if (id === this.activeConstellationId) {
+        if (id === this.activeConstellationId && mat.map) {
           mesh.visible = true;
           mat.opacity = gameState === 'RESOLVED' ? 0.92 : 0.70;
           mat.color.setHex(gameState === 'RESOLVED' ? 0xd8b4fe : 0xc084fc);
@@ -903,7 +959,7 @@ export class CelestialScene {
       const alignRatio = Math.max(0, Math.min(1, accuracy / 100));
       this.allArtMeshes.forEach((mesh, id) => {
         const mat = mesh.material as THREE.MeshBasicMaterial;
-        if (id === this.activeConstellationId) {
+        if (id === this.activeConstellationId && mat.map) {
           mesh.visible = true;
           mat.opacity = 0.15 + 0.55 * alignRatio;
           mat.color.setHex(alignRatio > 0.85 ? 0xd8b4fe : 0xc084fc);
@@ -916,6 +972,18 @@ export class CelestialScene {
     }
 
     this.renderer.render(this.scene, this.camera);
+  }
+
+  private computeTargetFov(gameState: GameState): number {
+    if (gameState === 'EARTH_HUB' || !this.activeBounds2D) {
+      return this.defaultHubFov;
+    }
+    const aspect = Math.max(0.55, this.camera.aspect || 1.6);
+    const { maxTanX, maxTanY } = this.activeBounds2D;
+    const reqTan = Math.max(maxTanY, maxTanX / (aspect * 0.88)) * 1.45;
+    const reqFov = (2.0 * Math.atan(reqTan) * 180.0) / Math.PI;
+    // Clamp between 32 deg (frames tiny constellations cleanly with 3D depth headroom) and 92 deg (frames Hydra/Eridanus without heavy fisheye)
+    return Math.max(32.0, Math.min(92.0, reqFov));
   }
 
   public resize(width: number, height: number) {
@@ -967,12 +1035,18 @@ export class CelestialScene {
       this.constellationArtGroup.remove(mesh);
       mesh.geometry.dispose();
       if (Array.isArray(mesh.material)) {
-        mesh.material.forEach((m) => m.dispose());
+        mesh.material.forEach((m) => {
+          (m as THREE.MeshBasicMaterial).map?.dispose();
+          m.dispose();
+        });
       } else {
+        (mesh.material as THREE.MeshBasicMaterial).map?.dispose();
         mesh.material.dispose();
       }
     });
     this.allArtMeshes.clear();
+    this.allArtUrls.clear();
+    this.loadedArtIds.clear();
     if (this.ghostGuideMesh) {
       this.camera.remove(this.ghostGuideMesh);
       this.ghostGuideMesh.geometry.dispose();

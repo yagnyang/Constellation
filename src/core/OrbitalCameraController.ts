@@ -12,6 +12,7 @@ export interface SolvedStats {
   finalAlphaDeg: number;
   distMin: number;
   distMax: number;
+  isAutoAligned?: boolean;
 }
 
 export interface CameraControllerCallbacks {
@@ -95,7 +96,8 @@ export class OrbitalCameraController {
 
   public getDisplaceProgress(): number {
     if (this.state === 'DISPLACE') {
-      return Math.min(1.0, this.stateElapsedTimeMs / 1500);
+      const displaceDuration = this.isFastDisplace ? 800 : 1500;
+      return Math.min(1.0, this.stateElapsedTimeMs / displaceDuration);
     }
     if (this.state === 'ALIGN_PUZZLE' || this.state === 'RESOLVED') {
       return 1.0;
@@ -167,7 +169,7 @@ export class OrbitalCameraController {
   /**
    * Transition to a new state with deterministic initialization
    */
-  public transitionTo(nextState: GameState) {
+  public transitionTo(nextState: GameState, options?: { isAutoAligned?: boolean }) {
     this.state = nextState;
     this.stateElapsedTimeMs = 0;
     this.isPointerDown = false;
@@ -268,6 +270,7 @@ export class OrbitalCameraController {
           finalAlphaDeg: +this.currentAlpha.toFixed(1),
           distMin: this.activeConstellation.distMin,
           distMax: this.activeConstellation.distMax,
+          isAutoAligned: options?.isAutoAligned === true,
         });
       }
     }
@@ -304,20 +307,22 @@ export class OrbitalCameraController {
 
   // --- STATE 1: EARTH_HUB ---
   private updateEarthHubState(deltaSec: number) {
-    // Apply inertia damping
+    // Apply frame-rate-independent inertia damping (calibrated to 0.88 per frame at 60Hz)
     if (!this.isPointerDown) {
       this.earthTargetYaw += this.dragVelocityX * deltaSec;
       this.earthTargetPitch += this.dragVelocityY * deltaSec;
-      this.dragVelocityX *= 0.88;
-      this.dragVelocityY *= 0.88;
+      const damp = Math.exp(-7.67 * deltaSec);
+      this.dragVelocityX *= damp;
+      this.dragVelocityY *= damp;
     }
 
     // Clamp pitch
     this.earthTargetPitch = Math.max(-1.45, Math.min(1.45, this.earthTargetPitch));
 
-    // Smooth lerp
-    this.earthYaw += (this.earthTargetYaw - this.earthYaw) * 0.18;
-    this.earthPitch += (this.earthTargetPitch - this.earthPitch) * 0.18;
+    // Smooth frame-rate-independent lerp (calibrated to 0.18 per frame at 60Hz)
+    const earthLerp = 1.0 - Math.exp(-11.91 * deltaSec);
+    this.earthYaw += (this.earthTargetYaw - this.earthYaw) * earthLerp;
+    this.earthPitch += (this.earthTargetPitch - this.earthPitch) * earthLerp;
 
     this.camera.position.set(0, 0, 0);
     this.camera.up.set(0, 0, 1);
@@ -407,20 +412,22 @@ export class OrbitalCameraController {
       }
     }
 
-    // Apply inertia damping to target angles
+    // Apply frame-rate-independent inertia damping to target angles
     if (!this.isPointerDown) {
       this.orbitTargetTheta += this.dragVelocityX * deltaSec;
       this.orbitTargetPhi += this.dragVelocityY * deltaSec;
-      this.dragVelocityX *= 0.88;
-      this.dragVelocityY *= 0.88;
+      const damp = Math.exp(-7.67 * deltaSec);
+      this.dragVelocityX *= damp;
+      this.dragVelocityY *= damp;
     }
 
     // Clamp vertical orbit angle to [-1.35, 1.35] radians
     this.orbitTargetPhi = Math.max(-1.35, Math.min(1.35, this.orbitTargetPhi));
 
-    // Smooth lerp
-    this.orbitTheta += (this.orbitTargetTheta - this.orbitTheta) * 0.22;
-    this.orbitPhi += (this.orbitTargetPhi - this.orbitPhi) * 0.22;
+    // Smooth frame-rate-independent lerp (calibrated to 0.22 per frame at 60Hz)
+    const orbitLerp = 1.0 - Math.exp(-14.91 * deltaSec);
+    this.orbitTheta += (this.orbitTargetTheta - this.orbitTheta) * orbitLerp;
+    this.orbitPhi += (this.orbitTargetPhi - this.orbitPhi) * orbitLerp;
 
     // Apply camera transform
     this.applyOrbitalCameraPosition(this.orbitTheta, this.orbitPhi);
@@ -570,10 +577,10 @@ export class OrbitalCameraController {
   }
 
   /**
-   * Action from Timeout Modal: Auto-align smoothly back to Earth (0,0,0)
+   * Action from Timeout Modal: Auto-align smoothly back to Earth (0,0,0) without crediting a solve
    */
   public autoAlignToEarth() {
-    this.transitionTo('RESOLVED');
+    this.transitionTo('RESOLVED', { isAutoAligned: true });
   }
 }
 

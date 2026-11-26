@@ -9,6 +9,7 @@ import { ConstellationSelector } from '../ui/ConstellationSelector';
 import { SettingsModal } from '../ui/SettingsModal';
 import { HowToPlayBanner } from '../ui/HowToPlayBanner';
 import { ControlSettings, loadControlSettings, saveControlSettings, DEFAULT_CONTROL_SETTINGS } from '../core/ControlSettings';
+import { soundEngine } from '../core/SoundEngine';
 import { DevFestStartModal } from '../ui/DevFestStartModal';
 import { DevFestLeaderboardModal } from '../ui/DevFestLeaderboardModal';
 import { DevFestGameOverModal } from '../ui/DevFestGameOverModal';
@@ -46,6 +47,7 @@ export default function ConstellationAlignerApp() {
   const [showGhostGuide, setShowGhostGuide] = useState<boolean>(false);
   const [showSkyPanorama, setShowSkyPanorama] = useState<boolean>(true);
   const [controlSettings, setControlSettings] = useState<ControlSettings>(loadControlSettings());
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(() => soundEngine.isEnabled());
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [showHowToPlay, setShowHowToPlay] = useState<boolean>(false);
 
@@ -77,6 +79,13 @@ export default function ConstellationAlignerApp() {
   const arcadeTotalActiveTimeRef = useRef<number>(0);
   const arcadeHistoryRef = useRef<SolvedConstellationRecord[]>([]);
   const bonusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Refs for throttling HUD React state updates while WebGL runs at full 60-120fps
+  const gameStateRef = useRef<GameState>('EARTH_HUB');
+  const lastUiSyncMsRef = useRef<number>(0);
+  const lastAlphaTenthsRef = useRef<number>(-1);
+  const lastAccuracyTenthsRef = useRef<number>(-1);
+  const lastTimerTenthsRef = useRef<number>(-1);
 
   // Sync refs when states change
   useEffect(() => {
@@ -234,8 +243,8 @@ export default function ConstellationAlignerApp() {
     const scene = new CelestialScene(container);
     sceneRef.current = scene;
 
-    // Load high-quality TIFF background celestial panorama
-    scene.initBackgroundPanorama('/bg-image.tif');
+    // Load optimized WebP background celestial panorama (with JPG fallback)
+    scene.initBackgroundPanorama('/bg-image.webp');
 
     // Load background starfield
     const starfieldData = starDataManager.getRawStarfield();
@@ -258,26 +267,70 @@ export default function ConstellationAlignerApp() {
     // Initialize controller with callbacks
     const controller = new OrbitalCameraController(scene.camera, {
       onStateChange: (newState) => {
+        gameStateRef.current = newState;
+        lastUiSyncMsRef.current = 0;
+        lastAlphaTenthsRef.current = -1;
+        lastAccuracyTenthsRef.current = -1;
+        lastTimerTenthsRef.current = -1;
+
         setGameState(newState);
-        if (newState === 'ALIGN_PUZZLE') {
+        if (newState === 'PREVIEW') {
+          soundEngine.stopResonance();
+          soundEngine.playPreviewLock();
+        } else if (newState === 'DISPLACE') {
+          soundEngine.stopResonance();
+          soundEngine.playDisplaceWhoosh();
+        } else if (newState === 'ALIGN_PUZZLE') {
           setShowTimeoutModal(false);
           setSolvedStats(null);
         } else if (newState === 'EARTH_HUB') {
+          soundEngine.stopResonance();
           setShowTimeoutModal(false);
         }
       },
       onAlignmentUpdate: (alpha, acc) => {
-        setAlphaDeg(alpha);
-        setAccuracy(acc);
+        const isAligning = gameStateRef.current === 'ALIGN_PUZZLE';
+        soundEngine.updateResonance(acc, isAligning);
+
+        // Only update React HUD telemetry during ALIGN_PUZZLE (at ~20Hz & when displayed 0.1 values change)
+        if (!isAligning) return;
+        const now = performance.now();
+        if (now - lastUiSyncMsRef.current < 48) return;
+
+        const alphaTenths = Math.round(alpha * 10);
+        const accTenths = Math.round(acc * 10);
+        if (alphaTenths !== lastAlphaTenthsRef.current || accTenths !== lastAccuracyTenthsRef.current) {
+          lastUiSyncMsRef.current = now;
+          lastAlphaTenthsRef.current = alphaTenths;
+          lastAccuracyTenthsRef.current = accTenths;
+          setAlphaDeg(alpha);
+          setAccuracy(acc);
+        }
       },
       onTimerUpdate: (timeLeft) => {
-        setTimerSec(timeLeft);
         if (isArcadeActiveRef.current) {
           arcadeTimeBankRef.current = timeLeft;
+        }
+        soundEngine.checkLowTimeTick(timeLeft);
+
+        const tenths = Math.round(timeLeft * 10);
+        if (tenths !== lastTimerTenthsRef.current) {
+          lastTimerTenthsRef.current = tenths;
+          setTimerSec(timeLeft);
         }
       },
       onSolved: (stats) => {
         setSolvedStats(stats);
+
+        // If user clicked "Show Alignment" after timeout, preview true Earth view without crediting a solve
+        if (stats.isAutoAligned) {
+          soundEngine.stopResonance();
+          soundEngine.playPreviewLock();
+          return;
+        }
+
+        soundEngine.playSolvedChord();
+
         setSolvedIds((prev) => {
           const next = new Set(prev).add(stats.constellationId);
           try {
@@ -302,6 +355,7 @@ export default function ConstellationAlignerApp() {
           const newBank = +(currentRemaining + bonus).toFixed(1);
 
           controllerRef.current?.setCustomPuzzleTimer(newBank);
+          lastTimerTenthsRef.current = Math.round(newBank * 10);
           setTimerSec(newBank);
           setArcadeTimeBank(newBank);
           arcadeTimeBankRef.current = newBank;
@@ -341,6 +395,7 @@ export default function ConstellationAlignerApp() {
         }
       },
       onTimeout: () => {
+        soundEngine.playTimeoutTone();
         if (isArcadeActiveRef.current) {
           handleGameOverArcade();
         } else {
@@ -407,9 +462,13 @@ export default function ConstellationAlignerApp() {
     const handleGlobalPointerUp = () => {
       controller.handlePointerUp();
     };
+    const handleWindowBlur = () => {
+      controller.handlePointerUp();
+      soundEngine.stopResonance();
+    };
     window.addEventListener('pointerup', handleGlobalPointerUp);
     window.addEventListener('pointercancel', handleGlobalPointerUp);
-    window.addEventListener('blur', handleGlobalPointerUp);
+    window.addEventListener('blur', handleWindowBlur);
 
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
@@ -417,7 +476,8 @@ export default function ConstellationAlignerApp() {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('pointerup', handleGlobalPointerUp);
       window.removeEventListener('pointercancel', handleGlobalPointerUp);
-      window.removeEventListener('blur', handleGlobalPointerUp);
+      window.removeEventListener('blur', handleWindowBlur);
+      soundEngine.stopResonance();
       scene.dispose();
       sceneRef.current = null;
       controllerRef.current = null;
@@ -426,6 +486,7 @@ export default function ConstellationAlignerApp() {
 
   // Pointer event handlers for 360 Earth gaze & orbital puzzle rotation
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    soundEngine.unlock();
     if (e.button !== 0 && e.buttons !== 1) return;
     try {
       (e.target as HTMLElement).setPointerCapture(e.pointerId);
@@ -450,6 +511,7 @@ export default function ConstellationAlignerApp() {
 
   // Constellation selection (free explorer mode)
   const handleSelectConstellation = useCallback((id: string) => {
+    soundEngine.unlock();
     controllerRef.current?.handlePointerUp();
     const norm = starDataManager.getNormalizedConstellation(id);
     if (!norm || !sceneRef.current || !controllerRef.current) return;
@@ -463,6 +525,7 @@ export default function ConstellationAlignerApp() {
   // Start DevFest Arcade Speedrun Tournament
   const handleStartArcade = useCallback(
     (playerName: string) => {
+      soundEngine.unlock();
       setIsStartModalOpen(false);
       setIsLeaderboardOpen(false);
       setIsGameOverModalOpen(false);
@@ -564,13 +627,13 @@ export default function ConstellationAlignerApp() {
 
   // Auto-advance after 2.5s on solve in arcade tournament mode
   useEffect(() => {
-    if (gameState === 'RESOLVED' && isArcadeActive) {
+    if (gameState === 'RESOLVED' && isArcadeActive && !isGameOverModalOpen) {
       const autoAdvanceTimer = setTimeout(() => {
         handleNextConstellation();
       }, 2500);
       return () => clearTimeout(autoAdvanceTimer);
     }
-  }, [gameState, isArcadeActive, handleNextConstellation]);
+  }, [gameState, isArcadeActive, isGameOverModalOpen, handleNextConstellation]);
 
   // Return to Earth Hub
   const handleReturnToEarthHub = useCallback(() => {
@@ -598,13 +661,11 @@ export default function ConstellationAlignerApp() {
 
   // Sky View Lines Toggle
   const handleToggleAllLines = useCallback(() => {
-    setShowAllLines((prev) => {
-      const next = !prev;
-      sceneRef.current?.setAllConstellationLinesVisible(next, true);
-      setShowArt(next);
-      return next;
-    });
-  }, []);
+    const next = !showAllLines;
+    setShowAllLines(next);
+    setShowArt(next);
+    sceneRef.current?.setAllConstellationLinesVisible(next, true);
+  }, [showAllLines]);
 
   // Sky View Art Toggle
   const handleToggleArt = useCallback(() => {
@@ -635,6 +696,14 @@ export default function ConstellationAlignerApp() {
     setShowSkyPanorama((prev) => {
       const next = !prev;
       sceneRef.current?.setBackgroundSkyVisible(next);
+      return next;
+    });
+  }, []);
+
+  const handleToggleSound = useCallback(() => {
+    setSoundEnabled((prev) => {
+      const next = !prev;
+      soundEngine.setEnabled(next);
       return next;
     });
   }, []);
@@ -708,6 +777,7 @@ export default function ConstellationAlignerApp() {
           showSkyPanorama={showSkyPanorama}
           onToggleSkyPanorama={handleToggleSkyPanorama}
           onStartAlignment={() => {
+            soundEngine.unlock();
             controllerRef.current?.handlePointerUp();
             controllerRef.current?.transitionTo('PREVIEW');
           }}
@@ -717,6 +787,9 @@ export default function ConstellationAlignerApp() {
           onAutoAlign={handleAutoAlign}
           onOpenSettings={() => setIsSettingsOpen(true)}
           onOpenHowToPlay={() => setShowHowToPlay(true)}
+          soundEnabled={soundEnabled}
+          onToggleSound={handleToggleSound}
+          hideResolvedModal={isGameOverModalOpen}
           // DevFest Arcade Tournament Props
           isArcadeActive={isArcadeActive}
           arcadePlayerName={arcadePlayerName}

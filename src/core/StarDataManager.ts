@@ -113,6 +113,8 @@ export interface NormalizedConstellation {
     maxSpan: number;
     centerU: number;
     centerV: number;
+    maxTanX: number;
+    maxTanY: number;
   };
   pivot: THREE.Vector3; // C = u_C * 100
   pivotDir: THREE.Vector3; // u_C
@@ -140,6 +142,7 @@ export interface AnimatedConstellationLineData {
 }
 
 export const ORBIT_RADIUS = 100.0;
+const HYG_SENTINEL_DIST = 90000.0;
 
 class StarDataManager {
   private rawConstellations: Record<string, RawConstellation> = {};
@@ -163,7 +166,20 @@ class StarDataManager {
         if (!constRes.ok) throw new Error(`Failed to load constellations: ${constRes.statusText}`);
         if (!starsRes.ok) throw new Error(`Failed to load stars: ${starsRes.statusText}`);
 
-        this.rawConstellations = await constRes.json();
+        const rawMap: Record<string, RawConstellation> = await constRes.json();
+        // Sanitize HYG unknown-parallax sentinel distances (>= 90,000 pc) for clean UI metadata
+        for (const c of Object.values(rawMap)) {
+          if (c.stars && c.stars.length > 0 && c.distMax >= HYG_SENTINEL_DIST) {
+            const validDists = c.stars
+              .map((s) => s.dist)
+              .filter((d) => Number.isFinite(d) && d > 0 && d < HYG_SENTINEL_DIST);
+            if (validDists.length > 0) {
+              c.distMin = +Math.min(...validDists).toFixed(1);
+              c.distMax = +Math.max(...validDists).toFixed(1);
+            }
+          }
+        }
+        this.rawConstellations = rawMap;
         const starsFlat: number[] = await starsRes.json();
         this.rawStarfield = new Float32Array(starsFlat);
         this.loaded = true;
@@ -374,23 +390,26 @@ class StarDataManager {
     }> = [];
 
     const sumRay = new THREE.Vector3(0, 0, 0);
-    const distances: number[] = [];
+    const validDistances: number[] = [];
 
     for (let i = 0; i < count; i++) {
       const s = rawStars[i];
       const pos = new THREE.Vector3(s.x, s.y, s.z);
       const d = pos.length() || (s.dist > 0 ? s.dist : 100.0);
       const u = pos.clone().normalize();
+      const isValidDist = Number.isFinite(d) && d > 0 && d < HYG_SENTINEL_DIST && s.dist < HYG_SENTINEL_DIST;
 
       starRays.push({
         raw: s,
         rawPos: pos,
         unitRay: u,
-        dist: d,
+        dist: isValidDist ? d : -1,
       });
 
       sumRay.add(u);
-      distances.push(d);
+      if (isValidDist) {
+        validDistances.push(d);
+      }
     }
 
     // Step 2: Constellation Pivot Center C = u_C * 100
@@ -413,24 +432,35 @@ class StarDataManager {
     const r = new THREE.Vector3().crossVectors(pivotDir, v).normalize();
 
     // Step 4: Bounded Depth Mapping Delta d_i in [-30, +30]
-    const meanD = distances.reduce((a, b) => a + b, 0) / count;
-    const variance = distances.reduce((acc, d) => acc + (d - meanD) ** 2, 0) / count;
+    // Exclude HYG unknown-parallax sentinel distances (>= 90,000 pc) so they don't flatten valid stars
+    const validCount = validDistances.length;
+    const meanD = validCount > 0 ? validDistances.reduce((a, b) => a + b, 0) / validCount : 100.0;
+    const variance =
+      validCount > 0
+        ? validDistances.reduce((acc, d) => acc + (d - meanD) ** 2, 0) / validCount
+        : 0;
     const sigmaD = Math.sqrt(variance);
-    const distMin = Math.min(...distances);
-    const distMax = Math.max(...distances);
+    const distMin = validCount > 0 ? Math.min(...validDistances) : raw.distMin;
+    const distMax = validCount > 0 ? Math.max(...validDistances) : raw.distMax;
     const distRange = distMax - distMin;
 
     const starMap = new Map<number, NormalizedStar>();
     const normalizedStars: NormalizedStar[] = [];
 
-    // Precalculate 2D projected coordinates for silhouette normalization
+    // Precalculate 2D projected coordinates for silhouette normalization & dynamic FOV
     const projected2D: Array<{ u2d: number; v2d: number }> = [];
+    let maxTanX = 0;
+    let maxTanY = 0;
 
     for (let i = 0; i < count; i++) {
       const { raw: s, rawPos, unitRay, dist } = starRays[i];
       let deltaD = 0;
 
-      if (sigmaD > 0.05 && distRange > 0.5) {
+      if (dist < 0) {
+        // Unknown parallax star (distant): deterministic far-side depth in [+14, +28]
+        const hash = ((s.id * 9301 + 49297) % 233280) / 233280.0;
+        deltaD = 14.0 + hash * 14.0;
+      } else if (sigmaD > 0.05 && distRange > 0.5) {
         const spread = Math.max(sigmaD, distRange / 3.5);
         const z = (dist - meanD) / spread;
         deltaD = Math.max(-30.0, Math.min(30.0, z * 24.0));
@@ -447,6 +477,13 @@ class StarDataManager {
       const u2d = unitRay.dot(r);
       const v2d = unitRay.dot(v);
       projected2D.push({ u2d, v2d });
+
+      // Tangent-plane extents relative to pivot ray for accurate camera FOV framing
+      const forwardDot = Math.max(0.15, unitRay.dot(pivotDir));
+      const tanX = Math.abs(u2d / forwardDot);
+      const tanY = Math.abs(v2d / forwardDot);
+      if (tanX > maxTanX) maxTanX = tanX;
+      if (tanY > maxTanY) maxTanY = tanY;
 
       const normStar: NormalizedStar = {
         id: s.id,
@@ -546,8 +583,8 @@ class StarDataManager {
       english: raw.english,
       lore: raw.lore,
       brightestStar: raw.brightestStar,
-      distMin: raw.distMin,
-      distMax: raw.distMax,
+      distMin: +distMin.toFixed(1),
+      distMax: +distMax.toFixed(1),
       starCount: count,
       art: raw.art || {
         filename: `${raw.name.toLowerCase().replace(/ /g, '_')}.png`,
@@ -559,6 +596,8 @@ class StarDataManager {
         maxSpan,
         centerU,
         centerV,
+        maxTanX,
+        maxTanY,
       },
       pivot,
       pivotDir,
