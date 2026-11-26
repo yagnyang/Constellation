@@ -258,6 +258,12 @@ export default function ConstellationAlignerApp() {
       scene.initAllConstellationLines(allLinesData);
     }
 
+    // Initialize highlighted blue pixel stars for all 88 constellations in Sky View
+    const allConstStarsData = starDataManager.getAllConstellationStarPoints();
+    if (allConstStarsData.count > 0) {
+      scene.initAllConstellationStars(allConstStarsData);
+    }
+
     // Initialize all 88 celestial constellation artwork plates on the sphere
     const allNormConsts = starDataManager.getAllNormalizedConstellations();
     if (allNormConsts.length > 0) {

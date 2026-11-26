@@ -3,17 +3,14 @@ import {
   NormalizedConstellation,
   bvToRgb,
   AnimatedConstellationLineData,
+  AllConstellationStarData,
 } from '../core/StarDataManager';
 import { GameState } from '../core/OrbitalCameraController';
 import {
   BACKGROUND_STAR_VERTEX_SHADER,
   BACKGROUND_STAR_FRAGMENT_SHADER,
-  ACTIVE_POINT_STAR_VERTEX_SHADER,
-  ACTIVE_POINT_STAR_FRAGMENT_SHADER,
-  STAR_SPHERE_SURFACE_VERTEX_SHADER,
-  STAR_SPHERE_SURFACE_FRAGMENT_SHADER,
-  STAR_SPHERE_CORONA_VERTEX_SHADER,
-  STAR_SPHERE_CORONA_FRAGMENT_SHADER,
+  CONSTELLATION_PIXEL_STAR_VERTEX_SHADER,
+  CONSTELLATION_PIXEL_STAR_FRAGMENT_SHADER,
   CONSTELLATION_LINE_VERTEX_SHADER,
   CONSTELLATION_LINE_FRAGMENT_SHADER,
   ALL_CONSTELLATION_LINES_VERTEX_SHADER,
@@ -21,13 +18,15 @@ import {
   GHOST_GUIDE_LINE_VERTEX_SHADER,
   GHOST_GUIDE_LINE_FRAGMENT_SHADER,
 } from './StarShaders';
+import { createPixelStarTexture, createStarGlowTexture } from './PixelStarTextures';
 
-interface StarSphereItem {
-  surfaceMesh: THREE.Mesh;
-  coronaMesh: THREE.Mesh;
-  surfaceMat: THREE.ShaderMaterial;
-  coronaMat: THREE.ShaderMaterial;
-  baseRadius: number;
+interface StarNodeItem {
+  pixelSprite: THREE.Sprite;
+  glowSprite: THREE.Sprite;
+  pixelMat: THREE.SpriteMaterial;
+  glowMat: THREE.SpriteMaterial;
+  baseScale: number;
+  twinklePhase: number;
 }
 
 export class CelestialScene {
@@ -46,16 +45,24 @@ export class CelestialScene {
   private backgroundStarsMesh: THREE.Points | null = null;
   private backgroundStarsMat: THREE.ShaderMaterial | null = null;
 
+  // Pixel-art star textures (blue for Sky View, yellow for Puzzle/Preview)
+  private blueStarTex: THREE.CanvasTexture;
+  private yellowStarTex: THREE.CanvasTexture;
+  private yellowGlowTex: THREE.CanvasTexture;
+
+  // All 88 constellations' stars highlighted in blue in free Sky View
+  private allConstellationStarsMesh: THREE.Points | null = null;
+  private allConstellationStarsMat: THREE.ShaderMaterial | null = null;
+  private allConstellationStarsOpacity: number = 1.0;
+
   // Active constellation puzzle objects
-  // 1. Point stars (used in Earth Hub and preview when observing from Earth)
+  // 1. Yellow pixel point stars (used in PREVIEW & crossfade into DISPLACE)
   private activeStarsMesh: THREE.Points | null = null;
   private activeStarsMat: THREE.ShaderMaterial | null = null;
 
-  // 2. 3D Star Spheres (used ONLY when solving in 3D orbit)
+  // 2. 3D Yellow Pixel Star Sprites (used ONLY when solving in 3D orbit)
   private starSpheresGroup: THREE.Group;
-  private starSphereItems: StarSphereItem[] = [];
-  private sharedSphereGeo: THREE.SphereGeometry;
-  private sharedCoronaGeo: THREE.SphereGeometry;
+  private starSphereItems: StarNodeItem[] = [];
 
   // 3. Constellation puzzle lines
   private activeLinesMesh: THREE.LineSegments | null = null;
@@ -134,9 +141,10 @@ export class CelestialScene {
     this.constellationArtGroup.visible = false;
     this.scene.add(this.constellationArtGroup);
 
-    // Shared sphere geometry for maximum GPU performance
-    this.sharedSphereGeo = new THREE.SphereGeometry(1, 24, 24);
-    this.sharedCoronaGeo = new THREE.SphereGeometry(1, 24, 24);
+    // Crisp 8-bit 4-point diamond star textures (blue in free view, yellow in puzzle)
+    this.blueStarTex = createPixelStarTexture('blue');
+    this.yellowStarTex = createPixelStarTexture('yellow');
+    this.yellowGlowTex = createStarGlowTexture('yellow');
   }
 
   /**
@@ -290,9 +298,46 @@ export class CelestialScene {
   }
 
   /**
+   * Highlights the stars of all 88 constellations in free Sky View using crisp blue pixel stars.
+   */
+  public initAllConstellationStars(data: AllConstellationStarData) {
+    if (this.allConstellationStarsMesh) {
+      this.scene.remove(this.allConstellationStarsMesh);
+      this.allConstellationStarsMesh.geometry.dispose();
+      this.allConstellationStarsMat?.dispose();
+      this.allConstellationStarsMesh = null;
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(data.positions, 3));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(data.sizes, 1));
+
+    this.allConstellationStarsMat = new THREE.ShaderMaterial({
+      vertexShader: CONSTELLATION_PIXEL_STAR_VERTEX_SHADER,
+      fragmentShader: CONSTELLATION_PIXEL_STAR_FRAGMENT_SHADER,
+      uniforms: {
+        uStarTex: { value: this.blueStarTex },
+        uGlowColor: { value: new THREE.Color(0x00d4ff) },
+        uPixelRatio: { value: this.pixelRatio },
+        uTime: { value: 0.0 },
+        uOpacity: { value: 1.0 },
+      },
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.NormalBlending,
+    });
+
+    this.allConstellationStarsMesh = new THREE.Points(geo, this.allConstellationStarsMat);
+    this.allConstellationStarsMesh.renderOrder = 5;
+    this.allConstellationStarsMesh.frustumCulled = false;
+    this.scene.add(this.allConstellationStarsMesh);
+  }
+
+  /**
    * Sets up the active constellation:
-   * 1. Realistic point stars (for Earth Hub & Sky View when NOT solving)
-   * 2. 3D Star Spheres with solar plasma & corona (activated ONLY when solving in 3D orbit!)
+   * 1. Yellow pixel point stars (used in PREVIEW & crossfade into DISPLACE)
+   * 2. 3D Yellow Pixel Star Sprites (activated ONLY when solving in 3D orbit!)
    * 3. Geometric connection lines
    */
   public setActiveConstellation(constellation: NormalizedConstellation) {
@@ -304,10 +349,10 @@ export class CelestialScene {
     // Lazy-load active constellation art texture on demand
     this.ensureArtTextureLoaded(constellation.id);
 
-    // 1. Clean up previous 3D star spheres
+    // 1. Clean up previous 3D star sprites
     this.clearStarSpheres();
 
-    // 2. Active constellation point stars (Sky view)
+    // 2. Active constellation yellow pixel stars (Preview & Displace crossfade)
     if (this.activeStarsMesh) {
       this.scene.remove(this.activeStarsMesh);
       this.activeStarsMesh.geometry.dispose();
@@ -315,82 +360,87 @@ export class CelestialScene {
       this.activeStarsMesh = null;
     }
 
+    const previewSizes = new Float32Array(constellation.stars.length);
+    constellation.stars.forEach((star, idx) => {
+      const mag = Number.isFinite(star.mag) ? star.mag : 4.0;
+      previewSizes[idx] = Math.max(18.0, Math.min(34.0, (6.5 - mag) * 4.5 + 15.0));
+    });
+
     const starsGeo = new THREE.BufferGeometry();
     starsGeo.setAttribute('position', new THREE.BufferAttribute(constellation.starPositionsArray, 3));
-    starsGeo.setAttribute('aColor', new THREE.BufferAttribute(constellation.starColorsArray, 3));
-    starsGeo.setAttribute('aSize', new THREE.BufferAttribute(constellation.starSizesArray, 1));
+    starsGeo.setAttribute('aSize', new THREE.BufferAttribute(previewSizes, 1));
 
     this.activeStarsMat = new THREE.ShaderMaterial({
-      vertexShader: ACTIVE_POINT_STAR_VERTEX_SHADER,
-      fragmentShader: ACTIVE_POINT_STAR_FRAGMENT_SHADER,
+      vertexShader: CONSTELLATION_PIXEL_STAR_VERTEX_SHADER,
+      fragmentShader: CONSTELLATION_PIXEL_STAR_FRAGMENT_SHADER,
       uniforms: {
+        uStarTex: { value: this.yellowStarTex },
+        uGlowColor: { value: new THREE.Color(0xfacc15) },
         uPixelRatio: { value: this.pixelRatio },
         uTime: { value: 0.0 },
         uOpacity: { value: 1.0 },
       },
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      depthTest: false,
+      blending: THREE.NormalBlending,
     });
 
     this.activeStarsMesh = new THREE.Points(starsGeo, this.activeStarsMat);
+    this.activeStarsMesh.renderOrder = 6;
+    this.activeStarsMesh.frustumCulled = false;
     this.scene.add(this.activeStarsMesh);
 
-    // 3. Create 3D Star Spheres for solving mode
+    // 3. Create 3D Yellow Pixel Star Sprites for solving mode
     constellation.stars.forEach((star) => {
-      const rgb = bvToRgb(star.ci);
-      const starColor = new THREE.Color(rgb.r, rgb.g, rgb.b);
+      const mag = Number.isFinite(star.mag) ? star.mag : 4.0;
+      const baseScale = Math.max(2.8, Math.min(6.4, 6.0 - (mag - 0.5) * 0.85));
 
-      // Realistic 3D radius based on apparent magnitude and luminosity
-      // Giants (e.g. mag <= 1.0) ~ 2.4 to 2.8 units; fainter stars ~ 1.0 to 1.5 units
-      const baseRadius = Math.max(1.0, 2.7 - (star.mag - 0.5) * 0.42);
-
-      // Photosphere surface mesh
-      const surfaceMat = new THREE.ShaderMaterial({
-        vertexShader: STAR_SPHERE_SURFACE_VERTEX_SHADER,
-        fragmentShader: STAR_SPHERE_SURFACE_FRAGMENT_SHADER,
-        uniforms: {
-          uColor: { value: starColor },
-          uTime: { value: 0.0 },
-        },
-        depthWrite: true,
-      });
-
-      const surfaceMesh = new THREE.Mesh(this.sharedSphereGeo, surfaceMat);
-      surfaceMesh.position.copy(star.normalizedPos);
-      surfaceMesh.scale.setScalar(baseRadius);
-
-      // Corona volumetric glow shell (broad radiant halo)
-      const coronaMat = new THREE.ShaderMaterial({
-        vertexShader: STAR_SPHERE_CORONA_VERTEX_SHADER,
-        fragmentShader: STAR_SPHERE_CORONA_FRAGMENT_SHADER,
-        uniforms: {
-          uColor: { value: starColor },
-          uTime: { value: 0.0 },
-        },
+      const glowMat = new THREE.SpriteMaterial({
+        map: this.yellowGlowTex,
+        color: 0xffffff,
         transparent: true,
+        opacity: 0.42,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
-        side: THREE.BackSide,
+        depthTest: true,
+        toneMapped: false,
       });
 
-      const coronaMesh = new THREE.Mesh(this.sharedCoronaGeo, coronaMat);
-      coronaMesh.position.copy(star.normalizedPos);
-      coronaMesh.scale.setScalar(baseRadius * 3.2);
+      const glowSprite = new THREE.Sprite(glowMat);
+      glowSprite.position.copy(star.normalizedPos);
+      glowSprite.scale.setScalar(baseScale * 1.9);
+      glowSprite.renderOrder = 6;
 
-      this.starSpheresGroup.add(surfaceMesh);
-      this.starSpheresGroup.add(coronaMesh);
+      const pixelMat = new THREE.SpriteMaterial({
+        map: this.yellowStarTex,
+        color: 0xffffff,
+        transparent: true,
+        alphaTest: 0.5,
+        depthWrite: true,
+        depthTest: true,
+        toneMapped: false,
+      });
+
+      const pixelSprite = new THREE.Sprite(pixelMat);
+      pixelSprite.position.copy(star.normalizedPos);
+      pixelSprite.scale.setScalar(baseScale);
+      pixelSprite.renderOrder = 7;
+
+      this.starSpheresGroup.add(glowSprite);
+      this.starSpheresGroup.add(pixelSprite);
 
       this.starSphereItems.push({
-        surfaceMesh,
-        coronaMesh,
-        surfaceMat,
-        coronaMat,
-        baseRadius,
+        pixelSprite,
+        glowSprite,
+        pixelMat,
+        glowMat,
+        baseScale,
+        twinklePhase: (star.id * 1.6180339) % (Math.PI * 2),
       });
     });
 
-    // Start with spheres hidden; they will be shown ONLY when entering solving mode
+    // Start with puzzle star sprites hidden; shown ONLY when entering solving mode
     this.starSpheresGroup.visible = false;
 
     // 4. Active puzzle lines
@@ -419,6 +469,7 @@ export class CelestialScene {
     });
 
     this.activeLinesMesh = new THREE.LineSegments(linesGeo, this.activeLinesMat);
+    this.activeLinesMesh.renderOrder = 4;
     this.scene.add(this.activeLinesMesh);
 
     // 5. Setup Quiz Target Ghost Guide Line Mesh (attached to camera)
@@ -725,10 +776,10 @@ export class CelestialScene {
 
   private clearStarSpheres() {
     this.starSphereItems.forEach((item) => {
-      this.starSpheresGroup.remove(item.surfaceMesh);
-      this.starSpheresGroup.remove(item.coronaMesh);
-      item.surfaceMat.dispose();
-      item.coronaMat.dispose();
+      this.starSpheresGroup.remove(item.pixelSprite);
+      this.starSpheresGroup.remove(item.glowSprite);
+      item.pixelMat.dispose();
+      item.glowMat.dispose();
     });
     this.starSphereItems = [];
   }
@@ -799,49 +850,63 @@ export class CelestialScene {
       this.backgroundStarsMat.uniforms.uTime.value = elapsedTime;
     }
 
-    // 2. State-dependent star sphere vs point rendering
+    // 2. State-dependent pixel star rendering:
+    // - EARTH_HUB (free view): all 88 constellations' stars highlighted as blue pixel stars.
+    // - PREVIEW: target constellation turns into yellow pixel stars; blue sky stars fade out.
+    // - DISPLACE: crossfade preview points out while scaling 3D yellow star sprites in.
+    // - ALIGN_PUZZLE / RESOLVED: 3D yellow pixel star sprites active.
+    if (this.allConstellationStarsMesh && this.allConstellationStarsMat) {
+      if (gameState === 'EARTH_HUB') {
+        this.allConstellationStarsOpacity = Math.min(1.0, this.allConstellationStarsOpacity + deltaSec * 4.5);
+      } else {
+        this.allConstellationStarsOpacity = Math.max(0.0, this.allConstellationStarsOpacity - deltaSec * 6.0);
+      }
+      this.allConstellationStarsMesh.visible = this.allConstellationStarsOpacity > 0.001;
+      this.allConstellationStarsMat.uniforms.uOpacity.value = this.allConstellationStarsOpacity;
+      this.allConstellationStarsMat.uniforms.uTime.value = elapsedTime;
+      this.allConstellationStarsMat.uniforms.uPixelRatio.value = this.pixelRatio;
+    }
+
     const isSolving = gameState === 'ALIGN_PUZZLE' || gameState === 'RESOLVED';
     const isTransitioning = gameState === 'DISPLACE';
+    const fovRatio = Math.tan((this.currentFov * Math.PI) / 360) / Math.tan((60 * Math.PI) / 360);
+    const fovScale = 0.35 + 0.65 * fovRatio;
 
     if (isSolving) {
-      // SOLVING MODE: Active 3D Star Spheres are visible; points are hidden
+      // SOLVING MODE: 3D Yellow Pixel Star Sprites are visible; point stars are hidden
       this.starSpheresGroup.visible = true;
       if (this.activeStarsMesh) {
         this.activeStarsMesh.visible = false;
       }
 
-      // Update full size and animation on spheres
       this.starSphereItems.forEach((item) => {
-        item.surfaceMesh.scale.setScalar(item.baseRadius);
-        item.coronaMesh.scale.setScalar(item.baseRadius * 3.2);
-        item.surfaceMat.uniforms.uTime.value = elapsedTime;
-        item.coronaMat.uniforms.uTime.value = elapsedTime;
+        const pulse = 0.96 + 0.04 * Math.sin(elapsedTime * 3.0 + item.twinklePhase);
+        const glowPulse = 0.94 + 0.08 * Math.sin(elapsedTime * 2.4 + item.twinklePhase);
+        item.pixelSprite.scale.setScalar(item.baseScale * fovScale * pulse);
+        item.glowSprite.scale.setScalar(item.baseScale * fovScale * 1.9 * glowPulse);
+        item.glowMat.opacity = 0.38 + 0.12 * Math.sin(elapsedTime * 2.4 + item.twinklePhase);
       });
     } else if (isTransitioning) {
-      // TRANSITIONING TO ORBIT: Crossfade points to 3D star spheres
+      // TRANSITIONING TO ORBIT: Crossfade preview yellow stars to 3D yellow star sprites
       this.starSpheresGroup.visible = true;
       const t = Math.max(0.0, Math.min(1.0, displaceProgress));
-
-      // Ease-in scale for spheres
       const easeT = t * t * (3.0 - 2.0 * t);
+
       this.starSphereItems.forEach((item) => {
-        const curRadius = item.baseRadius * easeT;
-        item.surfaceMesh.scale.setScalar(curRadius);
-        item.coronaMesh.scale.setScalar(curRadius * 3.2);
-        item.surfaceMat.uniforms.uTime.value = elapsedTime;
-        item.coronaMat.uniforms.uTime.value = elapsedTime;
+        const curScale = item.baseScale * fovScale * easeT;
+        item.pixelSprite.scale.setScalar(Math.max(0.001, curScale));
+        item.glowSprite.scale.setScalar(Math.max(0.001, curScale * 1.9));
+        item.glowMat.opacity = 0.42 * easeT;
       });
 
-      // Fade out points
       if (this.activeStarsMesh && this.activeStarsMat) {
         this.activeStarsMesh.visible = t < 0.95;
         this.activeStarsMat.uniforms.uOpacity.value = Math.max(0.0, 1.0 - t * 1.5);
         this.activeStarsMat.uniforms.uTime.value = elapsedTime;
         this.activeStarsMat.uniforms.uPixelRatio.value = this.pixelRatio;
       }
-    } else {
-      // SKY VIEW (EARTH_HUB / PREVIEW): Star spheres are completely hidden!
-      // Only realistic points in the celestial sky!
+    } else if (gameState === 'PREVIEW') {
+      // TARGET LOCK PREVIEW: Yellow pixel stars on Earth's vantage point
       this.starSpheresGroup.visible = false;
 
       if (this.activeStarsMesh && this.activeStarsMat) {
@@ -849,6 +914,12 @@ export class CelestialScene {
         this.activeStarsMat.uniforms.uOpacity.value = 1.0;
         this.activeStarsMat.uniforms.uTime.value = elapsedTime;
         this.activeStarsMat.uniforms.uPixelRatio.value = this.pixelRatio;
+      }
+    } else {
+      // FREE SKY VIEW (EARTH_HUB): Only blue constellation stars + realistic background stars
+      this.starSpheresGroup.visible = false;
+      if (this.activeStarsMesh) {
+        this.activeStarsMesh.visible = false;
       }
     }
 
@@ -996,6 +1067,9 @@ export class CelestialScene {
     if (this.backgroundStarsMat) {
       this.backgroundStarsMat.uniforms.uPixelRatio.value = this.pixelRatio;
     }
+    if (this.allConstellationStarsMat) {
+      this.allConstellationStarsMat.uniforms.uPixelRatio.value = this.pixelRatio;
+    }
     if (this.activeStarsMat) {
       this.activeStarsMat.uniforms.uPixelRatio.value = this.pixelRatio;
     }
@@ -1015,6 +1089,11 @@ export class CelestialScene {
       this.scene.remove(this.backgroundStarsMesh);
       this.backgroundStarsMesh.geometry.dispose();
       this.backgroundStarsMat?.dispose();
+    }
+    if (this.allConstellationStarsMesh) {
+      this.scene.remove(this.allConstellationStarsMesh);
+      this.allConstellationStarsMesh.geometry.dispose();
+      this.allConstellationStarsMat?.dispose();
     }
     if (this.activeStarsMesh) {
       this.scene.remove(this.activeStarsMesh);
@@ -1054,8 +1133,9 @@ export class CelestialScene {
     }
 
     this.clearStarSpheres();
-    this.sharedSphereGeo.dispose();
-    this.sharedCoronaGeo.dispose();
+    this.blueStarTex.dispose();
+    this.yellowStarTex.dispose();
+    this.yellowGlowTex.dispose();
 
     this.solvedConstellationsMap.forEach((mesh) => {
       this.solvedGroup.remove(mesh);

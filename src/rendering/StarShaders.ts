@@ -76,7 +76,60 @@ export const BACKGROUND_STAR_FRAGMENT_SHADER = `
 `;
 
 // ============================================================================
-// 2. ACTIVE CONSTELLATION POINT STARS (When viewing from Earth / NOT solving)
+// 2. CONSTELLATION PIXEL-ART STARS (Blue in Sky View, Yellow in Puzzle/Preview)
+// ============================================================================
+export const CONSTELLATION_PIXEL_STAR_VERTEX_SHADER = `
+  attribute float aSize;
+
+  uniform float uPixelRatio;
+  uniform float uTime;
+
+  varying float vTwinkle;
+
+  void main() {
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+
+    float hash = fract(sin(dot(position.xyz, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+    float pulse = 0.94 + 0.06 * sin(uTime * 2.8 + hash * 6.28318);
+    vTwinkle = 0.90 + 0.10 * sin(uTime * 3.6 + hash * 6.28318);
+
+    gl_PointSize = clamp(aSize * pulse * uPixelRatio, 13.0, 60.0);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+export const CONSTELLATION_PIXEL_STAR_FRAGMENT_SHADER = `
+  uniform sampler2D uStarTex;
+  uniform vec3 uGlowColor;
+  uniform float uOpacity;
+
+  varying float vTwinkle;
+
+  void main() {
+    if (uOpacity <= 0.001) discard;
+
+    vec2 coord = gl_PointCoord;
+    vec4 tex = texture2D(uStarTex, coord);
+    float dist = length(coord - vec2(0.5));
+    if (dist > 0.5 && tex.a < 0.1) discard;
+
+    if (tex.a > 0.5) {
+      // Modulate only colored/white core pixels so the crisp dark pixel outline stays sharp
+      float luma = dot(tex.rgb, vec3(0.299, 0.587, 0.114));
+      vec3 col = luma > 0.05 ? tex.rgb * (0.94 + 0.12 * vTwinkle) : tex.rgb;
+      gl_FragColor = vec4(col, uOpacity);
+    } else {
+      float glow = exp(-dist * 7.5) * 0.45 * vTwinkle;
+      if (glow * uOpacity <= 0.004) discard;
+      gl_FragColor = vec4(uGlowColor, glow * uOpacity);
+    }
+
+    #include <colorspace_fragment>
+  }
+`;
+
+// ============================================================================
+// 2b. ACTIVE CONSTELLATION POINT STARS (Legacy/fallback)
 // ============================================================================
 export const ACTIVE_POINT_STAR_VERTEX_SHADER = `
   attribute vec3 aColor;
