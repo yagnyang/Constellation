@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Trophy, Flame, Timer, Sparkles, Star, Zap, HelpCircle } from 'lucide-react';
+import { Trophy, Flame, Timer, Sparkles, Star, Zap, HelpCircle, Volume2, VolumeX } from 'lucide-react';
 import { GameState, SolvedStats } from '../core/OrbitalCameraController';
 import { NormalizedConstellation } from '../core/StarDataManager';
 import { ReferenceSilhouette } from './ReferenceSilhouette';
@@ -32,6 +32,9 @@ interface TelemetryHUDProps {
   onAutoAlign: () => void;
   onOpenSettings?: () => void;
   onOpenHowToPlay?: () => void;
+  soundEnabled?: boolean;
+  onToggleSound?: () => void;
+  hideResolvedModal?: boolean;
 
   // DevFest Arcade Tournament Props
   isArcadeActive?: boolean;
@@ -67,6 +70,9 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   onAutoAlign,
   onOpenSettings,
   onOpenHowToPlay,
+  soundEnabled = true,
+  onToggleSound,
+  hideResolvedModal = false,
   isArcadeActive = false,
   arcadePlayerName = 'Stargazer',
   arcadeStage = 1,
@@ -75,9 +81,9 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   onOpenLeaderboard,
   onStartArcadeChallenge,
 }) => {
-  // Fire confetti on solve
+  // Fire confetti on genuine solve (skip on auto-align preview or hidden modal)
   useEffect(() => {
-    if (state === 'RESOLVED') {
+    if (state === 'RESOLVED' && solvedStats && !solvedStats.isAutoAligned && !hideResolvedModal) {
       try {
         confetti({
           particleCount: 50,
@@ -87,7 +93,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
         });
       } catch {}
     }
-  }, [state]);
+  }, [state, solvedStats, hideResolvedModal]);
 
   // Format clean state label
   const getStateBadge = () => {
@@ -271,6 +277,26 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
             </button>
           )}
 
+          {/* Audio Mute / Unmute Button */}
+          {onToggleSound && (
+            <button
+              onClick={onToggleSound}
+              className={`w-8 h-8 rounded-full border transition-all backdrop-blur-xl flex items-center justify-center shadow-lg active:scale-95 ${
+                soundEnabled
+                  ? 'bg-black/75 hover:bg-purple-950/60 border-purple-500/20 hover:border-purple-400/50 text-purple-300 hover:text-white'
+                  : 'bg-black/75 hover:bg-purple-950/60 border-white/10 text-white/40 hover:text-white/80'
+              }`}
+              title={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
+              aria-label={soundEnabled ? 'Mute sound effects' : 'Enable sound effects'}
+            >
+              {soundEnabled ? (
+                <Volume2 className="w-3.5 h-3.5" />
+              ) : (
+                <VolumeX className="w-3.5 h-3.5" />
+              )}
+            </button>
+          )}
+
           {/* Control Settings Button */}
           {onOpenSettings && (
             <button
@@ -410,7 +436,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
       )}
 
       {/* --- MODAL: RESOLVED --- */}
-      {state === 'RESOLVED' && solvedStats && (
+      {state === 'RESOLVED' && solvedStats && !hideResolvedModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xl pointer-events-auto animate-in fade-in duration-300">
           <div className="w-full max-w-sm bg-black/90 border border-purple-500/30 rounded-2xl p-6 shadow-[0_16px_48px_rgba(0,0,0,0.9),0_0_30px_rgba(168,85,247,0.2)] space-y-4">
             {/* Header */}
@@ -418,7 +444,11 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-[11px] text-purple-300 font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
                 <span>
-                  {isArcadeActive ? `Stage ${arcadeStage}/88 Cleared!` : 'Perspective Aligned'}
+                  {solvedStats.isAutoAligned
+                    ? 'Alignment Preview'
+                    : isArcadeActive
+                    ? `Stage ${arcadeStage}/88 Cleared!`
+                    : 'Perspective Aligned'}
                 </span>
               </div>
               <h3 className="text-xl font-bold tracking-tight text-white pt-1">
@@ -444,7 +474,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
             )}
 
             {/* Arcade Reward Banner */}
-            {isArcadeActive && tierInfo && (
+            {isArcadeActive && !solvedStats.isAutoAligned && tierInfo && (
               <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-500/40 text-center">
                 <span className="text-xs font-semibold text-purple-200 block">
                   {tierInfo.label} Constellation Solved!
@@ -455,27 +485,33 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
               </div>
             )}
 
-            {/* Metrics */}
-            <div className="grid grid-cols-3 gap-2 py-2 border-y border-purple-500/10 text-center">
-              <div className="p-2 bg-white/[0.02] rounded-xl border border-purple-500/10">
-                <div className="text-[10px] text-white/40">Time</div>
-                <div className="text-sm font-semibold text-white mt-0.5 font-mono">
-                  {solvedStats.timeSpentSec}s
+            {/* Metrics (hidden on auto-align preview) */}
+            {solvedStats.isAutoAligned ? (
+              <div className="py-2.5 px-3 border-y border-purple-500/10 text-center text-xs text-white/50">
+                True Earth vantage point restored (not counted as solved).
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-2 py-2 border-y border-purple-500/10 text-center">
+                <div className="p-2 bg-white/[0.02] rounded-xl border border-purple-500/10">
+                  <div className="text-[10px] text-white/40">Time</div>
+                  <div className="text-sm font-semibold text-white mt-0.5 font-mono">
+                    {solvedStats.timeSpentSec}s
+                  </div>
+                </div>
+                <div className="p-2 bg-white/[0.02] rounded-xl border border-purple-500/10">
+                  <div className="text-[10px] text-white/40">Accuracy</div>
+                  <div className="text-sm font-semibold text-purple-300 mt-0.5 font-mono">
+                    {solvedStats.finalAccuracy}%
+                  </div>
+                </div>
+                <div className="p-2 bg-white/[0.02] rounded-xl border border-purple-500/10">
+                  <div className="text-[10px] text-white/40">Residual &alpha;</div>
+                  <div className="text-xs font-semibold text-purple-200 mt-1 font-mono">
+                    {solvedStats.finalAlphaDeg.toFixed(1)}&deg;
+                  </div>
                 </div>
               </div>
-              <div className="p-2 bg-white/[0.02] rounded-xl border border-purple-500/10">
-                <div className="text-[10px] text-white/40">Accuracy</div>
-                <div className="text-sm font-semibold text-purple-300 mt-0.5 font-mono">
-                  {solvedStats.finalAccuracy}%
-                </div>
-              </div>
-              <div className="p-2 bg-white/[0.02] rounded-xl border border-purple-500/10">
-                <div className="text-[10px] text-white/40">Residual &alpha;</div>
-                <div className="text-xs font-semibold text-purple-200 mt-1 font-mono">
-                  {solvedStats.finalAlphaDeg.toFixed(1)}&deg;
-                </div>
-              </div>
-            </div>
+            )}
 
             {/* Actions */}
             <div className="flex gap-2 pt-1">
