@@ -141,6 +141,12 @@ export interface AnimatedConstellationLineData {
   vertexCount: number;
 }
 
+export interface AllConstellationStarData {
+  positions: Float32Array;
+  sizes: Float32Array;
+  count: number;
+}
+
 export const ORBIT_RADIUS = 100.0;
 const HYG_SENTINEL_DIST = 90000.0;
 
@@ -149,6 +155,7 @@ class StarDataManager {
   private rawStarfield: Float32Array | null = null;
   private normalizedCache: Map<string, NormalizedConstellation> = new Map();
   private allAnimatedLinesCache: AnimatedConstellationLineData | null = null;
+  private allConstellationStarsCache: AllConstellationStarData | null = null;
   private loaded: boolean = false;
   private loadPromise: Promise<void> | null = null;
 
@@ -375,6 +382,43 @@ class StarDataManager {
     };
 
     return this.allAnimatedLinesCache;
+  }
+
+  /**
+   * Collects all unique constellation stars across all 88 constellations on the celestial sphere
+   * so the free Sky View can highlight every constellation's stars in blue pixel-art format.
+   */
+  public getAllConstellationStarPoints(): AllConstellationStarData {
+    if (this.allConstellationStarsCache) {
+      return this.allConstellationStarsCache;
+    }
+
+    const seenIds = new Set<number>();
+    const posList: number[] = [];
+    const sizeList: number[] = [];
+
+    for (const c of Object.values(this.rawConstellations)) {
+      if (!c.stars) continue;
+      for (const s of c.stars) {
+        if (seenIds.has(s.id)) continue;
+        seenIds.add(s.id);
+
+        const u = new THREE.Vector3(s.x, s.y, s.z).normalize().multiplyScalar(ORBIT_RADIUS);
+        posList.push(u.x, u.y, u.z);
+
+        const mag = Number.isFinite(s.mag) ? s.mag : 4.0;
+        const size = Math.max(14.0, Math.min(28.0, (6.5 - mag) * 3.8 + 12.0));
+        sizeList.push(size);
+      }
+    }
+
+    this.allConstellationStarsCache = {
+      positions: new Float32Array(posList),
+      sizes: new Float32Array(sizeList),
+      count: sizeList.length,
+    };
+
+    return this.allConstellationStarsCache;
   }
 
   private computeRayPreservingNormalization(raw: RawConstellation): NormalizedConstellation {
