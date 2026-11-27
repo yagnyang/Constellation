@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { Trophy, Timer, Sparkles, Star, ChevronRight, Zap, Mail, Phone, User } from 'lucide-react';
+import { MAX_ARCADE_ATTEMPTS } from '../core/DevFestArcadeManager';
 
 interface DevFestStartModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onStart: (playerName: string, playerId?: number) => void;
+  onStart: (playerName: string, playerId?: number, playerEmail?: string, playerPhone?: string) => void;
   onOpenLeaderboard: () => void;
 }
 
@@ -77,7 +78,7 @@ export const DevFestStartModal: React.FC<DevFestStartModalProps> = ({
       }
 
       const playerId = typeof data.player?.id === 'number' ? data.player.id : undefined;
-      onStart(trimmedName, playerId);
+      onStart(trimmedName, playerId, trimmedEmail, trimmedPhone || undefined);
     } catch {
       setError('Network error while saving registration. Please try again.');
       setIsSubmitting(false);
@@ -148,7 +149,7 @@ export const DevFestStartModal: React.FC<DevFestStartModalProps> = ({
             <Timer className="w-4 h-4 text-purple-400" />
             <span>
               <strong className="text-white font-mono">20.0s</strong> &bull;{' '}
-              <strong className="text-purple-200">3 Tries</strong> (Best Counts)
+              <strong className="text-purple-200">{MAX_ARCADE_ATTEMPTS} Tries</strong> (Best Counts)
             </span>
           </div>
           <div className="text-right text-[11px] text-white/50">

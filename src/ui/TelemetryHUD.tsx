@@ -6,7 +6,12 @@ import { Trophy, Flame, Timer, Sparkles, Star, Zap, HelpCircle, Volume2, VolumeX
 import { GameState, SolvedStats, PASS_ACCURACY_THRESHOLD } from '../core/OrbitalCameraController';
 import { NormalizedConstellation } from '../core/StarDataManager';
 import { ReferenceSilhouette } from './ReferenceSilhouette';
-import { getConstellationTierInfo, calculateAccuracyBonus, TierInfo } from '../core/DevFestArcadeManager';
+import {
+  getConstellationTierInfo,
+  calculateAccuracyBonus,
+  MAX_ARCADE_ATTEMPTS,
+  TierInfo,
+} from '../core/DevFestArcadeManager';
 
 interface TelemetryHUDProps {
   state: GameState;
@@ -76,7 +81,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   arcadeStage = 1,
   arcadeTotalSolved = 0,
   arcadeAttempt = 1,
-  arcadeMaxAttempts = 3,
+  arcadeMaxAttempts = MAX_ARCADE_ATTEMPTS,
   arcadeBonusNotice = null,
   onOpenLeaderboard,
   onStartArcadeChallenge,

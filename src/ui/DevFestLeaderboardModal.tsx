@@ -119,7 +119,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   <span className="text-[10px] text-white/50 font-normal">pts</span>
                 </div>
                 <div className="text-[10px] text-white/55 font-mono">
-                  {top2.avgAccuracy.toFixed(1)}% • {top2.totalTimeSec.toFixed(1)}s • {top2.score}/88
+                  {top2.avgAccuracy.toFixed(1)}% • {top2.score}/88 solved
                 </div>
               </div>
             ) : (
@@ -147,7 +147,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   <span className="text-xs text-purple-400/70 font-normal">pts</span>
                 </div>
                 <div className="text-[10px] text-purple-300/80 font-mono font-medium">
-                  {top1.avgAccuracy.toFixed(1)}% • {top1.totalTimeSec.toFixed(1)}s • {top1.score}/88
+                  {top1.avgAccuracy.toFixed(1)}% • {top1.score}/88 solved
                 </div>
               </div>
             ) : null}
@@ -172,7 +172,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   <span className="text-[10px] text-white/50 font-normal">pts</span>
                 </div>
                 <div className="text-[10px] text-white/55 font-mono">
-                  {top3.avgAccuracy.toFixed(1)}% • {top3.totalTimeSec.toFixed(1)}s • {top3.score}/88
+                  {top3.avgAccuracy.toFixed(1)}% • {top3.score}/88 solved
                 </div>
               </div>
             ) : (
@@ -188,7 +188,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
             <span className="col-span-4">Player</span>
             <span className="col-span-3 text-right">Score</span>
             <span className="col-span-2 text-right">Accuracy</span>
-            <span className="col-span-2 text-right">Time</span>
+            <span className="col-span-2 text-right">Solved</span>
           </div>
 
           {entries.length === 0 ? (
@@ -220,19 +220,14 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                     )}
                   </span>
 
-                  {/* Player Name & Solved Count */}
-                  <div className="col-span-4 flex flex-col truncate pr-2">
-                    <div className="flex items-center gap-1.5 truncate">
-                      <span className="truncate font-medium text-white">{entry.playerName}</span>
-                      {entry.isAllCleared && (
-                        <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-900/40 text-purple-200 border border-purple-500/40 font-bold shrink-0">
-                          MAX 88
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[10px] text-white/40 font-mono">
-                      {entry.score}/88 solved
-                    </span>
+                  {/* Player Name */}
+                  <div className="col-span-4 flex items-center gap-1.5 truncate pr-2">
+                    <span className="truncate font-medium text-white">{entry.playerName}</span>
+                    {entry.isAllCleared && (
+                      <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-900/40 text-purple-200 border border-purple-500/40 font-bold shrink-0">
+                        MAX 88
+                      </span>
+                    )}
                   </div>
 
                   {/* Competitive Points */}
@@ -246,9 +241,9 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                     {entry.avgAccuracy.toFixed(1)}%
                   </span>
 
-                  {/* Total Time */}
+                  {/* Constellations Solved */}
                   <span className="col-span-2 text-right font-mono text-white/90">
-                    {entry.totalTimeSec.toFixed(1)}s
+                    {entry.score}
                   </span>
                 </div>
               );

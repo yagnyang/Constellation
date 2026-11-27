@@ -1,7 +1,7 @@
 export type ConstellationTier = 'EASY' | 'MEDIUM' | 'HARD';
 
 export const MIN_PASS_ACCURACY = 85.0;
-export const MAX_ARCADE_ATTEMPTS = 3;
+export const MAX_ARCADE_ATTEMPTS = 2;
 
 export interface TierInfo {
   tier: ConstellationTier;
@@ -90,7 +90,7 @@ export interface SolvedConstellationRecord {
 }
 
 export interface AttemptResult {
-  attemptNumber: number; // 1, 2, or 3
+  attemptNumber: number; // 1 or 2
   points: number;
   score: number; // Constellations solved (0-88)
   totalConstellations: number; // 88
@@ -101,20 +101,26 @@ export interface AttemptResult {
   history: SolvedConstellationRecord[];
 }
 
+export interface CompactLeaderboardRecord {
+  name: string;
+  email?: string;
+  phone?: string;
+  score: number; // Competitive score (points)
+  accuracy: number; // Average accuracy %
+  constellationsSolved: number; // Number of constellations solved (0-88)
+}
+
 export interface LeaderboardEntry {
   id: string;
   playerName: string;
+  email?: string;
+  phone?: string;
   points: number; // Competitive score derived from accuracy & minimum time across solved constellations
   score: number; // Constellations solved (0-88)
-  totalConstellations: number; // 88
-  totalTimeSec: number; // Total active puzzle time in seconds
   avgAccuracy: number; // e.g. 98.4%
-  avgOffsetDeg: number; // Average residual alpha degree e.g. 1.2°
-  date: string;
+  totalTimeSec?: number; // Optional in-memory metric for active GameOver summary (not persisted in JSON)
   rank?: number;
   isAllCleared?: boolean;
-  attemptsUsed?: number;
-  history?: SolvedConstellationRecord[];
 }
 
 /**
@@ -144,11 +150,8 @@ export function getProjectedRank(candidate: AttemptResult): number {
     playerName: '__preview__',
     points: candidate.points,
     score: candidate.score,
-    totalConstellations: candidate.totalConstellations,
-    totalTimeSec: candidate.totalTimeSec,
     avgAccuracy: candidate.avgAccuracy,
-    avgOffsetDeg: candidate.avgOffsetDeg,
-    date: '',
+    totalTimeSec: candidate.totalTimeSec,
     isAllCleared: candidate.isAllCleared,
   };
   const combined = [...existing, previewEntry].sort(compareLeaderboardEntries);
@@ -179,162 +182,274 @@ export function calculateCompetitiveScore(
 const LEADERBOARD_STORAGE_KEY = 'starc_devfest_leaderboard';
 
 // Default seeded booth records so leaderboard looks exciting immediately on arrival
-const SEED_LEADERBOARD: LeaderboardEntry[] = [
+const SEED_LEADERBOARD: CompactLeaderboardRecord[] = [
   {
-    id: 'seed-1',
-    playerName: 'GDG_ApexStargazer',
-    points: calculateCompetitiveScore(28, 98.7, 84.6),
-    score: 28,
-    totalConstellations: 88,
-    totalTimeSec: 84.6,
-    avgAccuracy: 98.7,
-    avgOffsetDeg: 1.1,
-    date: '10:15 AM',
-    isAllCleared: false,
+    name: 'GDG_ApexStargazer',
+    score: calculateCompetitiveScore(28, 98.7, 84.6),
+    accuracy: 98.7,
+    constellationsSolved: 28,
   },
   {
-    id: 'seed-2',
-    playerName: 'CosmicVoyager',
-    points: calculateCompetitiveScore(21, 98.1, 68.2),
-    score: 21,
-    totalConstellations: 88,
-    totalTimeSec: 68.2,
-    avgAccuracy: 98.1,
-    avgOffsetDeg: 1.5,
-    date: '10:42 AM',
-    isAllCleared: false,
+    name: 'CosmicVoyager',
+    score: calculateCompetitiveScore(21, 98.1, 68.2),
+    accuracy: 98.1,
+    constellationsSolved: 21,
   },
   {
-    id: 'seed-3',
-    playerName: 'DevFestLead',
-    points: calculateCompetitiveScore(16, 97.6, 54.0),
-    score: 16,
-    totalConstellations: 88,
-    totalTimeSec: 54.0,
-    avgAccuracy: 97.6,
-    avgOffsetDeg: 1.9,
-    date: '11:05 AM',
-    isAllCleared: false,
+    name: 'DevFestLead',
+    score: calculateCompetitiveScore(16, 97.6, 54.0),
+    accuracy: 97.6,
+    constellationsSolved: 16,
   },
   {
-    id: 'seed-4',
-    playerName: 'AstroNova',
-    points: calculateCompetitiveScore(11, 97.2, 39.8),
-    score: 11,
-    totalConstellations: 88,
-    totalTimeSec: 39.8,
-    avgAccuracy: 97.2,
-    avgOffsetDeg: 2.2,
-    date: '11:30 AM',
-    isAllCleared: false,
+    name: 'AstroNova',
+    score: calculateCompetitiveScore(11, 97.2, 39.8),
+    accuracy: 97.2,
+    constellationsSolved: 11,
   },
 ];
 
+function makeEntryId(entry: Pick<LeaderboardEntry, 'playerName' | 'email' | 'points' | 'avgAccuracy' | 'score'>, index: number): string {
+  return `${index}:${entry.playerName}:${entry.email ?? ''}:${entry.points}:${entry.avgAccuracy}:${entry.score}`;
+}
+
 /**
- * Compare two leaderboard entries according to competitive accuracy + speed criteria:
- * 1. Primary: Competitive Points (descending - highest accuracy with minimum time wins!)
- * 2. Tie-breaker 1: Average accuracy % (descending - higher precision wins)
- * 3. Tie-breaker 2: Total time taken (ascending - minimum elapsed time wins)
- * 4. Tie-breaker 3: Constellations solved (descending)
- * 5. Tie-breaker 4: Average residual offset alpha in degrees (ascending - closest to 0° wins)
+ * Convert a runtime LeaderboardEntry to the minimal JSON record stored in localStorage & exported:
+ * only name, email (if present), phone (only if entered), score, accuracy, and constellationsSolved.
+ */
+export function toCompactLeaderboardRecord(
+  entry: Pick<LeaderboardEntry, 'playerName' | 'email' | 'phone' | 'points' | 'avgAccuracy' | 'score'>
+): CompactLeaderboardRecord {
+  const name = entry.playerName.trim();
+  const email = entry.email?.trim();
+  const phone = entry.phone?.trim();
+
+  const record: CompactLeaderboardRecord = {
+    name,
+    ...(email ? { email } : {}),
+    ...(phone ? { phone } : {}),
+    score: Math.round(entry.points),
+    accuracy: +Number(entry.avgAccuracy).toFixed(2),
+    constellationsSolved: Math.max(0, Math.round(entry.score)),
+  };
+  return record;
+}
+
+/**
+ * Normalize either a compact JSON record or a legacy bloated localStorage record into a LeaderboardEntry.
+ */
+function parseStoredEntry(raw: unknown): { entry: LeaderboardEntry; wasLegacy: boolean } | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const obj = raw as Record<string, unknown>;
+
+  // New compact format: { name, email?, phone?, score, accuracy, constellationsSolved }
+  if (typeof obj.name === 'string' && typeof obj.constellationsSolved === 'number') {
+    const scoreVal = typeof obj.score === 'number' && Number.isFinite(obj.score) ? Math.round(obj.score) : 0;
+    const accuracyVal =
+      typeof obj.accuracy === 'number' && Number.isFinite(obj.accuracy) ? +obj.accuracy.toFixed(2) : 0;
+    const solvedVal = Number.isFinite(obj.constellationsSolved)
+      ? Math.max(0, Math.round(obj.constellationsSolved))
+      : 0;
+    const email = typeof obj.email === 'string' && obj.email.trim() ? obj.email.trim() : undefined;
+    const phone = typeof obj.phone === 'string' && obj.phone.trim() ? obj.phone.trim() : undefined;
+
+    const allowedKeys = new Set(['name', 'email', 'phone', 'score', 'accuracy', 'constellationsSolved']);
+    const hasExtraKeys = Object.keys(obj).some((k) => !allowedKeys.has(k));
+
+    return {
+      entry: {
+        id: '',
+        playerName: obj.name.trim() || 'Stargazer',
+        ...(email ? { email } : {}),
+        ...(phone ? { phone } : {}),
+        points: scoreVal,
+        score: solvedVal,
+        avgAccuracy: accuracyVal,
+        isAllCleared: solvedVal >= 88,
+      },
+      wasLegacy: hasExtraKeys,
+    };
+  }
+
+  // Legacy format: { playerName, points?, score (solved), avgAccuracy, totalTimeSec?, history?, ... }
+  if (typeof obj.playerName === 'string') {
+    const solvedVal = typeof obj.score === 'number' && Number.isFinite(obj.score) ? Math.max(0, Math.round(obj.score)) : 0;
+    const accuracyVal =
+      typeof obj.avgAccuracy === 'number' && Number.isFinite(obj.avgAccuracy)
+        ? +obj.avgAccuracy.toFixed(2)
+        : 0;
+    const totalTimeSec =
+      typeof obj.totalTimeSec === 'number' && Number.isFinite(obj.totalTimeSec) ? obj.totalTimeSec : 0;
+    const pointsVal =
+      typeof obj.points === 'number' && Number.isFinite(obj.points)
+        ? Math.round(obj.points)
+        : calculateCompetitiveScore(solvedVal, accuracyVal, totalTimeSec);
+    const email = typeof obj.email === 'string' && obj.email.trim() ? obj.email.trim() : undefined;
+    const phone = typeof obj.phone === 'string' && obj.phone.trim() ? obj.phone.trim() : undefined;
+
+    return {
+      entry: {
+        id: '',
+        playerName: obj.playerName.trim() || 'Stargazer',
+        ...(email ? { email } : {}),
+        ...(phone ? { phone } : {}),
+        points: pointsVal,
+        score: solvedVal,
+        avgAccuracy: accuracyVal,
+        isAllCleared: solvedVal >= 88,
+      },
+      wasLegacy: true,
+    };
+  }
+
+  return null;
+}
+
+/**
+ * Compare two leaderboard entries according to competitive accuracy + score criteria:
+ * 1. Primary: Competitive Score / Points (descending)
+ * 2. Tie-breaker 1: Average accuracy % (descending)
+ * 3. Tie-breaker 2: Constellations solved (descending)
  */
 export function compareLeaderboardEntries(a: LeaderboardEntry, b: LeaderboardEntry): number {
-  const pointsA = a.points ?? calculateCompetitiveScore(a.score, a.avgAccuracy, a.totalTimeSec);
-  const pointsB = b.points ?? calculateCompetitiveScore(b.score, b.avgAccuracy, b.totalTimeSec);
-
-  if (pointsB !== pointsA) {
-    return pointsB - pointsA;
+  if (b.points !== a.points) {
+    return b.points - a.points;
   }
   if (Math.abs(b.avgAccuracy - a.avgAccuracy) > 0.05) {
     return b.avgAccuracy - a.avgAccuracy;
   }
-  if (Math.abs(a.totalTimeSec - b.totalTimeSec) > 0.05) {
-    return a.totalTimeSec - b.totalTimeSec;
-  }
-  if (b.score !== a.score) {
-    return b.score - a.score;
-  }
-  return a.avgOffsetDeg - b.avgOffsetDeg;
+  return b.score - a.score;
+}
+
+function hydrateAndRank(entries: LeaderboardEntry[]): LeaderboardEntry[] {
+  const sorted = [...entries].sort(compareLeaderboardEntries);
+  return sorted.map((entry, index) => ({
+    ...entry,
+    id: makeEntryId(entry, index),
+    rank: index + 1,
+    isAllCleared: entry.score >= 88,
+  }));
+}
+
+function persistCompactEntries(entries: LeaderboardEntry[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const compact = entries.map(toCompactLeaderboardRecord);
+    localStorage.setItem(LEADERBOARD_STORAGE_KEY, JSON.stringify(compact));
+  } catch {}
 }
 
 /**
- * Load and rank leaderboard from localStorage
+ * Load and rank leaderboard from localStorage (automatically compacting any legacy entries)
  */
 export function loadLeaderboard(): LeaderboardEntry[] {
-  if (typeof window === 'undefined') return [...SEED_LEADERBOARD];
+  const seedHydrated = () =>
+    hydrateAndRank(
+      SEED_LEADERBOARD.map((s) => ({
+        id: '',
+        playerName: s.name,
+        points: s.score,
+        score: s.constellationsSolved,
+        avgAccuracy: s.accuracy,
+        isAllCleared: s.constellationsSolved >= 88,
+      }))
+    );
+
+  if (typeof window === 'undefined') return seedHydrated();
 
   try {
     const raw = localStorage.getItem(LEADERBOARD_STORAGE_KEY);
-    let entries: LeaderboardEntry[] = [];
-    if (raw) {
-      entries = JSON.parse(raw);
-    } else {
-      entries = [...SEED_LEADERBOARD];
-      localStorage.setItem(LEADERBOARD_STORAGE_KEY, JSON.stringify(entries));
+    if (!raw) {
+      localStorage.setItem(LEADERBOARD_STORAGE_KEY, JSON.stringify(SEED_LEADERBOARD));
+      return seedHydrated();
     }
 
-    // Ensure legacy entries without points have their competitive score computed
-    entries = entries.map((entry) => ({
-      ...entry,
-      points:
-        typeof entry.points === 'number'
-          ? entry.points
-          : calculateCompetitiveScore(entry.score, entry.avgAccuracy, entry.totalTimeSec),
-    }));
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      return seedHydrated();
+    }
 
-    entries.sort(compareLeaderboardEntries);
-    return entries.map((entry, index) => ({
-      ...entry,
-      rank: index + 1,
-    }));
+    let needsCompaction = false;
+    const entries: LeaderboardEntry[] = [];
+    for (const item of parsed) {
+      const normalized = parseStoredEntry(item);
+      if (normalized) {
+        entries.push(normalized.entry);
+        if (normalized.wasLegacy) needsCompaction = true;
+      } else {
+        needsCompaction = true;
+      }
+    }
+
+    const ranked = hydrateAndRank(entries);
+
+    // Rewrite legacy bloated records (e.g. with per-constellation history) in compact format immediately
+    if (needsCompaction) {
+      persistCompactEntries(ranked);
+    }
+
+    return ranked;
   } catch {
-    return [...SEED_LEADERBOARD].map((entry, index) => ({
-      ...entry,
-      rank: index + 1,
-    }));
+    return seedHydrated();
   }
 }
 
 /**
- * Add a new player's session result to the leaderboard and persist
+ * Add a new player's session result to the leaderboard and persist in compact JSON format
  */
-export function saveLeaderboardEntry(
-  entryData: Omit<LeaderboardEntry, 'id' | 'rank' | 'date' | 'points'> & { points?: number }
-): { entry: LeaderboardEntry; rank: number; entries: LeaderboardEntry[] } {
+export function saveLeaderboardEntry(entryData: {
+  playerName: string;
+  email?: string;
+  phone?: string;
+  points?: number;
+  score: number;
+  avgAccuracy: number;
+  totalTimeSec?: number;
+}): { entry: LeaderboardEntry; rank: number; entries: LeaderboardEntry[] } {
   const currentEntries = loadLeaderboard();
 
-  const now = new Date();
-  const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const points =
-    typeof entryData.points === 'number'
-      ? entryData.points
-      : calculateCompetitiveScore(entryData.score, entryData.avgAccuracy, entryData.totalTimeSec);
+    typeof entryData.points === 'number' && Number.isFinite(entryData.points)
+      ? Math.round(entryData.points)
+      : calculateCompetitiveScore(entryData.score, entryData.avgAccuracy, entryData.totalTimeSec ?? 0);
+
+  const email = entryData.email?.trim() || undefined;
+  const phone = entryData.phone?.trim() || undefined;
+  const solvedCount = Math.max(0, Math.round(entryData.score));
+  const roundedAcc = +Number(entryData.avgAccuracy).toFixed(2);
 
   const newEntry: LeaderboardEntry = {
-    ...entryData,
+    id: '',
+    playerName: entryData.playerName.trim() || 'Stargazer',
+    ...(email ? { email } : {}),
+    ...(phone ? { phone } : {}),
     points,
-    id: `devfest-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-    date: timeString,
+    score: solvedCount,
+    avgAccuracy: roundedAcc,
+    isAllCleared: solvedCount >= 88,
   };
 
   const updatedEntries = [...currentEntries, newEntry];
   updatedEntries.sort(compareLeaderboardEntries);
 
+  const savedIdx = updatedEntries.indexOf(newEntry);
   const rankedEntries = updatedEntries.map((e, index) => ({
     ...e,
+    id: makeEntryId(e, index),
     rank: index + 1,
+    isAllCleared: e.score >= 88,
   }));
 
-  const savedRank = rankedEntries.find((e) => e.id === newEntry.id)?.rank || rankedEntries.length;
+  persistCompactEntries(rankedEntries);
 
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem(LEADERBOARD_STORAGE_KEY, JSON.stringify(rankedEntries));
-    } catch {}
-  }
+  const savedEntry = rankedEntries[savedIdx >= 0 ? savedIdx : rankedEntries.length - 1];
+  const savedRank = savedEntry.rank ?? rankedEntries.length;
 
   return {
-    entry: { ...newEntry, rank: savedRank },
+    entry: {
+      ...savedEntry,
+      ...(typeof entryData.totalTimeSec === 'number' ? { totalTimeSec: entryData.totalTimeSec } : {}),
+    },
     rank: savedRank,
     entries: rankedEntries,
   };
@@ -351,11 +466,13 @@ export function clearLeaderboard(): void {
 }
 
 /**
- * Export leaderboard data as JSON for post-event analytics
+ * Export leaderboard data as lean JSON containing only:
+ * name, email, phone (if provided), score, accuracy, and constellationsSolved
  */
 export function exportLeaderboardJSON(): string {
   const entries = loadLeaderboard();
-  return JSON.stringify(entries, null, 2);
+  const compact = entries.map(toCompactLeaderboardRecord);
+  return JSON.stringify(compact, null, 2);
 }
 
 /**
