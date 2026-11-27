@@ -115,6 +115,8 @@ export interface NormalizedConstellation {
     centerV: number;
     maxTanX: number;
     maxTanY: number;
+    artMaxTanX?: number;
+    artMaxTanY?: number;
   };
   pivot: THREE.Vector3; // C = u_C * 100
   pivotDir: THREE.Vector3; // u_C
@@ -621,6 +623,29 @@ class StarDataManager {
       starSizesArray[idx] = Math.max(16.0, (7.0 - s.mag) * 7.5);
     });
 
+    // Compute artwork tangent-plane extents so the 3D artwork plate stays framed within the viewport
+    let artMaxTanX = 0;
+    let artMaxTanY = 0;
+    if (raw.art?.affine) {
+      const p0 = new THREE.Vector3(...raw.art.affine.p0);
+      const du = new THREE.Vector3(...raw.art.affine.du);
+      const dv = new THREE.Vector3(...raw.art.affine.dv);
+      for (let iu = 0; iu <= 2; iu++) {
+        for (let iv = 0; iv <= 2; iv++) {
+          const au = iu * 0.5;
+          const av = iv * 0.5;
+          const pt = p0.clone().addScaledVector(du, au).addScaledVector(dv, av).normalize();
+          const forwardDot = pt.dot(pivotDir);
+          if (forwardDot > 0.05) {
+            const tx = Math.abs(pt.dot(r)) / forwardDot;
+            const ty = Math.abs(pt.dot(v)) / forwardDot;
+            if (tx > artMaxTanX) artMaxTanX = tx;
+            if (ty > artMaxTanY) artMaxTanY = ty;
+          }
+        }
+      }
+    }
+
     return {
       id: raw.id,
       name: raw.name,
@@ -642,6 +667,8 @@ class StarDataManager {
         centerV,
         maxTanX,
         maxTanY,
+        artMaxTanX,
+        artMaxTanY,
       },
       pivot,
       pivotDir,

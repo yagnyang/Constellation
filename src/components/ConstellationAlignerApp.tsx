@@ -15,8 +15,14 @@ import { DevFestLeaderboardModal } from '../ui/DevFestLeaderboardModal';
 import { DevFestGameOverModal } from '../ui/DevFestGameOverModal';
 import {
   getConstellationTierInfo,
+  calculateAccuracyBonus,
+  calculateCompetitiveScore,
   generateArcadeQueue,
   saveLeaderboardEntry,
+  pickBestAttempt,
+  getProjectedRank,
+  MAX_ARCADE_ATTEMPTS,
+  AttemptResult,
   LeaderboardEntry,
   SolvedConstellationRecord,
 } from '../core/DevFestArcadeManager';
@@ -45,7 +51,6 @@ export default function ConstellationAlignerApp() {
   const [showAllLines, setShowAllLines] = useState<boolean>(false);
   const [showArt, setShowArt] = useState<boolean>(false);
   const [showGhostGuide, setShowGhostGuide] = useState<boolean>(false);
-  const [showSkyPanorama, setShowSkyPanorama] = useState<boolean>(true);
   const [controlSettings, setControlSettings] = useState<ControlSettings>(loadControlSettings());
   const [soundEnabled, setSoundEnabled] = useState<boolean>(() => soundEngine.isEnabled());
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
@@ -70,14 +75,24 @@ export default function ConstellationAlignerApp() {
   const [gameOverRank, setGameOverRank] = useState<number>(1);
   const [isVictory, setIsVictory] = useState<boolean>(false);
 
+  // Consecutive 3-attempt session tracking (highest of up to 3 attempts is recorded)
+  const [arcadeAttempts, setArcadeAttempts] = useState<AttemptResult[]>([]);
+  const [currentAttemptNumber, setCurrentAttemptNumber] = useState<number>(1);
+  const [bestAttempt, setBestAttempt] = useState<AttemptResult | null>(null);
+  const [isSessionFinalized, setIsSessionFinalized] = useState<boolean>(false);
+
   // Mutable refs for persistent callbacks inside render loops & controller
   const isArcadeActiveRef = useRef<boolean>(false);
   const arcadePlayerNameRef = useRef<string>('Stargazer');
+  const arcadePlayerIdRef = useRef<number | null>(null);
   const arcadeQueueRef = useRef<string[]>([]);
   const arcadeIndexRef = useRef<number>(0);
   const arcadeTimeBankRef = useRef<number>(20.0);
   const arcadeTotalActiveTimeRef = useRef<number>(0);
   const arcadeHistoryRef = useRef<SolvedConstellationRecord[]>([]);
+  const arcadeAttemptsRef = useRef<AttemptResult[]>([]);
+  const currentAttemptNumberRef = useRef<number>(1);
+  const isSessionFinalizedRef = useRef<boolean>(false);
   const bonusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Refs for throttling HUD React state updates while WebGL runs at full 60-120fps
@@ -162,77 +177,134 @@ export default function ConstellationAlignerApp() {
     };
   }, []);
 
-  // Finish arcade session on game over / timeout
-  const handleGameOverArcade = useCallback(() => {
-    setIsArcadeActive(false);
-    isArcadeActiveRef.current = false;
-    controllerRef.current?.setFastDisplace(false);
+  // Commit the highest of the player's consecutive attempts (up to 3) to leaderboard & SQLite once
+  const finalizeArcadeSession = useCallback((attemptsOverride?: AttemptResult[]) => {
+    if (isSessionFinalizedRef.current) return;
+    const attempts = attemptsOverride ?? arcadeAttemptsRef.current;
+    if (attempts.length === 0) return;
 
-    const history = arcadeHistoryRef.current;
-    const score = history.length;
-    const totalTimeSec = +arcadeTotalActiveTimeRef.current.toFixed(1);
+    isSessionFinalizedRef.current = true;
+    setIsSessionFinalized(true);
 
-    // Calculate refined average accuracy % & residual offset
-    const avgAccuracy =
-      score > 0
-        ? +(history.reduce((sum, h) => sum + h.accuracy, 0) / score).toFixed(2)
-        : 0;
-
-    const avgOffsetDeg =
-      score > 0
-        ? +(history.reduce((sum, h) => sum + h.alphaDeg, 0) / score).toFixed(2)
-        : 90.0;
+    const best = pickBestAttempt(attempts);
+    setBestAttempt(best);
 
     const result = saveLeaderboardEntry({
       playerName: arcadePlayerNameRef.current,
-      score,
-      totalConstellations: 88,
-      totalTimeSec,
-      avgAccuracy,
-      avgOffsetDeg,
-      isAllCleared: false,
-      history,
+      points: best.points,
+      score: best.score,
+      totalConstellations: best.totalConstellations,
+      totalTimeSec: best.totalTimeSec,
+      avgAccuracy: best.avgAccuracy,
+      avgOffsetDeg: best.avgOffsetDeg,
+      isAllCleared: best.isAllCleared,
+      attemptsUsed: attempts.length,
+      history: best.history,
     });
+
+    if (arcadePlayerIdRef.current !== null) {
+      fetch('/api/players', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: arcadePlayerIdRef.current,
+          points: result.entry.points,
+          score: best.score,
+          totalTimeSec: best.totalTimeSec,
+          avgAccuracy: best.avgAccuracy,
+          attempts: attempts.length,
+        }),
+      }).catch(() => {});
+    }
 
     setGameOverEntry(result.entry);
     setGameOverRank(result.rank);
     setHighlightEntryId(result.entry.id);
-    setIsVictory(false);
-    setIsGameOverModalOpen(true);
+    setIsVictory(best.isAllCleared);
   }, []);
 
-  // Complete arcade session on conquering all 88 constellations!
-  const handleCompleteArcade = useCallback(
-    (history: SolvedConstellationRecord[], totalTimeSec: number) => {
+  // Record a finished attempt; automatically finalize after the 3rd consecutive attempt
+  const recordCompletedAttempt = useCallback(
+    (history: SolvedConstellationRecord[], totalTimeSec: number, isAllCleared: boolean) => {
       setIsArcadeActive(false);
       isArcadeActiveRef.current = false;
       controllerRef.current?.setFastDisplace(false);
 
-      const avgAccuracy = +(
-        history.reduce((sum, h) => sum + h.accuracy, 0) / 88
-      ).toFixed(2);
-      const avgOffsetDeg = +(
-        history.reduce((sum, h) => sum + h.alphaDeg, 0) / 88
-      ).toFixed(2);
+      const score = history.length;
+      const roundedTime = +totalTimeSec.toFixed(1);
+      const avgAccuracy =
+        score > 0
+          ? +(history.reduce((sum, h) => sum + h.accuracy, 0) / score).toFixed(2)
+          : 0;
+      const avgOffsetDeg =
+        score > 0
+          ? +(history.reduce((sum, h) => sum + h.alphaDeg, 0) / score).toFixed(2)
+          : 90.0;
+      const points = calculateCompetitiveScore(score, avgAccuracy, roundedTime);
 
-      const result = saveLeaderboardEntry({
-        playerName: arcadePlayerNameRef.current,
-        score: 88,
+      const attemptResult: AttemptResult = {
+        attemptNumber: currentAttemptNumberRef.current,
+        points,
+        score,
         totalConstellations: 88,
-        totalTimeSec: +totalTimeSec.toFixed(1),
+        totalTimeSec: roundedTime,
         avgAccuracy,
         avgOffsetDeg,
-        isAllCleared: true,
+        isAllCleared,
         history,
-      });
+      };
 
-      setGameOverEntry(result.entry);
-      setGameOverRank(result.rank);
-      setHighlightEntryId(result.entry.id);
-      setIsVictory(true);
+      const nextAttempts = [...arcadeAttemptsRef.current, attemptResult];
+      arcadeAttemptsRef.current = nextAttempts;
+      setArcadeAttempts(nextAttempts);
+
+      const best = pickBestAttempt(nextAttempts);
+      setBestAttempt(best);
+
+      if (nextAttempts.length >= MAX_ARCADE_ATTEMPTS) {
+        // 3rd and final consecutive attempt complete — record highest of the 3 permanently
+        finalizeArcadeSession(nextAttempts);
+      } else {
+        // Retries still available — show projected rank for best attempt so far without duplicating DB rows
+        const projectedRank = getProjectedRank(best);
+        setGameOverEntry({
+          id: `preview-${Date.now()}`,
+          playerName: arcadePlayerNameRef.current,
+          points: best.points,
+          score: best.score,
+          totalConstellations: 88,
+          totalTimeSec: best.totalTimeSec,
+          avgAccuracy: best.avgAccuracy,
+          avgOffsetDeg: best.avgOffsetDeg,
+          date: '',
+          isAllCleared: best.isAllCleared,
+          attemptsUsed: nextAttempts.length,
+          history: best.history,
+        });
+        setGameOverRank(projectedRank);
+        setIsVictory(attemptResult.isAllCleared);
+      }
+
       setIsGameOverModalOpen(true);
     },
-    []
+    [finalizeArcadeSession]
+  );
+
+  // Finish arcade attempt on game over / timeout
+  const handleGameOverArcade = useCallback(() => {
+    recordCompletedAttempt(
+      arcadeHistoryRef.current,
+      arcadeTotalActiveTimeRef.current,
+      false
+    );
+  }, [recordCompletedAttempt]);
+
+  // Complete arcade attempt on conquering all 88 constellations!
+  const handleCompleteArcade = useCallback(
+    (history: SolvedConstellationRecord[], totalTimeSec: number) => {
+      recordCompletedAttempt(history, totalTimeSec, true);
+    },
+    [recordCompletedAttempt]
   );
 
   // 2. Initialize Three.js scene and OrbitalCameraController
@@ -243,10 +315,7 @@ export default function ConstellationAlignerApp() {
     const scene = new CelestialScene(container);
     sceneRef.current = scene;
 
-    // Load optimized WebP background celestial panorama (with JPG fallback)
-    scene.initBackgroundPanorama('/bg-image.webp');
-
-    // Load background starfield
+    // Load HYG background starfield
     const starfieldData = starDataManager.getRawStarfield();
     if (starfieldData) {
       scene.initBackgroundStarfield(starfieldData);
@@ -354,11 +423,11 @@ export default function ConstellationAlignerApp() {
         // If in DevFest Arcade Tournament Mode:
         if (isArcadeActiveRef.current && norm) {
           const tierInfo = getConstellationTierInfo(norm.starCount);
-          const bonus = tierInfo.bonusSec;
+          const bonus = calculateAccuracyBonus(norm.starCount, stats.finalAccuracy);
 
-          // Calculate remaining timer + reward bonus
+          // Calculate remaining timer + accuracy-scaled reward bonus
           const currentRemaining = controllerRef.current?.getPuzzleTimer() || 0;
-          const newBank = +(currentRemaining + bonus).toFixed(1);
+          const newBank = +(currentRemaining + bonus).toFixed(2);
 
           controllerRef.current?.setCustomPuzzleTimer(newBank);
           lastTimerTenthsRef.current = Math.round(newBank * 10);
@@ -388,7 +457,7 @@ export default function ConstellationAlignerApp() {
           setArcadeTotalActiveTime(newTotalTime);
 
           // Show floating visual bonus notification
-          setArcadeBonusNotice({ bonusSec: bonus, label: tierInfo.bonusLabel });
+          setArcadeBonusNotice({ bonusSec: bonus, label: `+${bonus.toFixed(2)}s` });
           if (bonusTimeoutRef.current) clearTimeout(bonusTimeoutRef.current);
           bonusTimeoutRef.current = setTimeout(() => {
             setArcadeBonusNotice(null);
@@ -427,11 +496,12 @@ export default function ConstellationAlignerApp() {
       }
     } catch {}
 
-    // Set initial featured constellation (Cassiopeia by default)
+    // Start from the very first constellation (#1 of 88)
     const initialConstellation =
-      starDataManager.getNormalizedConstellation('Cas') ||
-      starDataManager.getNormalizedConstellation('Ori') ||
-      starDataManager.getNormalizedConstellation(constellationList[0]?.id || 'UMa');
+      (constellationList[0]
+        ? starDataManager.getNormalizedConstellation(constellationList[0].id)
+        : null) ||
+      starDataManager.getNormalizedConstellation('And');
 
     if (initialConstellation) {
       setActiveConstellation(initialConstellation);
@@ -466,23 +536,39 @@ export default function ConstellationAlignerApp() {
     window.addEventListener('resize', handleResize);
 
     const handleGlobalPointerUp = () => {
-      controller.handlePointerUp();
+      controller.handlePointerUp(true);
+    };
+    const handleGlobalPointerCancel = () => {
+      controller.handlePointerUp(false);
     };
     const handleWindowBlur = () => {
-      controller.handlePointerUp();
+      controller.handlePointerUp(false);
       soundEngine.stopResonance();
     };
+    const handleUserActivity = () => {
+      controller.notifyUserActivity();
+    };
     window.addEventListener('pointerup', handleGlobalPointerUp);
-    window.addEventListener('pointercancel', handleGlobalPointerUp);
+    window.addEventListener('pointercancel', handleGlobalPointerCancel);
     window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('pointerdown', handleUserActivity, { passive: true });
+    window.addEventListener('pointermove', handleUserActivity, { passive: true });
+    window.addEventListener('wheel', handleUserActivity, { passive: true });
+    window.addEventListener('keydown', handleUserActivity);
+    window.addEventListener('touchstart', handleUserActivity, { passive: true });
 
     return () => {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
       if (bonusTimeoutRef.current) clearTimeout(bonusTimeoutRef.current);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('pointerup', handleGlobalPointerUp);
-      window.removeEventListener('pointercancel', handleGlobalPointerUp);
+      window.removeEventListener('pointercancel', handleGlobalPointerCancel);
       window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('pointerdown', handleUserActivity);
+      window.removeEventListener('pointermove', handleUserActivity);
+      window.removeEventListener('wheel', handleUserActivity);
+      window.removeEventListener('keydown', handleUserActivity);
+      window.removeEventListener('touchstart', handleUserActivity);
       soundEngine.stopResonance();
       scene.dispose();
       sceneRef.current = null;
@@ -502,7 +588,7 @@ export default function ConstellationAlignerApp() {
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (e.buttons === 0) {
-      controllerRef.current?.handlePointerUp();
+      controllerRef.current?.handlePointerUp(true);
       return;
     }
     controllerRef.current?.handlePointerMove(e.clientX, e.clientY, e.buttons);
@@ -512,13 +598,20 @@ export default function ConstellationAlignerApp() {
     try {
       (e.target as HTMLElement).releasePointerCapture(e.pointerId);
     } catch {}
-    controllerRef.current?.handlePointerUp();
+    controllerRef.current?.handlePointerUp(true);
+  }, []);
+
+  const handlePointerCancel = useCallback((e: React.PointerEvent) => {
+    try {
+      (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+    controllerRef.current?.handlePointerUp(false);
   }, []);
 
   // Constellation selection (free explorer mode)
   const handleSelectConstellation = useCallback((id: string) => {
     soundEngine.unlock();
-    controllerRef.current?.handlePointerUp();
+    controllerRef.current?.handlePointerUp(false);
     const norm = starDataManager.getNormalizedConstellation(id);
     if (!norm || !sceneRef.current || !controllerRef.current) return;
 
@@ -528,9 +621,9 @@ export default function ConstellationAlignerApp() {
     setIsCatalogOpen(false);
   }, []);
 
-  // Start DevFest Arcade Speedrun Tournament
-  const handleStartArcade = useCallback(
-    (playerName: string) => {
+  // Launch a single consecutive arcade attempt (1, 2, or 3) starting from #1 Andromeda
+  const launchArcadeAttempt = useCallback(
+    (attemptNumber: number) => {
       soundEngine.unlock();
       setIsStartModalOpen(false);
       setIsLeaderboardOpen(false);
@@ -538,16 +631,16 @@ export default function ConstellationAlignerApp() {
       setShowTimeoutModal(false);
       setSolvedStats(null);
 
-      // 1. Generate progressive 88-constellation queue (Easy -> Medium -> Hard)
+      setCurrentAttemptNumber(attemptNumber);
+      currentAttemptNumberRef.current = attemptNumber;
+
+      // 1. Generate deterministic 1-to-88 constellation queue (no randomization)
       const queue = generateArcadeQueue(constellationList);
       setArcadeQueue(queue);
       arcadeQueueRef.current = queue;
 
       setArcadeIndex(0);
       arcadeIndexRef.current = 0;
-
-      setArcadePlayerName(playerName);
-      arcadePlayerNameRef.current = playerName;
 
       setArcadeHistory([]);
       arcadeHistoryRef.current = [];
@@ -579,6 +672,32 @@ export default function ConstellationAlignerApp() {
     },
     [constellationList]
   );
+
+  // Start a new player's 3-attempt DevFest Arcade Speedrun session
+  const handleStartArcade = useCallback(
+    (playerName: string, playerId?: number) => {
+      setArcadePlayerName(playerName);
+      arcadePlayerNameRef.current = playerName;
+      arcadePlayerIdRef.current = typeof playerId === 'number' ? playerId : null;
+
+      setArcadeAttempts([]);
+      arcadeAttemptsRef.current = [];
+      setBestAttempt(null);
+      setHighlightEntryId(undefined);
+      setIsSessionFinalized(false);
+      isSessionFinalizedRef.current = false;
+
+      launchArcadeAttempt(1);
+    },
+    [launchArcadeAttempt]
+  );
+
+  // Consecutive retry for the same player (strictly capped at MAX_ARCADE_ATTEMPTS = 3)
+  const handleRetryArcadeAttempt = useCallback(() => {
+    if (isSessionFinalizedRef.current) return;
+    if (arcadeAttemptsRef.current.length >= MAX_ARCADE_ATTEMPTS) return;
+    launchArcadeAttempt(arcadeAttemptsRef.current.length + 1);
+  }, [launchArcadeAttempt]);
 
   // Next constellation action
   const handleNextConstellation = useCallback(() => {
@@ -697,15 +816,6 @@ export default function ConstellationAlignerApp() {
     });
   }, []);
 
-  // Sky View Background Panorama Toggle
-  const handleToggleSkyPanorama = useCallback(() => {
-    setShowSkyPanorama((prev) => {
-      const next = !prev;
-      sceneRef.current?.setBackgroundSkyVisible(next);
-      return next;
-    });
-  }, []);
-
   const handleToggleSound = useCallback(() => {
     setSoundEnabled((prev) => {
       const next = !prev;
@@ -739,7 +849,7 @@ export default function ConstellationAlignerApp() {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
         className="w-full h-full cursor-grab active:cursor-grabbing touch-none"
       />
 
@@ -780,11 +890,9 @@ export default function ConstellationAlignerApp() {
           onReplayLinesAnimation={handleReplayLinesAnimation}
           showGhostGuide={showGhostGuide}
           onToggleGhostGuide={handleToggleGhostGuide}
-          showSkyPanorama={showSkyPanorama}
-          onToggleSkyPanorama={handleToggleSkyPanorama}
           onStartAlignment={() => {
             soundEngine.unlock();
-            controllerRef.current?.handlePointerUp();
+            controllerRef.current?.handlePointerUp(false);
             controllerRef.current?.transitionTo('PREVIEW');
           }}
           onNextConstellation={handleNextConstellation}
@@ -801,6 +909,8 @@ export default function ConstellationAlignerApp() {
           arcadePlayerName={arcadePlayerName}
           arcadeStage={arcadeIndex + 1}
           arcadeTotalSolved={arcadeHistory.length}
+          arcadeAttempt={currentAttemptNumber}
+          arcadeMaxAttempts={MAX_ARCADE_ATTEMPTS}
           arcadeBonusNotice={arcadeBonusNotice}
           onOpenLeaderboard={() => setIsLeaderboardOpen(true)}
           onStartArcadeChallenge={() => setIsStartModalOpen(true)}
@@ -862,15 +972,24 @@ export default function ConstellationAlignerApp() {
         entry={gameOverEntry}
         rank={gameOverRank}
         isVictory={isVictory}
+        attempts={arcadeAttempts}
+        maxAttempts={MAX_ARCADE_ATTEMPTS}
+        bestAttempt={bestAttempt}
+        isFinalized={isSessionFinalized}
+        onRetryAttempt={handleRetryArcadeAttempt}
+        onFinishSession={() => finalizeArcadeSession()}
         onViewLeaderboard={() => {
+          finalizeArcadeSession();
           setIsGameOverModalOpen(false);
           setIsLeaderboardOpen(true);
         }}
-        onPlayAgain={() => {
+        onNextAttendee={() => {
+          finalizeArcadeSession();
           setIsGameOverModalOpen(false);
           setIsStartModalOpen(true);
         }}
         onReturnToSky={() => {
+          finalizeArcadeSession();
           setIsGameOverModalOpen(false);
           controllerRef.current?.transitionTo('EARTH_HUB');
         }}

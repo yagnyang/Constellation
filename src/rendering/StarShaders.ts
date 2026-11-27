@@ -19,16 +19,15 @@ export const BACKGROUND_STAR_VERTEX_SHADER = `
 
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
 
-    // Realistic astronomical point sizing:
-    // Clearly visible, brilliant stellar pinpoints (1.8px to 7.5px)
-    float apparentSize = clamp(aSize * 0.42, 1.8, 7.5);
-    gl_PointSize = clamp(apparentSize * uPixelRatio, 1.5, 16.0);
+    // Crisp point-sized astronomical stars (1.2px to 4.2px CSS)
+    float apparentSize = clamp(aSize * 0.36, 1.2, 4.2);
+    gl_PointSize = clamp(apparentSize * uPixelRatio, 1.2, 8.5);
 
-    // Atmospheric scintillation (twinkle) based on star coordinates
+    // Subtle atmospheric scintillation (twinkle) based on star coordinates
     float hash = fract(sin(dot(position.xyz, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
     float twinkleSpeed = 2.2 + hash * 3.2;
     float twinklePhase = hash * 6.28318;
-    vTwinkle = 0.86 + 0.14 * sin(uTime * twinkleSpeed + twinklePhase);
+    vTwinkle = 0.88 + 0.12 * sin(uTime * twinkleSpeed + twinklePhase);
 
     vBrightness = aSize;
     gl_Position = projectionMatrix * mvPosition;
@@ -48,28 +47,18 @@ export const BACKGROUND_STAR_FRAGMENT_SHADER = `
     float dist = length(coord);
     if (dist > 0.5) discard;
 
-    // 1. Intense pinpoint Airy disk core (steep exponential drop)
-    float core = exp(-dist * dist * 36.0);
+    // 1. Sharp, high-intensity pinpoint Airy core
+    float core = exp(-dist * dist * 22.0);
 
-    // 2. Natural optical scatter halo
-    float halo = exp(-dist * 6.5);
+    // 2. Tight micro-halo so small point stars stay bright and jewel-like
+    float halo = exp(-dist * 8.0);
 
-    // 3. Four-point diffraction spikes on bright stars (mag < 2.5, vBrightness > 4.5)
-    float spike = 0.0;
-    if (vBrightness > 4.5) {
-      float ax = abs(coord.x);
-      float ay = abs(coord.y);
-      float spikeX = max(0.0, 1.0 - ax * 22.0) * max(0.0, 1.0 - ay * 3.5);
-      float spikeY = max(0.0, 1.0 - ay * 22.0) * max(0.0, 1.0 - ax * 3.5);
-      spike = (spikeX + spikeY) * clamp((vBrightness - 4.5) * 0.38, 0.0, 1.0);
-    }
+    // White-hot core with subtle B-V spectral tint around the edge
+    vec3 hotCore = mix(vColor, vec3(1.0, 1.0, 1.0), core * 0.86);
 
-    // White-hot core: in real astronomy, bright star cores saturate to pure radiant white
-    vec3 hotCore = mix(vColor, vec3(1.0, 1.0, 1.0), core * 0.92);
-
-    // HDR emission boost so stars actually shine brightly on screen!
-    vec3 emission = hotCore * (core * 2.8 + halo * 1.1 + spike * 1.4);
-    float alpha = clamp(core * 1.0 + halo * 0.55 + spike * 0.75, 0.0, 1.0) * vTwinkle * vAlpha * uDimFactor;
+    // Enhanced HDR emission boost for crisp visibility on pure black sky
+    vec3 emission = hotCore * (core * 4.4 + halo * 1.5);
+    float alpha = clamp(core * 1.15 + halo * 0.50, 0.0, 1.0) * vTwinkle * vAlpha * uDimFactor;
 
     gl_FragColor = vec4(emission * vTwinkle * uDimFactor, alpha);
   }
