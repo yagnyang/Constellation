@@ -74,11 +74,16 @@ export class CelestialScene {
   private ghostGuideMat: THREE.ShaderMaterial | null = null;
   private showGhostGuide: boolean = false;
 
-  // 6. Constellation Art Textured Meshes on Celestial Sphere (lazy-loaded on demand)
+  // 6. Constellation Art Textured Meshes on Celestial Sphere (prioritized + background preloaded)
   private constellationArtGroup: THREE.Group;
   private allArtMeshes: Map<string, THREE.Mesh> = new Map();
   private allArtUrls: Map<string, string> = new Map();
   private loadedArtIds: Set<string> = new Set();
+  private loadingArtIds: Set<string> = new Set();
+  private preloadQueue: string[] = [];
+  private preloadActiveCount: number = 0;
+  private preloadTimerId: ReturnType<typeof setTimeout> | null = null;
+  private isDisposed: boolean = false;
   private textureLoader: THREE.TextureLoader = new THREE.TextureLoader();
   private activeConstellationId: string | null = null;
   private allArtVisible: boolean = false;
@@ -503,32 +508,103 @@ export class CelestialScene {
     }
   }
 
-  private ensureArtTextureLoaded(id: string) {
-    if (this.loadedArtIds.has(id)) return;
+  private ensureArtTextureLoaded(id: string, onDone?: () => void) {
+    if (this.isDisposed) {
+      onDone?.();
+      return;
+    }
+    if (this.loadedArtIds.has(id) || this.loadingArtIds.has(id)) {
+      onDone?.();
+      return;
+    }
     const mesh = this.allArtMeshes.get(id);
     const url = this.allArtUrls.get(id);
-    if (!mesh || !url) return;
+    if (!mesh || !url) {
+      onDone?.();
+      return;
+    }
 
-    this.loadedArtIds.add(id);
-    this.textureLoader.load(url, (texture) => {
-      if (!this.allArtMeshes.has(id)) {
-        texture.dispose();
-        return;
+    this.loadingArtIds.add(id);
+    this.textureLoader.setCrossOrigin('anonymous');
+    this.textureLoader.load(
+      url,
+      (texture) => {
+        this.loadingArtIds.delete(id);
+        if (this.isDisposed || !this.allArtMeshes.has(id)) {
+          texture.dispose();
+          onDone?.();
+          return;
+        }
+        texture.colorSpace = THREE.SRGBColorSpace;
+        const mat = mesh.material as THREE.MeshBasicMaterial;
+        if (mat.map && mat.map !== texture) {
+          mat.map.dispose();
+        }
+        mat.map = texture;
+        mat.needsUpdate = true;
+        this.loadedArtIds.add(id);
+        onDone?.();
+      },
+      undefined,
+      () => {
+        // Allow retry on subsequent selection or preload pass instead of permanently locking out
+        this.loadingArtIds.delete(id);
+        onDone?.();
       }
-      texture.colorSpace = THREE.SRGBColorSpace;
-      const mat = mesh.material as THREE.MeshBasicMaterial;
-      if (mat.map && mat.map !== texture) {
-        mat.map.dispose();
+    );
+  }
+
+  /**
+   * Immediately prioritizes loading one or more constellation artwork textures (e.g. upcoming arcade stages).
+   */
+  public preloadConstellationArt(ids: string[]) {
+    for (const id of ids) {
+      if (id && !this.loadedArtIds.has(id) && !this.loadingArtIds.has(id)) {
+        this.ensureArtTextureLoaded(id);
       }
-      mat.map = texture;
-      mat.needsUpdate = true;
-    });
+    }
+  }
+
+  private pumpPreloadQueue() {
+    if (this.isDisposed) return;
+    const MAX_CONCURRENT = 6;
+    while (this.preloadActiveCount < MAX_CONCURRENT && this.preloadQueue.length > 0) {
+      const nextId = this.preloadQueue.shift()!;
+      if (this.loadedArtIds.has(nextId) || this.loadingArtIds.has(nextId)) {
+        continue;
+      }
+      this.preloadActiveCount++;
+      this.ensureArtTextureLoaded(nextId, () => {
+        this.preloadActiveCount = Math.max(0, this.preloadActiveCount - 1);
+        if (!this.isDisposed && this.preloadQueue.length > 0) {
+          this.pumpPreloadQueue();
+        }
+      });
+    }
+  }
+
+  private startBackgroundArtPreload() {
+    if (this.preloadTimerId) {
+      clearTimeout(this.preloadTimerId);
+      this.preloadTimerId = null;
+    }
+    const ids = Array.from(this.allArtMeshes.keys()).filter(
+      (id) => !this.loadedArtIds.has(id) && !this.loadingArtIds.has(id)
+    );
+    // Prioritize active constellation first if present
+    if (this.activeConstellationId) {
+      const idx = ids.indexOf(this.activeConstellationId);
+      if (idx > 0) {
+        ids.splice(idx, 1);
+        ids.unshift(this.activeConstellationId);
+      }
+    }
+    this.preloadQueue = ids;
+    this.pumpPreloadQueue();
   }
 
   private ensureAllArtTexturesLoaded() {
-    this.allArtMeshes.forEach((_mesh, id) => {
-      this.ensureArtTextureLoaded(id);
-    });
+    this.startBackgroundArtPreload();
   }
 
   public isAllConstellationArtVisible(): boolean {
@@ -556,6 +632,9 @@ export class CelestialScene {
     this.allArtMeshes.clear();
     this.allArtUrls.clear();
     this.loadedArtIds.clear();
+    this.loadingArtIds.clear();
+    this.preloadQueue = [];
+    this.preloadActiveCount = 0;
 
     const R = 98.2; // Positioned right along the celestial sphere of radius 100
 
@@ -618,11 +697,15 @@ export class CelestialScene {
       this.allArtMeshes.set(c.id, mesh);
     }
 
-    if (this.allArtVisible) {
-      this.ensureAllArtTexturesLoaded();
-    } else if (this.activeConstellationId) {
+    if (this.activeConstellationId) {
       this.ensureArtTextureLoaded(this.activeConstellationId);
     }
+    // Warm all 88 small (~24KB) constellation art textures in batched background chunks
+    // so art is already cached before PREVIEW, ALIGN_PUZZLE, RESOLVED, or Art toggle.
+    this.preloadTimerId = setTimeout(() => {
+      this.preloadTimerId = null;
+      this.startBackgroundArtPreload();
+    }, 150);
   }
 
   /**
@@ -918,14 +1001,28 @@ export class CelestialScene {
         });
       }
     } else if (gameState === 'PREVIEW' || gameState === 'RESOLVED') {
-      // In preview or celebration modal, show the active constellation's artwork in the sky
-      this.constellationArtGroup.visible = !isDeepSpace;
+      // In preview or celebration modal, always show the active constellation's artwork in the sky
+      this.constellationArtGroup.visible = true;
       this.allArtMeshes.forEach((mesh, id) => {
         const mat = mesh.material as THREE.MeshBasicMaterial;
         if (id === this.activeConstellationId && mat.map) {
           mesh.visible = true;
-          mat.opacity = gameState === 'RESOLVED' ? 0.92 : 0.70;
+          mat.opacity = gameState === 'RESOLVED' ? 0.92 : 0.72;
           mat.color.setHex(gameState === 'RESOLVED' ? 0xd8b4fe : 0xc084fc);
+        } else {
+          mesh.visible = false;
+        }
+      });
+    } else if (gameState === 'DISPLACE') {
+      // Smoothly transition active constellation artwork from preview into orbital alignment
+      this.constellationArtGroup.visible = true;
+      const t = Math.max(0.0, Math.min(1.0, displaceProgress));
+      this.allArtMeshes.forEach((mesh, id) => {
+        const mat = mesh.material as THREE.MeshBasicMaterial;
+        if (id === this.activeConstellationId && mat.map) {
+          mesh.visible = true;
+          mat.opacity = 0.72 * (1.0 - t) + 0.15 * t;
+          mat.color.setHex(0xc084fc);
         } else {
           mesh.visible = false;
         }
@@ -987,6 +1084,11 @@ export class CelestialScene {
   }
 
   public dispose() {
+    this.isDisposed = true;
+    if (this.preloadTimerId) {
+      clearTimeout(this.preloadTimerId);
+      this.preloadTimerId = null;
+    }
     if (this.backgroundStarsMesh) {
       this.scene.remove(this.backgroundStarsMesh);
       this.backgroundStarsMesh.geometry.dispose();
@@ -1028,6 +1130,9 @@ export class CelestialScene {
     this.allArtMeshes.clear();
     this.allArtUrls.clear();
     this.loadedArtIds.clear();
+    this.loadingArtIds.clear();
+    this.preloadQueue = [];
+    this.preloadActiveCount = 0;
     if (this.ghostGuideMesh) {
       this.camera.remove(this.ghostGuideMesh);
       this.ghostGuideMesh.geometry.dispose();

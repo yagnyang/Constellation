@@ -148,6 +148,7 @@ export const ConstellationSelector: React.FC<ConstellationSelectorProps> = ({
                           <img
                             src={c.art.url}
                             alt=""
+                            crossOrigin="anonymous"
                             className="w-full h-full object-contain filter brightness-110"
                             loading="lazy"
                           />

@@ -657,12 +657,13 @@ export default function ConstellationAlignerApp() {
       setArcadeTimeBank(20.0);
       arcadeTimeBankRef.current = 20.0;
 
-      // 3. Load first constellation from queue
+      // 3. Load first constellation from queue & pre-warm upcoming stages
       const firstId = queue[0];
       const norm = starDataManager.getNormalizedConstellation(firstId);
       if (norm && sceneRef.current && controllerRef.current) {
         setActiveConstellation(norm);
         sceneRef.current.setActiveConstellation(norm);
+        sceneRef.current.preloadConstellationArt(queue.slice(1, 5));
         controllerRef.current.selectConstellation(norm, true);
       }
     },
@@ -715,6 +716,7 @@ export default function ConstellationAlignerApp() {
         if (norm && sceneRef.current && controllerRef.current) {
           setActiveConstellation(norm);
           sceneRef.current.setActiveConstellation(norm);
+          sceneRef.current.preloadConstellationArt(queue.slice(nextIndex + 1, nextIndex + 5));
           controllerRef.current.selectConstellation(norm, true);
         }
       } else {

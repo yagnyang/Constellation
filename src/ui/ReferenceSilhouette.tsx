@@ -110,6 +110,7 @@ export const ReferenceSilhouette: React.FC<ReferenceSilhouetteProps> = ({
             constellation.art.svgMatrix ? (
               <image
                 href={constellation.art.url}
+                crossOrigin="anonymous"
                 width={constellation.art.width || 512}
                 height={constellation.art.height || 512}
                 transform={`matrix(${constellation.art.svgMatrix.a * size}, ${constellation.art.svgMatrix.b * size}, ${constellation.art.svgMatrix.c * size}, ${constellation.art.svgMatrix.d * size}, ${constellation.art.svgMatrix.e * size}, ${constellation.art.svgMatrix.f * size})`}
@@ -123,6 +124,7 @@ export const ReferenceSilhouette: React.FC<ReferenceSilhouetteProps> = ({
             ) : (
               <image
                 href={constellation.art.url}
+                crossOrigin="anonymous"
                 x={size * 0.05}
                 y={size * 0.05}
                 width={size * 0.9}

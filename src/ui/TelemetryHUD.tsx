@@ -495,6 +495,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
                 <img
                   src={constellation.art.url}
                   alt={constellation.name}
+                  crossOrigin="anonymous"
+                  decoding="async"
                   className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] brightness-110"
                 />
               </div>
