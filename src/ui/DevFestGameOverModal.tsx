@@ -83,12 +83,16 @@ export const DevFestGameOverModal: React.FC<DevFestGameOverModalProps> = ({
               ? bestAttempt
                 ? `Official score locked from Attempt #${bestAttempt.attemptNumber} (Highest of ${attemptsUsed})`
                 : 'GDG DevFest Astral Challenge Final Report'
-              : 'You get 3 consecutive attempts — only your highest score will be recorded'}
+              : `You get ${maxAttempts} consecutive attempts — only your highest score will be recorded`}
           </p>
         </div>
 
-        {/* 3 Consecutive Attempts Scoreboard */}
-        <div className="grid grid-cols-3 gap-2 text-center relative">
+        {/* Consecutive Attempts Scoreboard */}
+        <div
+          className={`grid gap-2 text-center relative ${
+            maxAttempts === 2 ? 'grid-cols-2' : 'grid-cols-3'
+          }`}
+        >
           {Array.from({ length: maxAttempts }, (_, idx) => {
             const num = idx + 1;
             const att = attempts.find((a) => a.attemptNumber === num);
@@ -170,7 +174,7 @@ export const DevFestGameOverModal: React.FC<DevFestGameOverModalProps> = ({
           <div className="p-3 bg-white/[0.03] rounded-2xl border border-purple-500/15 space-y-0.5">
             <div className="text-[10px] text-white/50">Total Time</div>
             <div className="text-base font-bold text-white font-mono">
-              {entry.totalTimeSec.toFixed(1)}s
+              {(bestAttempt?.totalTimeSec ?? entry.totalTimeSec ?? 0).toFixed(1)}s
             </div>
             <div className="text-[9px] text-purple-300/70">Speed Multiplier</div>
           </div>

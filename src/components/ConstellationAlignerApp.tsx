@@ -75,7 +75,7 @@ export default function ConstellationAlignerApp() {
   const [gameOverRank, setGameOverRank] = useState<number>(1);
   const [isVictory, setIsVictory] = useState<boolean>(false);
 
-  // Consecutive 3-attempt session tracking (highest of up to 3 attempts is recorded)
+  // Consecutive 2-attempt session tracking (highest of up to 2 attempts is recorded)
   const [arcadeAttempts, setArcadeAttempts] = useState<AttemptResult[]>([]);
   const [currentAttemptNumber, setCurrentAttemptNumber] = useState<number>(1);
   const [bestAttempt, setBestAttempt] = useState<AttemptResult | null>(null);
@@ -84,6 +84,8 @@ export default function ConstellationAlignerApp() {
   // Mutable refs for persistent callbacks inside render loops & controller
   const isArcadeActiveRef = useRef<boolean>(false);
   const arcadePlayerNameRef = useRef<string>('Stargazer');
+  const arcadePlayerEmailRef = useRef<string>('');
+  const arcadePlayerPhoneRef = useRef<string | undefined>(undefined);
   const arcadePlayerIdRef = useRef<number | null>(null);
   const arcadeQueueRef = useRef<string[]>([]);
   const arcadeIndexRef = useRef<number>(0);
@@ -177,7 +179,7 @@ export default function ConstellationAlignerApp() {
     };
   }, []);
 
-  // Commit the highest of the player's consecutive attempts (up to 3) to leaderboard & SQLite once
+  // Commit the highest of the player's consecutive attempts (up to 2) to leaderboard & SQLite once
   const finalizeArcadeSession = useCallback((attemptsOverride?: AttemptResult[]) => {
     if (isSessionFinalizedRef.current) return;
     const attempts = attemptsOverride ?? arcadeAttemptsRef.current;
@@ -191,15 +193,12 @@ export default function ConstellationAlignerApp() {
 
     const result = saveLeaderboardEntry({
       playerName: arcadePlayerNameRef.current,
+      email: arcadePlayerEmailRef.current || undefined,
+      phone: arcadePlayerPhoneRef.current || undefined,
       points: best.points,
       score: best.score,
-      totalConstellations: best.totalConstellations,
-      totalTimeSec: best.totalTimeSec,
       avgAccuracy: best.avgAccuracy,
-      avgOffsetDeg: best.avgOffsetDeg,
-      isAllCleared: best.isAllCleared,
-      attemptsUsed: attempts.length,
-      history: best.history,
+      totalTimeSec: best.totalTimeSec,
     });
 
     if (arcadePlayerIdRef.current !== null) {
@@ -223,7 +222,7 @@ export default function ConstellationAlignerApp() {
     setIsVictory(best.isAllCleared);
   }, []);
 
-  // Record a finished attempt; automatically finalize after the 3rd consecutive attempt
+  // Record a finished attempt; automatically finalize after the 2nd consecutive attempt
   const recordCompletedAttempt = useCallback(
     (history: SolvedConstellationRecord[], totalTimeSec: number, isAllCleared: boolean) => {
       setIsArcadeActive(false);
@@ -262,7 +261,7 @@ export default function ConstellationAlignerApp() {
       setBestAttempt(best);
 
       if (nextAttempts.length >= MAX_ARCADE_ATTEMPTS) {
-        // 3rd and final consecutive attempt complete — record highest of the 3 permanently
+        // Final consecutive attempt complete — record highest attempt permanently
         finalizeArcadeSession(nextAttempts);
       } else {
         // Retries still available — show projected rank for best attempt so far without duplicating DB rows
@@ -270,16 +269,13 @@ export default function ConstellationAlignerApp() {
         setGameOverEntry({
           id: `preview-${Date.now()}`,
           playerName: arcadePlayerNameRef.current,
+          email: arcadePlayerEmailRef.current || undefined,
+          phone: arcadePlayerPhoneRef.current || undefined,
           points: best.points,
           score: best.score,
-          totalConstellations: 88,
           totalTimeSec: best.totalTimeSec,
           avgAccuracy: best.avgAccuracy,
-          avgOffsetDeg: best.avgOffsetDeg,
-          date: '',
           isAllCleared: best.isAllCleared,
-          attemptsUsed: nextAttempts.length,
-          history: best.history,
         });
         setGameOverRank(projectedRank);
         setIsVictory(attemptResult.isAllCleared);
@@ -621,7 +617,7 @@ export default function ConstellationAlignerApp() {
     setIsCatalogOpen(false);
   }, []);
 
-  // Launch a single consecutive arcade attempt (1, 2, or 3) starting from #1 Andromeda
+  // Launch a single consecutive arcade attempt (1 or 2) starting from #1 Andromeda
   const launchArcadeAttempt = useCallback(
     (attemptNumber: number) => {
       soundEngine.unlock();
@@ -673,11 +669,13 @@ export default function ConstellationAlignerApp() {
     [constellationList]
   );
 
-  // Start a new player's 3-attempt DevFest Arcade Speedrun session
+  // Start a new player's 2-attempt DevFest Arcade Speedrun session
   const handleStartArcade = useCallback(
-    (playerName: string, playerId?: number) => {
+    (playerName: string, playerId?: number, playerEmail?: string, playerPhone?: string) => {
       setArcadePlayerName(playerName);
       arcadePlayerNameRef.current = playerName;
+      arcadePlayerEmailRef.current = playerEmail?.trim() || '';
+      arcadePlayerPhoneRef.current = playerPhone?.trim() || undefined;
       arcadePlayerIdRef.current = typeof playerId === 'number' ? playerId : null;
 
       setArcadeAttempts([]);
@@ -692,7 +690,7 @@ export default function ConstellationAlignerApp() {
     [launchArcadeAttempt]
   );
 
-  // Consecutive retry for the same player (strictly capped at MAX_ARCADE_ATTEMPTS = 3)
+  // Consecutive retry for the same player (strictly capped at MAX_ARCADE_ATTEMPTS = 2)
   const handleRetryArcadeAttempt = useCallback(() => {
     if (isSessionFinalizedRef.current) return;
     if (arcadeAttemptsRef.current.length >= MAX_ARCADE_ATTEMPTS) return;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createPlayer, listPlayers, updatePlayerScore } from '../../../lib/db';
-import { calculateCompetitiveScore } from '../../../core/DevFestArcadeManager';
+import { calculateCompetitiveScore, MAX_ARCADE_ATTEMPTS } from '../../../core/DevFestArcadeManager';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[\d\s+\-().]{5,30}$/;
@@ -19,31 +19,43 @@ export async function GET(request: NextRequest) {
     const players = listPlayers();
     const format = request.nextUrl.searchParams.get('format');
 
+    const compactPlayers = players.map((p) => {
+      const constellationsSolved = p.score ?? 0;
+      const accuracy = p.avg_accuracy !== null ? +Number(p.avg_accuracy).toFixed(2) : 0;
+      const score =
+        p.points !== null
+          ? p.points
+          : p.score !== null && p.avg_accuracy !== null && p.total_time_sec !== null
+          ? calculateCompetitiveScore(p.score, p.avg_accuracy, p.total_time_sec)
+          : 0;
+
+      return {
+        name: p.name,
+        email: p.email,
+        ...(p.phone ? { phone: p.phone } : {}),
+        score,
+        accuracy,
+        constellationsSolved,
+      };
+    });
+
     if (format === 'csv') {
       const headers = [
-        'id',
         'name',
         'email',
         'phone',
-        'points',
         'score',
-        'total_time_sec',
-        'avg_accuracy',
-        'attempts',
-        'created_at',
+        'accuracy',
+        'constellations_solved',
       ];
-      const rows = players.map((p) =>
+      const rows = compactPlayers.map((p) =>
         [
-          p.id,
           p.name,
           p.email,
-          p.phone,
-          p.points,
+          p.phone ?? '',
           p.score,
-          p.total_time_sec,
-          p.avg_accuracy,
-          p.attempts,
-          p.created_at,
+          p.accuracy,
+          p.constellationsSolved,
         ]
           .map(escapeCsvField)
           .join(',')
@@ -59,7 +71,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    return NextResponse.json({ players }, { status: 200 });
+    return NextResponse.json({ players: compactPlayers }, { status: 200 });
   } catch (err) {
     console.error('Failed to list players:', err);
     return NextResponse.json({ error: 'Failed to load players' }, { status: 500 });
@@ -144,7 +156,7 @@ export async function PATCH(request: NextRequest) {
       : calculateCompetitiveScore(score, avgAccuracy, totalTimeSec);
     const attempts =
       Number.isInteger(Number(body.attempts)) && Number(body.attempts) >= 1
-        ? Math.min(3, Number(body.attempts))
+        ? Math.min(MAX_ARCADE_ATTEMPTS, Number(body.attempts))
         : 1;
 
     const updated = updatePlayerScore({ id, points, score, totalTimeSec, avgAccuracy, attempts });
