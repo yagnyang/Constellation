@@ -225,7 +225,7 @@ export const HowToPlayBanner: React.FC<HowToPlayBannerProps> = ({
                   </span>
                 </div>
                 <p className="text-[11px] sm:text-xs text-white/55 leading-relaxed">
-                  Get within &le; 3.5&deg; before the countdown ends. The camera snaps to the true viewpoint, celebrating your discovery!
+                  Reach at least 85% accuracy, keep refining up to 100% for maximum bonus time, then release the cursor to lock in your alignment!
                 </p>
               </div>
             </div>

@@ -73,7 +73,7 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                 <span>GDG DevFest Leaderboard</span>
               </h2>
               <p className="text-[11px] text-white/50">
-                Booth Tournament • Tie-breaker: Least Elapsed Time & Precision
+                Ranked by Competitive Score (Highest Accuracy &amp; Minimum Time)
               </p>
             </div>
           </div>
@@ -115,10 +115,11 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   {top2.playerName}
                 </div>
                 <div className="text-base font-extrabold text-purple-200 font-mono mt-0.5">
-                  {top2.score} <span className="text-[10px] text-white/50 font-normal">/ 88</span>
+                  {top2.points.toLocaleString()}{' '}
+                  <span className="text-[10px] text-white/50 font-normal">pts</span>
                 </div>
-                <div className="text-[10px] text-white/50 font-mono">
-                  {top2.totalTimeSec.toFixed(1)}s • {top2.avgAccuracy.toFixed(1)}%
+                <div className="text-[10px] text-white/55 font-mono">
+                  {top2.avgAccuracy.toFixed(1)}% • {top2.totalTimeSec.toFixed(1)}s • {top2.score}/88
                 </div>
               </div>
             ) : (
@@ -142,10 +143,11 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   {top1.playerName}
                 </div>
                 <div className="text-lg font-black text-purple-200 font-mono">
-                  {top1.score} <span className="text-xs text-purple-400/60 font-normal">/ 88</span>
+                  {top1.points.toLocaleString()}{' '}
+                  <span className="text-xs text-purple-400/70 font-normal">pts</span>
                 </div>
-                <div className="text-[11px] text-purple-300/80 font-mono font-medium">
-                  {top1.totalTimeSec.toFixed(1)}s • {top1.avgAccuracy.toFixed(1)}%
+                <div className="text-[10px] text-purple-300/80 font-mono font-medium">
+                  {top1.avgAccuracy.toFixed(1)}% • {top1.totalTimeSec.toFixed(1)}s • {top1.score}/88
                 </div>
               </div>
             ) : null}
@@ -166,10 +168,11 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                   {top3.playerName}
                 </div>
                 <div className="text-base font-extrabold text-purple-300/90 font-mono mt-0.5">
-                  {top3.score} <span className="text-[10px] text-white/50 font-normal">/ 88</span>
+                  {top3.points.toLocaleString()}{' '}
+                  <span className="text-[10px] text-white/50 font-normal">pts</span>
                 </div>
-                <div className="text-[10px] text-white/50 font-mono">
-                  {top3.totalTimeSec.toFixed(1)}s • {top3.avgAccuracy.toFixed(1)}%
+                <div className="text-[10px] text-white/55 font-mono">
+                  {top3.avgAccuracy.toFixed(1)}% • {top3.totalTimeSec.toFixed(1)}s • {top3.score}/88
                 </div>
               </div>
             ) : (
@@ -183,9 +186,9 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
           <div className="grid grid-cols-12 px-3 py-1.5 text-[11px] font-semibold text-white/40 uppercase tracking-wider">
             <span className="col-span-1 text-center">#</span>
             <span className="col-span-4">Player</span>
-            <span className="col-span-3 text-center">Solved (88)</span>
-            <span className="col-span-2 text-right">Time</span>
+            <span className="col-span-3 text-right">Score</span>
             <span className="col-span-2 text-right">Accuracy</span>
+            <span className="col-span-2 text-right">Time</span>
           </div>
 
           {entries.length === 0 ? (
@@ -217,38 +220,35 @@ export const DevFestLeaderboardModal: React.FC<DevFestLeaderboardModalProps> = (
                     )}
                   </span>
 
-                  {/* Player Name */}
-                  <div className="col-span-4 flex items-center gap-1.5 truncate pr-2">
-                    <span className="truncate font-medium text-white">{entry.playerName}</span>
-                    {entry.isAllCleared && (
-                      <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-900/40 text-purple-200 border border-purple-500/40 font-bold shrink-0">
-                        MAX 88
-                      </span>
-                    )}
+                  {/* Player Name & Solved Count */}
+                  <div className="col-span-4 flex flex-col truncate pr-2">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <span className="truncate font-medium text-white">{entry.playerName}</span>
+                      {entry.isAllCleared && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] bg-purple-900/40 text-purple-200 border border-purple-500/40 font-bold shrink-0">
+                          MAX 88
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] text-white/40 font-mono">
+                      {entry.score}/88 solved
+                    </span>
                   </div>
 
-                  {/* Solved Count + Progress */}
-                  <div className="col-span-3 flex flex-col items-center">
-                    <span className="font-mono font-bold text-purple-300">
-                      {entry.score}{' '}
-                      <span className="text-[10px] text-white/40 font-normal">/ 88</span>
-                    </span>
-                    <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden mt-1">
-                      <div
-                        className="h-full bg-gradient-to-r from-purple-700 to-purple-400 rounded-full"
-                        style={{ width: `${Math.min(100, (entry.score / 88) * 100)}%` }}
-                      />
-                    </div>
+                  {/* Competitive Points */}
+                  <div className="col-span-3 text-right font-mono font-bold text-purple-300">
+                    {entry.points.toLocaleString()}{' '}
+                    <span className="text-[10px] text-white/40 font-normal">pts</span>
                   </div>
+
+                  {/* Avg Accuracy */}
+                  <span className="col-span-2 text-right font-mono text-emerald-300 font-semibold">
+                    {entry.avgAccuracy.toFixed(1)}%
+                  </span>
 
                   {/* Total Time */}
                   <span className="col-span-2 text-right font-mono text-white/90">
                     {entry.totalTimeSec.toFixed(1)}s
-                  </span>
-
-                  {/* Avg Accuracy */}
-                  <span className="col-span-2 text-right font-mono text-purple-200 font-semibold">
-                    {entry.avgAccuracy.toFixed(1)}%
                   </span>
                 </div>
               );

@@ -2,11 +2,11 @@
 
 import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Trophy, Flame, Timer, Sparkles, Star, Zap, HelpCircle, Volume2, VolumeX } from 'lucide-react';
-import { GameState, SolvedStats } from '../core/OrbitalCameraController';
+import { Trophy, Flame, Timer, Sparkles, Star, Zap, HelpCircle, Volume2, VolumeX, Crosshair } from 'lucide-react';
+import { GameState, SolvedStats, PASS_ACCURACY_THRESHOLD } from '../core/OrbitalCameraController';
 import { NormalizedConstellation } from '../core/StarDataManager';
 import { ReferenceSilhouette } from './ReferenceSilhouette';
-import { getConstellationTierInfo, TierInfo } from '../core/DevFestArcadeManager';
+import { getConstellationTierInfo, calculateAccuracyBonus, TierInfo } from '../core/DevFestArcadeManager';
 
 interface TelemetryHUDProps {
   state: GameState;
@@ -23,8 +23,6 @@ interface TelemetryHUDProps {
   onReplayLinesAnimation?: () => void;
   showGhostGuide?: boolean;
   onToggleGhostGuide?: () => void;
-  showSkyPanorama?: boolean;
-  onToggleSkyPanorama?: () => void;
   onStartAlignment?: () => void;
   onNextConstellation: () => void;
   onReturnToEarthHub: () => void;
@@ -41,6 +39,8 @@ interface TelemetryHUDProps {
   arcadePlayerName?: string;
   arcadeStage?: number;
   arcadeTotalSolved?: number;
+  arcadeAttempt?: number;
+  arcadeMaxAttempts?: number;
   arcadeBonusNotice?: { bonusSec: number; label: string } | null;
   onOpenLeaderboard?: () => void;
   onStartArcadeChallenge?: () => void;
@@ -61,8 +61,6 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   onReplayLinesAnimation,
   showGhostGuide = false,
   onToggleGhostGuide,
-  showSkyPanorama = true,
-  onToggleSkyPanorama,
   onStartAlignment,
   onNextConstellation,
   onReturnToEarthHub,
@@ -77,6 +75,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   arcadePlayerName = 'Stargazer',
   arcadeStage = 1,
   arcadeTotalSolved = 0,
+  arcadeAttempt = 1,
+  arcadeMaxAttempts = 3,
   arcadeBonusNotice = null,
   onOpenLeaderboard,
   onStartArcadeChallenge,
@@ -115,6 +115,16 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   const tierInfo: TierInfo | null = constellation
     ? getConstellationTierInfo(constellation.starCount)
     : null;
+  const displayedAccuracy = Number(accuracy.toFixed(1));
+  const isPassReady = displayedAccuracy >= PASS_ACCURACY_THRESHOLD;
+  const liveBonusSec =
+    isArcadeActive && constellation && isPassReady
+      ? calculateAccuracyBonus(constellation.starCount, displayedAccuracy)
+      : 0;
+  const solvedBonusSec =
+    isArcadeActive && constellation && solvedStats && !solvedStats.isAutoAligned
+      ? calculateAccuracyBonus(constellation.starCount, solvedStats.finalAccuracy)
+      : 0;
 
   // Timer styling
   const timerStyle =
@@ -138,6 +148,9 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
               <Flame className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
               <span className="text-xs font-bold text-white tracking-wide">
                 {arcadePlayerName}
+              </span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/10 text-purple-200 font-bold font-mono">
+                TRY {arcadeAttempt}/{arcadeMaxAttempts}
               </span>
               <span className="text-[10px] text-purple-300/70 font-mono">
                 STAGE {arcadeStage}/88
@@ -323,7 +336,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
         <div className="absolute top-16 right-5 z-40 pointer-events-none animate-bounce">
           <div className="px-4 py-2 rounded-2xl bg-purple-900/40 border border-purple-400/50 text-purple-200 font-black text-sm shadow-[0_0_30px_rgba(168,85,247,0.4)] backdrop-blur-xl flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-purple-300" />
-            <span>+{arcadeBonusNotice.bonusSec}s TIME REWARD!</span>
+            <span>+{arcadeBonusNotice.bonusSec.toFixed(2)}s TIME REWARD!</span>
           </div>
         </div>
       )}
@@ -356,7 +369,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
                 Match:{' '}
                 <span
                   className={`font-semibold tabular-nums ${
-                    accuracy >= 96.0 ? 'text-purple-300 animate-pulse' : 'text-purple-400'
+                    isPassReady ? 'text-emerald-300 animate-pulse' : 'text-purple-400'
                   }`}
                 >
                   {accuracy.toFixed(1)}%
@@ -366,17 +379,17 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
 
             {/* Progress Bar */}
             <div className="relative w-full h-2 bg-white/[0.06] rounded-full overflow-hidden border border-purple-500/15">
-              {/* Target lock threshold mark at alpha = 3.5 deg (acc = 96.1%) */}
+              {/* Minimum passing threshold mark at 85% */}
               <div
-                className="absolute top-0 bottom-0 w-0.5 bg-purple-300 z-10 opacity-70"
-                style={{ left: `${(1.0 - 3.5 / 90.0) * 100}%` }}
+                className="absolute top-0 bottom-0 w-0.5 bg-emerald-300 z-10 opacity-85"
+                style={{ left: `${PASS_ACCURACY_THRESHOLD}%` }}
               />
 
               {/* Filling bar */}
               <div
                 className={`h-full transition-all duration-75 rounded-full ${
-                  accuracy >= 96.0
-                    ? 'bg-gradient-to-r from-purple-600 to-purple-300 shadow-[0_0_12px_rgba(192,132,252,0.9)]'
+                  isPassReady
+                    ? 'bg-gradient-to-r from-purple-500 via-emerald-400 to-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.85)]'
                     : 'bg-gradient-to-r from-purple-900 via-purple-700 to-purple-500'
                 }`}
                 style={{ width: `${Math.min(100, Math.max(0, accuracy))}%` }}
@@ -385,53 +398,62 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
 
             {/* Guidance */}
             <div className="flex items-center justify-between text-[11px] text-white/40 pt-0.5">
-              <span className="flex items-center gap-1.5 text-purple-300/80">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-                Align 3D lines into guide
+              <span
+                className={`flex items-center gap-1.5 ${
+                  isPassReady ? 'text-emerald-300 font-semibold' : 'text-purple-300/80'
+                }`}
+              >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+                    isPassReady ? 'bg-emerald-400' : 'bg-purple-400'
+                  }`}
+                />
+                {isPassReady
+                  ? 'Release cursor to lock in (push for 100%!)'
+                  : 'Align ≥ 85%, then release cursor'}
               </span>
-              <span className="text-purple-300/70 font-mono">Snap &le; 3.5&deg;</span>
+              <span className="text-purple-300/80 font-mono shrink-0 ml-2">
+                {isPassReady
+                  ? isArcadeActive
+                    ? `+${liveBonusSec.toFixed(2)}s`
+                    : 'READY'
+                  : 'Min 85%'}
+              </span>
             </div>
           </div>
         </div>
       )}
 
-      {/* --- EARTH HUB: BOTTOM BAR --- */}
+      {/* --- EARTH HUB: LEFT-ALIGNED MINIMAL SQUARE ACTION BUTTONS --- */}
       {state === 'EARTH_HUB' && constellation && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex flex-col items-center gap-3 animate-fadeIn">
-          {/* Main DevFest Speedrun Launcher Call-to-Action */}
+        <div className="absolute bottom-20 left-6 z-30 pointer-events-auto flex items-center gap-2.5 animate-fadeIn">
+          {/* Speedrun Challenge Square Button */}
           {onStartArcadeChallenge && (
             <button
               onClick={onStartArcadeChallenge}
-              className="px-6 py-3 bg-gradient-to-r from-purple-700 via-purple-600 to-purple-800 hover:from-purple-600 hover:to-purple-700 active:scale-95 text-white font-extrabold text-xs sm:text-sm rounded-2xl transition-all shadow-[0_0_30px_rgba(168,85,247,0.5)] flex items-center gap-2.5 border border-purple-400/40"
+              title="Start DevFest Speedrun Challenge (20s)"
+              aria-label="Start DevFest Speedrun Challenge"
+              className="w-14 h-14 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 hover:from-purple-500 hover:to-purple-700 active:scale-95 text-white rounded-xl transition-all shadow-[0_0_24px_rgba(168,85,247,0.45)] flex flex-col items-center justify-center gap-1 border border-purple-400/45 cursor-pointer"
             >
-              <Flame className="w-4 h-4 text-purple-300 animate-pulse" />
-              <span>START DEVFEST SPEEDRUN CHALLENGE</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-mono">
-                20s Timer
+              <Flame className="w-5 h-5 text-purple-100" />
+              <span className="text-[9px] font-bold tracking-wider uppercase text-purple-100/90 leading-none">
+                Play
               </span>
             </button>
           )}
 
-          {/* Regular Explorer bar */}
-          <div className="bg-black/85 backdrop-blur-2xl border border-purple-500/25 rounded-2xl px-5 py-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.8),0_0_20px_rgba(168,85,247,0.18)] flex items-center gap-5">
-            <div>
-              <div className="text-xs font-semibold text-white flex items-center gap-2">
-                <span>{constellation.name}</span>
-                <span className="text-[10px] text-purple-400 font-mono">[{constellation.id}]</span>
-              </div>
-              <div className="text-[11px] text-white/50">
-                {constellation.english} &bull; {constellation.starCount} stars
-              </div>
-            </div>
-            <button
-              onClick={onStartAlignment}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 active:scale-95 text-white font-medium text-xs rounded-xl transition-all flex items-center gap-1.5"
-            >
-              <span>Practice Align</span>
-              <span>&rarr;</span>
-            </button>
-          </div>
-          <span className="text-[11px] text-white/30 tracking-wide">Drag to look around celestial sphere</span>
+          {/* Practice Align Square Button */}
+          <button
+            onClick={onStartAlignment}
+            title={`Practice Align — ${constellation.name}`}
+            aria-label={`Practice Align ${constellation.name}`}
+            className="w-14 h-14 bg-black/80 hover:bg-purple-950/60 active:scale-95 text-white rounded-xl transition-all backdrop-blur-2xl border border-purple-500/30 hover:border-purple-400/60 shadow-[0_8px_24px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center gap-1 cursor-pointer"
+          >
+            <Crosshair className="w-5 h-5 text-purple-300" />
+            <span className="text-[9px] font-semibold tracking-wider uppercase text-white/80 leading-none">
+              Align
+            </span>
+          </button>
         </div>
       )}
 
@@ -477,10 +499,10 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
             {isArcadeActive && !solvedStats.isAutoAligned && tierInfo && (
               <div className="p-3 rounded-xl bg-purple-950/60 border border-purple-500/40 text-center">
                 <span className="text-xs font-semibold text-purple-200 block">
-                  {tierInfo.label} Constellation Solved!
+                  {tierInfo.label} Constellation Solved at {solvedStats.finalAccuracy}%!
                 </span>
                 <span className="text-sm font-extrabold text-purple-300 font-mono">
-                  {tierInfo.bonusLabel} Added to Time Bank
+                  +{solvedBonusSec.toFixed(2)}s Added to Time Bank
                 </span>
               </div>
             )}

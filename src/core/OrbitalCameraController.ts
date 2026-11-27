@@ -4,6 +4,9 @@ import { ControlSettings, DEFAULT_CONTROL_SETTINGS, loadControlSettings } from '
 
 export type GameState = 'EARTH_HUB' | 'PREVIEW' | 'DISPLACE' | 'ALIGN_PUZZLE' | 'RESOLVED';
 
+export const PASS_ACCURACY_THRESHOLD = 85.0; // Bare minimum accuracy (%) required to lock in on cursor release
+export const IDLE_SPIN_DELAY_SEC = 15.0; // Seconds of inactivity in Sky View before gentle idle spin starts
+
 export interface SolvedStats {
   constellationId: string;
   constellationName: string;
@@ -75,6 +78,11 @@ export class OrbitalCameraController {
   // Control settings (inversion & sensitivity)
   private controlSettings: ControlSettings = loadControlSettings();
 
+  // Idle away-from-screen sky rotation (activates in EARTH_HUB after 15s without input)
+  private idleSec: number = 0;
+  private idleSpinDir: number = Math.random() < 0.5 ? 1 : -1;
+  private wasIdleSpinning: boolean = false;
+
   constructor(camera: THREE.PerspectiveCamera, callbacks: CameraControllerCallbacks = {}) {
     this.camera = camera;
     this.callbacks = callbacks;
@@ -88,6 +96,17 @@ export class OrbitalCameraController {
 
   public getControlSettings(): ControlSettings {
     return { ...this.controlSettings };
+  }
+
+  /**
+   * Reset idle away-from-screen timer on any user input.
+   */
+  public notifyUserActivity() {
+    this.idleSec = 0;
+    if (this.wasIdleSpinning) {
+      this.wasIdleSpinning = false;
+      this.idleSpinDir = Math.random() < 0.5 ? 1 : -1;
+    }
   }
 
   public getState(): GameState {
@@ -175,6 +194,7 @@ export class OrbitalCameraController {
     this.isPointerDown = false;
     this.dragVelocityX = 0;
     this.dragVelocityY = 0;
+    this.notifyUserActivity();
 
     if (nextState === 'EARTH_HUB') {
       this.isTimerRunning = false;
@@ -213,27 +233,16 @@ export class OrbitalCameraController {
       this.animStartTheta = 0;
       this.animStartPhi = 0;
 
-      // Random starting offset between 55 deg and 95 deg
-      const minAngleRad = (55 * Math.PI) / 180;
-      const maxAngleRad = (95 * Math.PI) / 180;
-      const targetDistRad = minAngleRad + Math.random() * (maxAngleRad - minAngleRad);
+      // Random starting offset around 90 deg (80°–90°) in a random direction, never exceeding 90°
+      const minAngleRad = (80 * Math.PI) / 180;
+      const maxAngleRad = (90 * Math.PI) / 180;
+      const targetAngleRad = minAngleRad + Math.random() * (maxAngleRad - minAngleRad);
       const randomBearing = Math.random() * Math.PI * 2;
 
-      // Decompose into theta and phi
-      let targetPhi = Math.sin(randomBearing) * targetDistRad;
-      // Clamp phi to [-1.2, 1.2] to ensure comfortable gameplay orbit
-      targetPhi = Math.max(-1.2, Math.min(1.2, targetPhi));
-
-      // Calculate theta such that acos(cos(phi)*cos(theta)) approx targetDistRad
-      const cosDist = Math.cos(targetDistRad);
-      const cosPhi = Math.cos(targetPhi);
-      let targetTheta = 0;
-      if (Math.abs(cosPhi) > 0.001) {
-        const cosTheta = Math.max(-1.0, Math.min(1.0, cosDist / cosPhi));
-        targetTheta = (Math.cos(randomBearing) >= 0 ? 1 : -1) * Math.acos(cosTheta);
-      } else {
-        targetTheta = (Math.random() - 0.5) * Math.PI;
-      }
+      // Decompose directly into orbital (theta, phi) so neither axis nor total offset exceeds ~90°
+      const targetTheta = Math.cos(randomBearing) * targetAngleRad;
+      // Clamp vertical orbit phi to [-1.25, 1.25] (~71.6 deg) safely inside gameplay limit [-1.35, 1.35]
+      const targetPhi = Math.max(-1.25, Math.min(1.25, Math.sin(randomBearing) * targetAngleRad));
 
       this.animTargetTheta = targetTheta;
       this.animTargetPhi = targetPhi;
@@ -314,6 +323,23 @@ export class OrbitalCameraController {
       const damp = Math.exp(-7.67 * deltaSec);
       this.dragVelocityX *= damp;
       this.dragVelocityY *= damp;
+
+      // Idle away-from-screen animation: slowly spin camera after 15s of no input
+      this.idleSec += deltaSec;
+      if (this.idleSec >= IDLE_SPIN_DELAY_SEC) {
+        this.wasIdleSpinning = true;
+        const idleActiveSec = this.idleSec - IDLE_SPIN_DELAY_SEC;
+        const ramp = Math.min(1.0, idleActiveSec / 2.0); // Smooth 2s ease-in
+        const spinSpeedRadPerSec = 0.045; // ~2.6 deg/sec slow cinematic rotation
+        this.earthTargetYaw += this.idleSpinDir * spinSpeedRadPerSec * ramp * deltaSec;
+
+        // Gently drift pitch into a scenic mid-sky band with subtle vertical wave
+        const scenicPitch = Math.sin(idleActiveSec * 0.08) * 0.28;
+        this.earthTargetPitch +=
+          (scenicPitch - this.earthTargetPitch) * Math.min(1.0, 0.25 * ramp * deltaSec);
+      }
+    } else {
+      this.idleSec = 0;
     }
 
     // Clamp pitch
@@ -448,10 +474,7 @@ export class OrbitalCameraController {
 
     this.currentDimFactor = 0.15;
 
-    // Win condition: alpha <= 3.5 degrees
-    if (this.currentAlpha <= 3.5 && this.isTimerRunning) {
-      this.transitionTo('RESOLVED');
-    }
+    // Do not auto-complete while dragging; completion is checked on cursor release (>= 85% accuracy).
   }
 
   // --- STATE 5: RESOLVED ---
@@ -516,6 +539,7 @@ export class OrbitalCameraController {
   // --- POINTER / DRAG INPUT HANDLERS ---
 
   public handlePointerDown(clientX: number, clientY: number) {
+    this.notifyUserActivity();
     if (this.state !== 'EARTH_HUB' && this.state !== 'ALIGN_PUZZLE') return;
 
     this.isPointerDown = true;
@@ -526,11 +550,11 @@ export class OrbitalCameraController {
   }
 
   public handlePointerMove(clientX: number, clientY: number, buttons?: number) {
-    // If no mouse button or touch contact is active, cancel drag immediately!
+    // If no mouse button or touch contact is active, finalize any active drag immediately
     if (buttons !== undefined && buttons === 0) {
-      this.isPointerDown = false;
-      this.dragVelocityX = 0;
-      this.dragVelocityY = 0;
+      if (this.isPointerDown) {
+        this.handlePointerUp(true);
+      }
       return;
     }
 
@@ -562,10 +586,24 @@ export class OrbitalCameraController {
     }
   }
 
-  public handlePointerUp() {
+  public handlePointerUp(commitAlignment: boolean = true) {
+    const wasPointerDown = this.isPointerDown;
     this.isPointerDown = false;
     this.dragVelocityX = 0;
     this.dragVelocityY = 0;
+
+    // Mark puzzle completed only upon releasing the cursor when accuracy meets the minimum passing limit (>= 85%)
+    if (
+      commitAlignment &&
+      wasPointerDown &&
+      this.state === 'ALIGN_PUZZLE' &&
+      this.isTimerRunning
+    ) {
+      const displayedAccuracy = Number(this.currentAccuracy.toFixed(1));
+      if (displayedAccuracy >= PASS_ACCURACY_THRESHOLD) {
+        this.transitionTo('RESOLVED');
+      }
+    }
   }
 
   /**

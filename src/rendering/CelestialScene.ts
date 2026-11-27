@@ -35,12 +35,6 @@ export class CelestialScene {
   public camera: THREE.PerspectiveCamera;
   public renderer: THREE.WebGLRenderer;
 
-  // High-resolution realistic 360-degree celestial sky panorama
-  private backgroundSkyMesh: THREE.Mesh | null = null;
-  private backgroundSkyMat: THREE.MeshBasicMaterial | null = null;
-  private backgroundTexture: THREE.Texture | null = null;
-  private backgroundSkyVisible: boolean = true;
-
   // Background starfield (Points mesh)
   private backgroundStarsMesh: THREE.Points | null = null;
   private backgroundStarsMat: THREE.ShaderMaterial | null = null;
@@ -93,7 +87,12 @@ export class CelestialScene {
   // Dynamic per-constellation camera FOV framing
   private readonly defaultHubFov: number = 60;
   private currentFov: number = 60;
-  private activeBounds2D: { maxTanX: number; maxTanY: number } | null = null;
+  private activeBounds2D: {
+    maxTanX: number;
+    maxTanY: number;
+    artMaxTanX?: number;
+    artMaxTanY?: number;
+  } | null = null;
 
   // Solved constellations permanent display in celestial sphere
   private solvedGroup: THREE.Group;
@@ -148,95 +147,7 @@ export class CelestialScene {
   }
 
   /**
-   * Initializes the realistic 360-degree celestial sphere background panorama
-   * using the optimized WebP texture (with JPG fallback) and proper GPU texture disposal.
-   */
-  public initBackgroundPanorama(imagePath: string = '/bg-image.webp') {
-    if (this.backgroundSkyMesh) {
-      this.scene.remove(this.backgroundSkyMesh);
-      this.backgroundSkyMesh.geometry.dispose();
-      this.backgroundSkyMat?.dispose();
-      this.backgroundTexture?.dispose();
-      this.backgroundSkyMesh = null;
-      this.backgroundSkyMat = null;
-      this.backgroundTexture = null;
-    }
-
-    // Outer celestial sphere (radius 25000, inside far plane 50000, outside all stars)
-    const sphereGeo = new THREE.SphereGeometry(25000, 64, 48);
-
-    this.backgroundSkyMat = new THREE.MeshBasicMaterial({
-      side: THREE.BackSide,
-      depthWrite: false,
-      depthTest: false,
-      transparent: true,
-      opacity: 0.95,
-      fog: false,
-    });
-
-    this.backgroundSkyMesh = new THREE.Mesh(sphereGeo, this.backgroundSkyMat);
-    this.backgroundSkyMesh.renderOrder = -1000; // Render first before foreground stars & lines
-
-    // Astronomical Galactic -> Equatorial (ICRS) alignment:
-    // Local +X = Galactic Center (Sgr A*)
-    // Local +Y = North Galactic Pole (Coma Berenices)
-    // Local +Z = Galactic l = 270 deg (right-handed cross product)
-    const gc = new THREE.Vector3(-0.05487566, -0.87343705, -0.48383507);
-    const ngp = new THREE.Vector3(-0.86766614, -0.19807634, 0.45598381);
-    const z = new THREE.Vector3().crossVectors(gc, ngp);
-    const basisMat = new THREE.Matrix4().makeBasis(gc, ngp, z);
-    this.backgroundSkyMesh.setRotationFromMatrix(basisMat);
-
-    this.scene.add(this.backgroundSkyMesh);
-
-    const applyTexture = (texture: THREE.Texture) => {
-      if (!this.backgroundSkyMat) {
-        texture.dispose();
-        return;
-      }
-      if (this.backgroundTexture && this.backgroundTexture !== texture) {
-        this.backgroundTexture.dispose();
-      }
-
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.ClampToEdgeWrapping;
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.generateMipmaps = false;
-      texture.needsUpdate = true;
-
-      this.backgroundTexture = texture;
-      this.backgroundSkyMat.map = texture;
-      this.backgroundSkyMat.needsUpdate = true;
-    };
-
-    const texLoader = new THREE.TextureLoader();
-    texLoader.load(
-      imagePath,
-      (tex) => applyTexture(tex),
-      undefined,
-      () => {
-        if (imagePath !== '/bg-image.jpg') {
-          texLoader.load('/bg-image.jpg', (tex) => applyTexture(tex));
-        }
-      }
-    );
-  }
-
-  public setBackgroundSkyVisible(visible: boolean) {
-    this.backgroundSkyVisible = visible;
-    if (this.backgroundSkyMesh) {
-      this.backgroundSkyMesh.visible = visible;
-    }
-  }
-
-  public isBackgroundSkyVisible(): boolean {
-    return this.backgroundSkyVisible;
-  }
-
-  /**
-   * Builds the realistic HYG background starfield points mesh
+   * Builds the realistic HYG background starfield points mesh (crisp, bright pinpoint stars)
    */
   public initBackgroundStarfield(starfieldData: Float32Array) {
     if (this.backgroundStarsMesh) {
@@ -268,9 +179,9 @@ export class CelestialScene {
       colors[i * 3 + 1] = rgb.g;
       colors[i * 3 + 2] = rgb.b;
 
-      // Apparent magnitude scaling with enhanced brightness dynamic range
-      sizes[i] = Math.max(1.4, (7.8 - mag) * 2.2);
-      alphas[i] = Math.max(0.48, Math.min(1.0, 1.0 - (mag - 0.5) / 7.2));
+      // Compact pinpoint sizing with enhanced brightness across all naked-eye magnitudes
+      sizes[i] = Math.max(1.2, (7.6 - mag) * 1.45);
+      alphas[i] = Math.max(0.68, Math.min(1.0, 1.08 - (mag - 0.5) / 8.5));
     }
 
     const geo = new THREE.BufferGeometry();
@@ -343,7 +254,12 @@ export class CelestialScene {
   public setActiveConstellation(constellation: NormalizedConstellation) {
     this.activeConstellationId = constellation.id;
     this.activeBounds2D = constellation.bounds2D
-      ? { maxTanX: constellation.bounds2D.maxTanX, maxTanY: constellation.bounds2D.maxTanY }
+      ? {
+          maxTanX: constellation.bounds2D.maxTanX,
+          maxTanY: constellation.bounds2D.maxTanY,
+          artMaxTanX: constellation.bounds2D.artMaxTanX,
+          artMaxTanY: constellation.bounds2D.artMaxTanY,
+        }
       : null;
 
     // Lazy-load active constellation art texture on demand
@@ -832,16 +748,6 @@ export class CelestialScene {
       this.camera.updateProjectionMatrix();
     }
 
-    // 0. Update background sky panorama sphere
-    if (this.backgroundSkyMesh) {
-      this.backgroundSkyMesh.position.copy(this.camera.position);
-      if (this.backgroundSkyMat) {
-        this.backgroundSkyMat.opacity = this.backgroundSkyVisible
-          ? Math.max(0.20, dimFactor * 0.95)
-          : 0.0;
-      }
-    }
-
     // 1. Update background starfield
     if (this.backgroundStarsMat) {
       this.backgroundStarsMat.uniforms.uCamPos.value.copy(this.camera.position);
@@ -1050,11 +956,16 @@ export class CelestialScene {
       return this.defaultHubFov;
     }
     const aspect = Math.max(0.55, this.camera.aspect || 1.6);
-    const { maxTanX, maxTanY } = this.activeBounds2D;
-    const reqTan = Math.max(maxTanY, maxTanX / (aspect * 0.88)) * 1.45;
+    const { maxTanX, maxTanY, artMaxTanX = 0, artMaxTanY = 0 } = this.activeBounds2D;
+    const starReqTan = Math.max(maxTanY, maxTanX / (aspect * 0.88)) * 1.45;
+    const artReqTan =
+      artMaxTanX > 0 || artMaxTanY > 0
+        ? Math.max(artMaxTanY, artMaxTanX / (aspect * 0.90)) * 1.15
+        : 0;
+    const reqTan = Math.max(starReqTan, artReqTan);
     const reqFov = (2.0 * Math.atan(reqTan) * 180.0) / Math.PI;
-    // Clamp between 32 deg (frames tiny constellations cleanly with 3D depth headroom) and 92 deg (frames Hydra/Eridanus without heavy fisheye)
-    return Math.max(32.0, Math.min(92.0, reqFov));
+    // Clamp between 32 deg (frames tiny constellations cleanly with 3D depth headroom) and 96 deg (frames wide constellations & artwork without heavy fisheye)
+    return Math.max(32.0, Math.min(96.0, reqFov));
   }
 
   public resize(width: number, height: number) {
@@ -1076,15 +987,6 @@ export class CelestialScene {
   }
 
   public dispose() {
-    if (this.backgroundSkyMesh) {
-      this.scene.remove(this.backgroundSkyMesh);
-      this.backgroundSkyMesh.geometry.dispose();
-      this.backgroundSkyMat?.dispose();
-      this.backgroundTexture?.dispose();
-      this.backgroundSkyMesh = null;
-      this.backgroundSkyMat = null;
-      this.backgroundTexture = null;
-    }
     if (this.backgroundStarsMesh) {
       this.scene.remove(this.backgroundStarsMesh);
       this.backgroundStarsMesh.geometry.dispose();

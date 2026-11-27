@@ -181,8 +181,8 @@ export class SoundEngine {
 
     this.isDroneActive = true;
 
-    // Gentle ramp starting above 45% alignment; blossoms smoothly approaching 96%
-    const norm = Math.max(0, Math.min(1, (accuracy - 45) / 51));
+    // Gentle ramp starting above 45% alignment; blossoms smoothly all the way to 100%
+    const norm = Math.max(0, Math.min(1, (accuracy - 45) / 55));
     const curved = norm * norm;
 
     const baseFreq = 196 + curved * 196; // G3 -> G4
